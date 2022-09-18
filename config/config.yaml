@@ -1,0 +1,28 @@
+excel:
+  file: "cases.xlsx"
+
+logger:
+  name: primihub-test
+  file: 'testlog.txt'
+  logger_level: 'DEBUG'
+  stream_level: "DEBUG"
+  file_level: "INFO"
+
+db:
+  host: "118.190.39.100"
+  port: 27936
+  user: "primihub"
+  password: "primihub@123"
+  charset: "utf8"
+
+user:
+  userAccount: "13699223155"
+  userPassword: "lyn@123456"
+
+host1: http://test1.primihub.com/prod-api
+host2: http://test1.primihub.com/prod-api/data
+
+host3: http://test2.primihub.com/prod-api
+host4: http://test2.primihub.com/prod-api/data
+
+
