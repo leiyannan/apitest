@@ -32,6 +32,7 @@ class TestRegister(unittest.TestCase):
             data=data,
         )
         print(actual)
+
         expected_dict = eval(test_info["expected"])
 
         # 断言：code和msg
@@ -39,7 +40,7 @@ class TestRegister(unittest.TestCase):
             for key, value in expected_dict.items():
                 self.assertTrue(value == actual[key])
 
-            if actual["code"]== 0:
+            if actual["code"] == 0:
                 # 如果注册成功，数据库当代中需要有这个手机号码的记录
                 db = MysqlHandlerMid()
                 # 查询数据库当中有没有插入账号注册成功的记录
@@ -52,6 +53,16 @@ class TestRegister(unittest.TestCase):
         except AssertionError as e:
             logger.error("{}：测试用例无法通过：{}".format(test_info["title"],e))
             raise e
+
+            # if actual["code"] == 0:
+            #     # 如果注册成功，数据库当代中需要有这个手机号码的记录
+            #     db = MysqlHandlerMid()
+            #     # 查询数据库当中有没有插入账号注册成功的记录
+            #     sql_code = "select * from privacy_test1.sys_user where user_account={};".format(data["userAccount"])
+            #     user = db.query(sql_code)
+            #         # 测试通过
+            #     self.assertTrue(user)
+
 
     def random_phone(self):
         """随机生成一个动态的手机号码

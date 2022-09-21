@@ -22,6 +22,9 @@ class TestProject(unittest.TestCase):
         self.db = MysqlHandlerMid()
         self.pid = env_data.pid
 
+    def tearDown(self) -> None:
+        self.db.close()
+
     # @ddt.data(*test_data)
     def test_project(self):
         data= {

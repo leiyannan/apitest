@@ -59,6 +59,7 @@ class TestLogin(unittest.TestCase):
              method = test_info['method'],
              data = data
         )
+        print(actual)
         # 预期结果
         expected_dict = eval(test_info['expected'])
 

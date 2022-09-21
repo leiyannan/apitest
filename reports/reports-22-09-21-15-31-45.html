@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>primihub管理平台测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 120%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">primihub管理平台测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> lyn</p>
+<p class='attribute'><strong>开始时间 : </strong> 2022-09-21 15:31:45</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:20.488314</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 20，通过 20，通过率= 100.00%</p>
+
+<p class='description'>测试报告描述</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 100.00% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 0 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 20 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 20 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 16px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_login.TestLogin</td>
+    <td class="text-center">4</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',4)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in" align="left">
+    <pre>
+    
+pt1_1: {'code': 109, 'msg': '密码不正确', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_2</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse in" align="left">
+    <pre>
+    
+pt1_2: {'code': 100, 'msg': '缺少参数:userAccount', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_3</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse in" align="left">
+    <pre>
+    
+pt1_3: {'code': 108, 'msg': '无法找到该账号', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_4</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse in" align="left">
+    <pre>
+    
+pt1_4: {'code': 0, 'msg': '请求成功', 'result': {'grantAuthRootList': [{'authId': 1001, 'authName': '项目管理', 'authType': 1, 'authCode': 'Project', 'fullPath': '1001', 'authUrl': '', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 0, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 0, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.172+00:00', 'utime': '2022-09-14T08:41:41.178+00:00'}, {'authId': 1007, 'authName': '模型管理', 'authType': 1, 'authCode': 'Model', 'fullPath': '1007', 'authUrl': '/model/getmodellist', 'dataAuthCode': 'own', 'authIndex': 2, 'authDepth': 0, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 0, 'rauthId': 1007, 'ctime': '2022-09-14T08:41:41.195+00:00', 'utime': '2022-09-14T08:41:41.197+00:00'}, {'authId': 1016, 'authName': '匿踪查询', 'authType': 1, 'authCode': 'PrivateSearch', 'fullPath': '1016', 'authUrl': '/fusionResource/getResourceList', 'dataAuthCode': 'own', 'authIndex': 3, 'authDepth': 0, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 0, 'rauthId': 1016, 'ctime': '2022-09-14T08:41:41.223+00:00', 'utime': '2022-09-14T08:41:41.224+00:00'}, {'authId': 1019, 'authName': '隐私求交', 'authType': 1, 'authCode': 'PSI', 'fullPath': '1019', 'authUrl': '', 'dataAuthCode': 'own', 'authIndex': 4, 'authDepth': 0, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 0, 'rauthId': 1019, 'ctime': '2022-09-14T08:41:41.232+00:00', 'utime': '2022-09-14T08:41:41.234+00:00'}, {'authId': 1022, 'authName': '资源管理', 'authType': 1, 'authCode': 'ResourceMenu', 'fullPath': '1022', 'authUrl': '', 'dataAuthCode': 'own', 'authIndex': 5, 'authDepth': 0, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 0, 'rauthId': 1022, 'ctime': '2022-09-14T08:41:41.241+00:00', 'utime': '2022-09-14T08:41:41.243+00:00'}, {'authId': 1054, 'authName': '模型推理', 'authType': 1, 'authCode': 'ModelReasoning', 'fullPath': '1054', 'authUrl': '', 'dataAuthCode': 'own', 'authIndex': 7, 'authDepth': 0, 'isShow': 1, 'isEditable': 0, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 0, 'rauthId': 1054, 'ctime': '2022-09-14T08:41:41.335+00:00', 'utime': '2022-09-14T08:41:41.337+00:00'}, {'authId': 1058, 'authName': '日志', 'authType': 1, 'authCode': 'Log', 'fullPath': '1058', 'authUrl': '', 'dataAuthCode': 'own', 'authIndex': 8, 'authDepth': 0, 'isShow': 1, 'isEditable': 0, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 0, 'rauthId': 1058, 'ctime': '2022-09-14T08:41:41.346+00:00', 'utime': '2022-09-14T08:41:41.348+00:00'}, {'authId': 1002, 'authName': '项目列表', 'authType': 2, 'authCode': 'ProjectList', 'fullPath': '1001,1002', 'authUrl': '/project/getProjectList', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1001, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.181+00:00', 'utime': '2022-09-14T08:41:41.182+00:00'}, {'authId': 1008, 'authName': '模型列表', 'authType': 2, 'authCode': 'ModelList', 'fullPath': '1007,1008', 'authUrl': '/model/getmodellist', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1007, 'rauthId': 1007, 'ctime': '2022-09-14T08:41:41.198+00:00', 'utime': '2022-09-14T08:41:41.200+00:00'}, {'authId': 1017, 'authName': '匿踪查询按钮', 'authType': 3, 'authCode': 'PrivateSearchButton', 'fullPath': '1016,1017', 'authUrl': '/pir/pirSubmitTask', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1016, 'rauthId': 1016, 'ctime': '2022-09-14T08:41:41.226+00:00', 'utime': '2022-09-14T08:41:41.227+00:00'}, {'authId': 1020, 'authName': '求交任务', 'authType': 2, 'authCode': 'PSITask', 'fullPath': '1019,1020', 'authUrl': '/psi/getPsiResourceAllocationList', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1019, 'rauthId': 1019, 'ctime': '2022-09-14T08:41:41.236+00:00', 'utime': '2022-09-14T08:41:41.237+00:00'}, {'authId': 1023, 'authName': '资源概览', 'authType': 2, 'authCode': 'ResourceList', 'fullPath': '1022,1023', 'authUrl': '/resource/getdataresourcelist', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1022, 'rauthId': 1022, 'ctime': '2022-09-14T08:41:41.244+00:00', 'utime': '2022-09-14T08:41:41.246+00:00'}, {'authId': 1055, 'authName': '模型推理列表', 'authType': 2, 'authCode': 'ModelReasoningList', 'fullPath': '1054,1055', 'authUrl': '', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 1, 'isShow': 1, 'isEditable': 0, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1054, 'rauthId': 1054, 'ctime': '2022-09-14T08:41:41.338+00:00', 'utime': '2022-09-14T08:41:41.340+00:00'}, {'authId': 1003, 'authName': '项目详情', 'authType': 3, 'authCode': 'ProjectDetail', 'fullPath': '1001,1003', 'authUrl': '/project/getProjectDetails', 'dataAuthCode': 'own', 'authIndex': 2, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1001, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.183+00:00', 'utime': '2022-09-14T08:41:41.185+00:00'}, {'authId': 1018, 'authName': '匿踪查询列表', 'authType': 2, 'authCode': 'PrivateSearchList', 'fullPath': '1016,1018', 'authUrl': '/pir/downloadPirTask', 'dataAuthCode': 'own', 'authIndex': 2, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1016, 'rauthId': 1016, 'ctime': '2022-09-14T08:41:41.229+00:00', 'utime': '2022-09-14T08:41:41.230+00:00'}, {'authId': 1021, 'authName': '求交结果', 'authType': 2, 'authCode': 'PSIResult', 'fullPath': '1019,1021', 'authUrl': '/psi/getPsiTaskList', 'dataAuthCode': 'own', 'authIndex': 2, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1019, 'rauthId': 1019, 'ctime': '2022-09-14T08:41:41.238+00:00', 'utime': '2022-09-14T08:41:41.240+00:00'}, {'authId': 1024, 'authName': '资源详情', 'authType': 3, 'authCode': 'ResourceDetail', 'fullPath': '1022,1024', 'authUrl': '/resource/getdataresource', 'dataAuthCode': 'own', 'authIndex': 2, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1022, 'rauthId': 1022, 'ctime': '2022-09-14T08:41:41.247+00:00', 'utime': '2022-09-14T08:41:41.248+00:00'}, {'authId': 1056, 'authName': '模型推理任务', 'authType': 3, 'authCode': 'ModelReasoningTask', 'fullPath': '1054,1056', 'authUrl': '', 'dataAuthCode': 'own', 'authIndex': 2, 'authDepth': 1, 'isShow': 1, 'isEditable': 0, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1054, 'rauthId': 1054, 'ctime': '2022-09-14T08:41:41.341+00:00', 'utime': '2022-09-14T08:41:41.343+00:00'}, {'authId': 1004, 'authName': '任务详情', 'authType': 3, 'authCode': 'ModelTaskDetail', 'fullPath': '1001,1004', 'authUrl': '/project/getProjectDetails', 'dataAuthCode': 'own', 'authIndex': 3, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1001, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.186+00:00', 'utime': '2022-09-14T08:41:41.188+00:00'}, {'authId': 1025, 'authName': '上传资源', 'authType': 3, 'authCode': 'ResourceUpload', 'fullPath': '1022,1025', 'authUrl': '/resource/saveorupdateresource', 'dataAuthCode': 'own', 'authIndex': 3, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1022, 'rauthId': 1022, 'ctime': '2022-09-14T08:41:41.250+00:00', 'utime': '2022-09-14T08:41:41.251+00:00'}, {'authId': 1057, 'authName': '模型推理详情', 'authType': 3, 'authCode': 'ModelReasoningDetail', 'fullPath': '1054,1057', 'authUrl': '', 'dataAuthCode': 'own', 'authIndex': 3, 'authDepth': 1, 'isShow': 1, 'isEditable': 0, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1054, 'rauthId': 1054, 'ctime': '2022-09-14T08:41:41.344+00:00', 'utime': '2022-09-14T08:41:41.345+00:00'}, {'authId': 1026, 'authName': '编辑资源', 'authType': 3, 'authCode': 'ResourceEdit', 'fullPath': '1022,1026', 'authUrl': '/resource/saveorupdateresource', 'dataAuthCode': 'own', 'authIndex': 4, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1022, 'rauthId': 1022, 'ctime': '2022-09-14T08:41:41.252+00:00', 'utime': '2022-09-14T08:41:41.254+00:00'}, {'authId': 1027, 'authName': '联邦资源', 'authType': 2, 'authCode': 'UnionList', 'fullPath': '1022,1027', 'authUrl': '/fusionResource/getResourceList', 'dataAuthCode': 'own', 'authIndex': 5, 'authDepth': 1, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1022, 'rauthId': 1022, 'ctime': '2022-09-14T08:41:41.255+00:00', 'utime': '2022-09-14T08:41:41.257+00:00'}, {'authId': 1005, 'authName': '新建项目', 'authType': 3, 'authCode': 'ProjectCreate', 'fullPath': '1001,1002,1005', 'authUrl': '/project/saveOrUpdateProject', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1002, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.189+00:00', 'utime': '2022-09-14T08:41:41.191+00:00'}, {'authId': 1009, 'authName': '模型详情', 'authType': 3, 'authCode': 'ModelDetail', 'fullPath': '1007,1008,1009', 'authUrl': '/model/getdatamodel', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1008, 'rauthId': 1007, 'ctime': '2022-09-14T08:41:41.201+00:00', 'utime': '2022-09-14T08:41:41.202+00:00'}, {'authId': 1028, 'authName': '联邦资源详情', 'authType': 3, 'authCode': 'UnionResourceDetail', 'fullPath': '1022,1027,1028', 'authUrl': '/fusionResource/getDataResource', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1027, 'rauthId': 1022, 'ctime': '2022-09-14T08:41:41.258+00:00', 'utime': '2022-09-14T08:41:41.259+00:00'}, {'authId': 1050, 'authName': '项目禁用', 'authType': 3, 'authCode': 'closeProject', 'fullPath': '1001,1003,1050', 'authUrl': '/project/closeProject', 'dataAuthCode': 'own', 'authIndex': 1, 'authDepth': 2, 'isShow': 1, 'isEditable': 0, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1003, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.324+00:00', 'utime': '2022-09-14T08:41:41.325+00:00'}, {'authId': 1006, 'authName': '关闭项目', 'authType': 3, 'authCode': 'ProjectDelete', 'fullPath': '1001,1002,1006', 'authUrl': '/project/closeProject', 'dataAuthCode': 'own', 'authIndex': 2, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1002, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.192+00:00', 'utime': '2022-09-14T08:41:41.194+00:00'}, {'authId': 1010, 'authName': '模型查看', 'authType': 3, 'authCode': 'ModelView', 'fullPath': '1007,1008,1010', 'authUrl': '/model/getdatamodel', 'dataAuthCode': 'own', 'authIndex': 2, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1008, 'rauthId': 1007, 'ctime': '2022-09-14T08:41:41.204+00:00', 'utime': '2022-09-14T08:41:41.205+00:00'}, {'authId': 1051, 'authName': '项目启动', 'authType': 3, 'authCode': 'openProject', 'fullPath': '1001,1003,1051', 'authUrl': '/project/openProject', 'dataAuthCode': 'own', 'authIndex': 2, 'authDepth': 2, 'isShow': 1, 'isEditable': 0, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1003, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.326+00:00', 'utime': '2022-09-14T08:41:41.328+00:00'}, {'authId': 1011, 'authName': '添加模型', 'authType': 3, 'authCode': 'ModelCreate', 'fullPath': '1007,1008,1011', 'authUrl': '/model/saveModelAndComponent', 'dataAuthCode': 'own', 'authIndex': 3, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1008, 'rauthId': 1007, 'ctime': '2022-09-14T08:41:41.206+00:00', 'utime': '2022-09-14T08:41:41.208+00:00'}, {'authId': 1052, 'authName': '模型任务删除', 'authType': 3, 'authCode': 'deleteModelTask', 'fullPath': '1001,1003,1052', 'authUrl': '/task/deleteTask', 'dataAuthCode': 'own', 'authIndex': 3, 'authDepth': 2, 'isShow': 1, 'isEditable': 0, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1003, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.330+00:00', 'utime': '2022-09-14T08:41:41.331+00:00'}, {'authId': 1012, 'authName': '模型编辑', 'authType': 3, 'authCode': 'ModelEdit', 'fullPath': '1007,1008,1012', 'authUrl': '/model/saveModelAndComponent', 'dataAuthCode': 'own', 'authIndex': 4, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1008, 'rauthId': 1007, 'ctime': '2022-09-14T08:41:41.209+00:00', 'utime': '2022-09-14T08:41:41.211+00:00'}, {'authId': 1053, 'authName': '模型复制', 'authType': 3, 'authCode': 'copyModelTask', 'fullPath': '1001,1003,1053', 'authUrl': '', 'dataAuthCode': 'own', 'authIndex': 4, 'authDepth': 2, 'isShow': 1, 'isEditable': 0, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1003, 'rauthId': 1001, 'ctime': '2022-09-14T08:41:41.332+00:00', 'utime': '2022-09-14T08:41:41.334+00:00'}, {'authId': 1013, 'authName': '执行记录列表', 'authType': 3, 'authCode': 'ModelTaskHistory', 'fullPath': '1007,1008,1013', 'authUrl': '/task/saveModelAndComponent', 'dataAuthCode': 'own', 'authIndex': 5, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1008, 'rauthId': 1007, 'ctime': '2022-09-14T08:41:41.212+00:00', 'utime': '2022-09-14T08:41:41.214+00:00'}, {'authId': 1014, 'authName': '模型运行', 'authType': 3, 'authCode': 'ModelRun', 'fullPath': '1007,1008,1014', 'authUrl': '/model/runTaskModel', 'dataAuthCode': 'own', 'authIndex': 6, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1008, 'rauthId': 1007, 'ctime': '2022-09-14T08:41:41.215+00:00', 'utime': '2022-09-14T08:41:41.216+00:00'}, {'authId': 1015, 'authName': '下载结果', 'authType': 3, 'authCode': 'ModelResultDownload', 'fullPath': '1007,1008,1015', 'authUrl': '/task/downloadTaskFile', 'dataAuthCode': 'own', 'authIndex': 7, 'authDepth': 2, 'isShow': 1, 'isEditable': 1, 'isDel': 0, 'children': None, 'isGrant': 1, 'pauthId': 1008, 'rauthId': 1007, 'ctime': '2022-09-14T08:41:41.219+00:00', 'utime': '2022-09-14T08:41:41.221+00:00'}], 'sysUser': {'userId': 6, 'userAccount': 'test', 'userName': '测试账号', 'roleIdList': '1000', 'roleIdListDesc': '业务权限', 'organIdList': '8bf56ee6-b004-4ada-b078-591acb22b324', 'organIdListDesc': 'test1', 'isForbid': 0, 'isEditable': 1, 'cTime': '2022-07-25 15:33:34', 'authIdList': '1024,1,1025,2,1026,1027,4,1028,5,11,13,14,16,17,18,20,21,22,1050,1051,1052,1053,1054,1055,1056,1057,1058,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1019,1020,1021,1022,1023', 'registerType': 1, 'ctime': '2022-07-25 15:33:34'}, 'token': 'SU202209210731489E8BE152CE1441815F366BCCD6AF0C09'}, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_project.TestProject</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',1)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_project</div></td>
+    <td colspan='5' align='center'><span class="label label-success success">通过</span></td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_register.TestRegister</td>
+    <td class="text-center">8</td>
+    <td class="text-center">8</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',8)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='pt3_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse in" align="left">
+    <pre>
+    
+pt3_1: {'code': 118, 'msg': '验证码失败', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_2</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+    <div id='div_pt3_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+    <div id='div_pt3_2' class="collapse in" align="left">
+    <pre>
+    
+pt3_2: {'code': 100, 'msg': '缺少参数:userAccount', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_3</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_3'>通过</button>
+    <div id='div_pt3_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_3'>通过</button>
+    <div id='div_pt3_3' class="collapse in" align="left">
+    <pre>
+    
+pt3_3: {'code': 100, 'msg': '缺少参数:password', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_4</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_4'>通过</button>
+    <div id='div_pt3_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_4'>通过</button>
+    <div id='div_pt3_4' class="collapse in" align="left">
+    <pre>
+    
+pt3_4: {'code': 100, 'msg': '缺少参数:passwordAgain', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_5</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_5'>通过</button>
+    <div id='div_pt3_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_5'>通过</button>
+    <div id='div_pt3_5' class="collapse in" align="left">
+    <pre>
+    
+pt3_5: {'code': 100, 'msg': '缺少参数:verificationCode', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_6</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_6'>通过</button>
+    <div id='div_pt3_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_6'>通过</button>
+    <div id='div_pt3_6' class="collapse in" align="left">
+    <pre>
+    
+pt3_6: {'code': 106, 'msg': '不可重复:账户名称', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_7</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_7'>通过</button>
+    <div id='div_pt3_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_7'>通过</button>
+    <div id='div_pt3_7' class="collapse in" align="left">
+    <pre>
+    
+pt3_7: {'code': 101, 'msg': '无效参数:password not match', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_8' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_8</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_8'>通过</button>
+    <div id='div_pt3_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_8'>通过</button>
+    <div id='div_pt3_8' class="collapse in" align="left">
+    <pre>
+    
+pt3_8: 13214883605
+{'code': 0, 'msg': '请求成功', 'result': {'sysUser': {'userId': 63, 'userAccount': '13214883605', 'userPassword': '', 'userName': 'test01', 'roleIdList': '', 'isForbid': 0, 'isDel': 0, 'isEditable': 1, 'registerType': 3, 'ctime': None, 'utime': None}}, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_resource.TestResource</td>
+    <td class="text-center">7</td>
+    <td class="text-center">7</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',7)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='pt4_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse in" align="left">
+    <pre>
+    
+pt4_1: {'code': 0, 'msg': '请求成功', 'result': {'resourceDesc': 'apitest_编辑资源-描述', 'resourceId': 166, 'resourceName': 'apitest_编辑资源-名称'}, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_2</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_2'>通过</button>
+    <div id='div_pt4_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_2'>通过</button>
+    <div id='div_pt4_2' class="collapse in" align="left">
+    <pre>
+    
+pt4_2: {'code': 0, 'msg': '请求成功', 'result': {'resourceDesc': 'apitest_添加资源-描述', 'resourceId': 167, 'resourceName': 'apitest_添加资源-名称'}, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_3</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_3'>通过</button>
+    <div id='div_pt4_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_3'>通过</button>
+    <div id='div_pt4_3' class="collapse in" align="left">
+    <pre>
+    
+pt4_3: {'code': 100, 'msg': '缺少参数:resourceName', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_4</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_4'>通过</button>
+    <div id='div_pt4_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_4'>通过</button>
+    <div id='div_pt4_4' class="collapse in" align="left">
+    <pre>
+    
+pt4_4: {'code': 100, 'msg': '缺少参数:resourceDesc', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_5</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_5'>通过</button>
+    <div id='div_pt4_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_5'>通过</button>
+    <div id='div_pt4_5' class="collapse in" align="left">
+    <pre>
+    
+pt4_5: {'code': 100, 'msg': '缺少参数:tags', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_6</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_6'>通过</button>
+    <div id='div_pt4_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_6'>通过</button>
+    <div id='div_pt4_6' class="collapse in" align="left">
+    <pre>
+    
+pt4_6: {'code': 100, 'msg': '缺少参数:resourceAuthType', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_7</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_7'>通过</button>
+    <div id='div_pt4_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_7'>通过</button>
+    <div id='div_pt4_7' class="collapse in" align="left">
+    <pre>
+    
+pt4_7: {'code': 0, 'msg': '请求成功', 'result': {'resourceDesc': 'apitest_添加资源-描述', 'resourceId': 168, 'resourceName': 'apitest_添加资源-名称'}, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>20</td>
+    <td>20</td>
+    <td>0</td>
+    <td>0</td>
+    <td>通过率：100.00%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>
