@@ -18,10 +18,10 @@ class TestResource(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.token = env_data.token_test1
         cls.userid = env_data.user_id_test1
+        cls.resourceId = env_data.resourceId
 
     def setUp(self) -> None:
         self.db = env_data.db_class()
-        self.resourceId = env_data.resourceId
 
     def tearDown(self) -> None:
         self.db.close()
@@ -36,12 +36,15 @@ class TestResource(unittest.TestCase):
         if "#timestamp#" in data:
             data = data.replace("#timestamp#",str(int(time.time())))
 
-        if test_info["sql_code"]:
-            before_resource = self.db.query(
-                "select * from privacy_test1.data_resource where user_id={}".format(self.userid),
-                one=False
-            )
-            print(len(before_resource))
+        if "#resourceId#" in data:
+            data = data.replace("#resourceId#", str(self.resourceId))
+
+        # if test_info["sql_code"]:
+        #     before_resource = self.db.query(
+        #         "select * from privacy_test1.data_resource where user_id={}".format(self.userid),
+        #         one=False
+        #     )
+        #     print(len(before_resource))
 
 
         actual = requests_handler.visit(
