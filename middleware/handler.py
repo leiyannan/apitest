@@ -62,25 +62,6 @@ class Handler():
     )
     db_class = MysqlHandlerMid
 
-
-
-    # @property
-    # def token_test1(self):
-    #     return login_test1()["token"]
-    #
-    # @property
-    # def user_id_test1(self):
-    #     return login_test1()["user_id"]
-    #
-    # @property
-    # def token_test2(self):
-    #     return login_test2()["token"]
-    #
-    # @property
-    # def user_id_test2(self):
-    #     return login_test2()["user_id"]
-
-
     @property
     def resourceId01(self):
         # test1本地资源ID
@@ -196,7 +177,7 @@ def add_resource01():
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
     if "#resourceName#" in data:
-        data = data.replace("#resourceName#", Handler.yaml["test_name"]["resourceName01"])
+        data = data.replace("#resourceName#", Handler().yaml["test_name"]["resourceName01"])
 
     resp = requests_handler.visit(
         url=Handler.yaml["host2"] + "/resource/saveorupdateresource",
@@ -206,6 +187,7 @@ def add_resource01():
     )
     resourceId01 = resp["result"]["resourceId"]
     resourceFusionId01 = resp["result"]["resourceFusionId"]
+    print(resourceFusionId01)
     return {"resourceId01":resourceId01, "resourceFusionId01":resourceFusionId01}
 
 def add_resource02():
@@ -216,7 +198,7 @@ def add_resource02():
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
     if "#resourceName#" in data:
-        data = data.replace("#resourceName#", Handler.yaml["test_name"]["resourceName02"])
+        data = data.replace("#resourceName#", Handler().yaml["test_name"]["resourceName02"])
 
     resp = requests_handler.visit(
         url=Handler.yaml["host4"] + "/resource/saveorupdateresource",
@@ -226,6 +208,7 @@ def add_resource02():
     )
     resourceId02 = resp["result"]["resourceId"]
     resourceFusionId02 = resp["result"]["resourceFusionId"]
+    print(resourceFusionId02)
     return {"resourceId02":resourceId02,"resourceFusionId02":resourceFusionId02}
 
 def add_project():
@@ -247,6 +230,7 @@ def add_project():
         data = data.replace("#resourceFusionId02#", str(Handler().resourceFusionId02))
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
+    print(data)
     resp = requests_handler.visit(
         url=Handler.yaml["host2"] + "/project/saveOrUpdateProject",
         method="post",
@@ -351,7 +335,7 @@ if __name__ == "__main__":
     # print(Handler().projectId)
     #print(Handler().resourceFusionId01)
     #print(Handler().resourceFusionId02)
-    # print(add_project())
+    print(add_project())
     #print(getprojectlist())
     #print(getProjectDetails())
     # print(add_resource())
@@ -361,6 +345,6 @@ if __name__ == "__main__":
     # print(login())
     # print(Handler().token_test1)
     # print(Handler().token_test2)
-    print(Projectapproval())
+    # print(Projectapproval())
 
 
