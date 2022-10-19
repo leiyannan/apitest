@@ -336,3 +336,135 @@
 2022-09-21 15:32:03,984--test_resource.py--hanghao:62--INFO:添加失败-关键词为空：测试用例通过
 2022-09-21 15:32:05,013--test_resource.py--hanghao:62--INFO:添加失败-授权方式为空：测试用例通过
 2022-09-21 15:32:05,767--test_resource.py--hanghao:62--INFO:添加成功-授权方式为私有：测试用例通过
+2022-09-21 17:08:33,740--test_resource.py--hanghao:62--INFO:添加资源：测试用例通过
+2022-09-21 17:08:33,965--test_resource.py--hanghao:62--INFO:添加失败-资源名称为空：测试用例通过
+2022-09-21 17:08:34,208--test_resource.py--hanghao:62--INFO:添加失败-资源描述为空：测试用例通过
+2022-09-21 17:08:34,462--test_resource.py--hanghao:62--INFO:添加失败-关键词为空：测试用例通过
+2022-09-21 17:08:34,684--test_resource.py--hanghao:62--INFO:添加失败-授权方式为空：测试用例通过
+2022-09-21 17:08:35,042--test_resource.py--hanghao:62--INFO:添加成功-授权方式为私有：测试用例通过
+2022-09-21 17:36:45,324--test_resource.py--hanghao:62--INFO:编辑资源：测试用例通过
+2022-09-21 17:36:45,934--test_resource.py--hanghao:62--INFO:添加资源：测试用例通过
+2022-09-21 17:36:46,165--test_resource.py--hanghao:62--INFO:添加失败-资源名称为空：测试用例通过
+2022-09-21 17:36:46,391--test_resource.py--hanghao:62--INFO:添加失败-资源描述为空：测试用例通过
+2022-09-21 17:36:46,604--test_resource.py--hanghao:62--INFO:添加失败-关键词为空：测试用例通过
+2022-09-21 17:36:46,807--test_resource.py--hanghao:62--INFO:添加失败-授权方式为空：测试用例通过
+2022-09-21 17:36:48,326--test_resource.py--hanghao:62--INFO:添加成功-授权方式为私有：测试用例通过
+2022-09-22 16:58:17,226--test_login.py--hanghao:72--ERROR:登录失败-密码错误：测试用例无法通过：False is not true
+2022-09-22 16:58:17,651--test_login.py--hanghao:70--INFO:登录失败-用户名为空：测试用例通过
+2022-09-22 16:58:17,987--test_login.py--hanghao:72--ERROR:登录失败-用户不存在：测试用例无法通过：False is not true
+2022-09-22 16:58:18,432--test_login.py--hanghao:72--ERROR:登录成功：测试用例无法通过：False is not true
+2022-09-27 18:45:54,064--test_login.py--hanghao:72--ERROR:登录失败-密码错误：测试用例无法通过：False is not true
+2022-09-27 18:45:54,262--test_login.py--hanghao:70--INFO:登录失败-用户名为空：测试用例通过
+2022-09-27 18:45:54,446--test_login.py--hanghao:72--ERROR:登录失败-用户不存在：测试用例无法通过：False is not true
+2022-09-27 18:45:54,753--test_login.py--hanghao:72--ERROR:登录成功：测试用例无法通过：False is not true
+2022-10-17 11:12:05,395--test_login.py--hanghao:74--ERROR:登录失败-密码错误：测试用例无法通过：False is not true
+2022-10-17 11:12:05,788--test_login.py--hanghao:72--INFO:登录失败-用户名为空：测试用例通过
+2022-10-17 11:12:06,043--test_login.py--hanghao:74--ERROR:登录失败-用户不存在：测试用例无法通过：False is not true
+2022-10-17 11:12:06,269--test_login.py--hanghao:74--ERROR:登录成功：测试用例无法通过：False is not true
+2022-10-18 11:06:59,844--test_register.py--hanghao:52--INFO:注册失败-验证码错误：测试用例通过
+2022-10-18 11:06:59,923--test_register.py--hanghao:52--INFO:注册失败-用户名为空：测试用例通过
+2022-10-18 11:07:00,000--test_register.py--hanghao:52--INFO:注册失败-密码为空：测试用例通过
+2022-10-18 11:07:00,081--test_register.py--hanghao:52--INFO:注册失败-确认密码为空：测试用例通过
+2022-10-18 11:07:00,163--test_register.py--hanghao:52--INFO:注册失败-验证码为空：测试用例通过
+2022-10-18 11:07:00,243--test_register.py--hanghao:52--INFO:注册失败-账号已注册：测试用例通过
+2022-10-18 11:07:00,322--test_register.py--hanghao:52--INFO:两次密码不一致：测试用例通过
+2022-10-18 11:10:45,237--test_register.py--hanghao:52--INFO:注册失败-验证码错误：测试用例通过
+2022-10-18 11:10:45,315--test_register.py--hanghao:52--INFO:注册失败-用户名为空：测试用例通过
+2022-10-18 11:10:45,393--test_register.py--hanghao:52--INFO:注册失败-密码为空：测试用例通过
+2022-10-18 11:10:45,471--test_register.py--hanghao:52--INFO:注册失败-确认密码为空：测试用例通过
+2022-10-18 11:10:45,564--test_register.py--hanghao:52--INFO:注册失败-验证码为空：测试用例通过
+2022-10-18 11:10:45,645--test_register.py--hanghao:52--INFO:注册失败-账号已注册：测试用例通过
+2022-10-18 11:10:45,863--test_register.py--hanghao:52--INFO:两次密码不一致：测试用例通过
+2022-10-18 11:10:46,306--test_register.py--hanghao:52--INFO:注册成功：测试用例通过
+2022-10-18 15:39:59,500--test_resource.py--hanghao:66--INFO:编辑资源：测试用例通过
+2022-10-18 15:39:59,898--test_resource.py--hanghao:66--INFO:添加资源：测试用例通过
+2022-10-18 15:40:00,126--test_resource.py--hanghao:66--INFO:添加失败-资源名称为空：测试用例通过
+2022-10-18 15:40:00,351--test_resource.py--hanghao:66--INFO:添加失败-资源描述为空：测试用例通过
+2022-10-18 15:40:00,560--test_resource.py--hanghao:66--INFO:添加失败-关键词为空：测试用例通过
+2022-10-18 15:40:00,774--test_resource.py--hanghao:66--INFO:添加失败-授权方式为空：测试用例通过
+2022-10-18 15:40:01,014--test_resource.py--hanghao:66--INFO:添加成功-授权方式为私有：测试用例通过
+2022-10-18 15:41:18,097--test_resource.py--hanghao:66--INFO:添加资源：测试用例通过
+2022-10-18 15:41:18,374--test_resource.py--hanghao:66--INFO:编辑资源：测试用例通过
+2022-10-18 15:41:18,584--test_resource.py--hanghao:66--INFO:添加失败-资源名称为空：测试用例通过
+2022-10-18 15:41:18,790--test_resource.py--hanghao:66--INFO:添加失败-资源描述为空：测试用例通过
+2022-10-18 15:41:19,004--test_resource.py--hanghao:66--INFO:添加失败-关键词为空：测试用例通过
+2022-10-18 15:41:19,225--test_resource.py--hanghao:66--INFO:添加失败-授权方式为空：测试用例通过
+2022-10-18 15:41:19,462--test_resource.py--hanghao:66--INFO:添加成功-授权方式为私有：测试用例通过
+2022-10-18 16:02:01,463--test_resource.py--hanghao:66--INFO:添加资源：测试用例通过
+2022-10-18 16:02:01,716--test_resource.py--hanghao:66--INFO:编辑资源：测试用例通过
+2022-10-18 16:02:01,976--test_resource.py--hanghao:66--INFO:添加失败-资源名称为空：测试用例通过
+2022-10-18 16:02:02,194--test_resource.py--hanghao:66--INFO:添加失败-资源描述为空：测试用例通过
+2022-10-18 16:02:02,438--test_resource.py--hanghao:66--INFO:添加失败-关键词为空：测试用例通过
+2022-10-18 16:02:02,662--test_resource.py--hanghao:66--INFO:添加失败-授权方式为空：测试用例通过
+2022-10-18 16:02:02,896--test_resource.py--hanghao:66--INFO:添加成功-授权方式为私有：测试用例通过
+2022-10-18 16:33:28,527--test_project.py--hanghao:63--INFO:添加项目-成功：测试用例通过
+2022-10-18 16:33:28,602--test_project.py--hanghao:63--INFO:添加失败-项目名称为空：测试用例通过
+2022-10-18 16:33:28,817--test_project.py--hanghao:63--INFO:添加失败-中心节点为空：测试用例通过
+2022-10-18 16:35:29,418--test_resource.py--hanghao:62--INFO:添加资源：测试用例通过
+2022-10-18 16:35:29,689--test_resource.py--hanghao:62--INFO:编辑资源：测试用例通过
+2022-10-18 16:35:29,920--test_resource.py--hanghao:62--INFO:添加失败-资源名称为空：测试用例通过
+2022-10-18 16:35:30,137--test_resource.py--hanghao:62--INFO:添加失败-资源描述为空：测试用例通过
+2022-10-18 16:35:30,375--test_resource.py--hanghao:62--INFO:添加失败-关键词为空：测试用例通过
+2022-10-18 16:35:30,616--test_resource.py--hanghao:62--INFO:添加失败-授权方式为空：测试用例通过
+2022-10-18 16:35:31,234--test_resource.py--hanghao:62--INFO:添加成功-授权方式为私有：测试用例通过
+2022-10-18 16:38:39,850--test_project.py--hanghao:63--INFO:添加项目-成功：测试用例通过
+2022-10-18 16:38:39,926--test_project.py--hanghao:63--INFO:添加失败-项目名称为空：测试用例通过
+2022-10-18 16:38:40,159--test_project.py--hanghao:63--INFO:添加失败-中心节点为空：测试用例通过
+2022-10-18 16:39:13,271--test_register.py--hanghao:52--INFO:注册失败-验证码错误：测试用例通过
+2022-10-18 16:39:13,362--test_register.py--hanghao:52--INFO:注册失败-用户名为空：测试用例通过
+2022-10-18 16:39:13,448--test_register.py--hanghao:52--INFO:注册失败-密码为空：测试用例通过
+2022-10-18 16:39:13,528--test_register.py--hanghao:52--INFO:注册失败-确认密码为空：测试用例通过
+2022-10-18 16:39:13,621--test_register.py--hanghao:52--INFO:注册失败-验证码为空：测试用例通过
+2022-10-18 16:39:13,708--test_register.py--hanghao:52--INFO:注册失败-账号已注册：测试用例通过
+2022-10-18 16:39:13,800--test_register.py--hanghao:52--INFO:两次密码不一致：测试用例通过
+2022-10-18 16:39:14,232--test_register.py--hanghao:52--INFO:注册成功：测试用例通过
+2022-10-18 16:39:21,824--test_project.py--hanghao:63--INFO:添加项目-成功：测试用例通过
+2022-10-18 16:39:21,905--test_project.py--hanghao:63--INFO:添加失败-项目名称为空：测试用例通过
+2022-10-18 16:39:22,073--test_project.py--hanghao:63--INFO:添加失败-中心节点为空：测试用例通过
+2022-10-18 16:39:22,342--test_register.py--hanghao:52--INFO:注册失败-验证码错误：测试用例通过
+2022-10-18 16:39:22,426--test_register.py--hanghao:52--INFO:注册失败-用户名为空：测试用例通过
+2022-10-18 16:39:22,516--test_register.py--hanghao:52--INFO:注册失败-密码为空：测试用例通过
+2022-10-18 16:39:22,588--test_register.py--hanghao:52--INFO:注册失败-确认密码为空：测试用例通过
+2022-10-18 16:39:22,667--test_register.py--hanghao:52--INFO:注册失败-验证码为空：测试用例通过
+2022-10-18 16:39:22,743--test_register.py--hanghao:52--INFO:注册失败-账号已注册：测试用例通过
+2022-10-18 16:39:22,823--test_register.py--hanghao:52--INFO:两次密码不一致：测试用例通过
+2022-10-18 16:39:23,244--test_register.py--hanghao:52--INFO:注册成功：测试用例通过
+2022-10-18 16:39:23,591--test_resource.py--hanghao:62--INFO:添加资源：测试用例通过
+2022-10-18 16:39:23,836--test_resource.py--hanghao:62--INFO:编辑资源：测试用例通过
+2022-10-18 16:39:24,051--test_resource.py--hanghao:62--INFO:添加失败-资源名称为空：测试用例通过
+2022-10-18 16:39:24,274--test_resource.py--hanghao:62--INFO:添加失败-资源描述为空：测试用例通过
+2022-10-18 16:39:24,483--test_resource.py--hanghao:62--INFO:添加失败-关键词为空：测试用例通过
+2022-10-18 16:39:24,696--test_resource.py--hanghao:62--INFO:添加失败-授权方式为空：测试用例通过
+2022-10-18 16:39:24,950--test_resource.py--hanghao:62--INFO:添加成功-授权方式为私有：测试用例通过
+2022-10-18 16:44:20,131--test_project.py--hanghao:63--INFO:添加项目-成功：测试用例通过
+2022-10-18 16:44:20,210--test_project.py--hanghao:63--INFO:添加失败-项目名称为空：测试用例通过
+2022-10-18 16:44:20,437--test_project.py--hanghao:63--INFO:添加失败-中心节点为空：测试用例通过
+2022-10-18 17:09:01,886--test_project.py--hanghao:66--INFO:添加项目-成功：测试用例通过
+2022-10-18 17:09:01,967--test_project.py--hanghao:66--INFO:添加失败-项目名称为空：测试用例通过
+2022-10-18 17:09:02,043--test_project.py--hanghao:66--INFO:添加失败-中心节点为空：测试用例通过
+2022-10-18 17:10:15,767--test_project.py--hanghao:66--INFO:添加项目-成功：测试用例通过
+2022-10-18 17:10:15,849--test_project.py--hanghao:66--INFO:添加失败-项目名称为空：测试用例通过
+2022-10-18 17:10:15,928--test_project.py--hanghao:66--INFO:添加失败-中心节点为空：测试用例通过
+2022-10-18 17:10:16,005--test_project.py--hanghao:68--ERROR:禁用项目：测试用例无法通过：False is not true
+2022-10-18 17:10:16,158--test_project.py--hanghao:68--ERROR:启用项目：测试用例无法通过：False is not true
+2022-10-18 17:59:46,270--test_c_o_project.py--hanghao:56--INFO:禁用项目：测试用例通过
+2022-10-18 17:59:46,432--test_c_o_project.py--hanghao:56--INFO:启用项目：测试用例通过
+2022-10-18 17:59:59,170--test_c_o_project.py--hanghao:58--ERROR:禁用项目：测试用例无法通过：False is not true
+2022-10-18 17:59:59,300--test_c_o_project.py--hanghao:58--ERROR:启用项目：测试用例无法通过：False is not true
+2022-10-18 18:05:09,256--test_clop_project.py--hanghao:53--INFO:禁用项目：测试用例通过
+2022-10-18 18:05:09,424--test_clop_project.py--hanghao:53--INFO:启用项目：测试用例通过
+2022-10-18 18:05:10,435--test_register.py--hanghao:52--INFO:注册失败-验证码错误：测试用例通过
+2022-10-18 18:05:10,522--test_register.py--hanghao:52--INFO:注册失败-用户名为空：测试用例通过
+2022-10-18 18:05:10,595--test_register.py--hanghao:52--INFO:注册失败-密码为空：测试用例通过
+2022-10-18 18:05:10,686--test_register.py--hanghao:52--INFO:注册失败-确认密码为空：测试用例通过
+2022-10-18 18:05:10,767--test_register.py--hanghao:52--INFO:注册失败-验证码为空：测试用例通过
+2022-10-18 18:05:10,852--test_register.py--hanghao:52--INFO:注册失败-账号已注册：测试用例通过
+2022-10-18 18:05:10,929--test_register.py--hanghao:52--INFO:两次密码不一致：测试用例通过
+2022-10-18 18:05:11,344--test_register.py--hanghao:52--INFO:注册成功：测试用例通过
+2022-10-18 18:05:11,706--test_resource.py--hanghao:62--INFO:添加资源：测试用例通过
+2022-10-18 18:05:11,949--test_resource.py--hanghao:62--INFO:编辑资源：测试用例通过
+2022-10-18 18:05:12,145--test_resource.py--hanghao:62--INFO:添加失败-资源名称为空：测试用例通过
+2022-10-18 18:05:12,341--test_resource.py--hanghao:62--INFO:添加失败-资源描述为空：测试用例通过
+2022-10-18 18:05:12,534--test_resource.py--hanghao:62--INFO:添加失败-关键词为空：测试用例通过
+2022-10-18 18:05:12,728--test_resource.py--hanghao:62--INFO:添加失败-授权方式为空：测试用例通过
+2022-10-18 18:05:12,959--test_resource.py--hanghao:62--INFO:添加成功-授权方式为私有：测试用例通过
