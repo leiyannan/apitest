@@ -18,7 +18,7 @@ class TestResource(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.resourceId01 = env_data.resourceFusionId01
         cls.resourceId02 = env_data.resourceFusionId02
-        cls.pid = env_data.pid
+
 
     def setUp(self) -> None:
         pass
@@ -27,6 +27,8 @@ class TestResource(unittest.TestCase):
     def tearDown(self) -> None:
         pass
         #self.db.close()
+
+
     @ddt.data(*test_data)
     def test_resource(self,test_info):
 
@@ -47,8 +49,7 @@ class TestResource(unittest.TestCase):
             data = data.replace("#resourceFusionId02#", str(self.resourceId02))
         if "#timestamp#" in data:
             data = data.replace("#timestamp#", str(int(time.time())))
-        if "#id#" in data:
-            data = data.replace("#id#", str(self.pid))
+
 
         actual = requests_handler.visit(
             url=env_data.yaml["host2"] + test_info["url"],

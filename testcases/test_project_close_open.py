@@ -16,7 +16,7 @@ class TestResource(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.pid = env_data.pid
+        cls.pid = env_data.pid01
 
     def setUp(self) -> None:
         pass

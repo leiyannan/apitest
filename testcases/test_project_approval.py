@@ -4,7 +4,7 @@ import unittest
 import ddt
 
 from common import requests_handler, yaml_handler
-from middleware.handler import Handler,add_project
+from middleware.handler import Handler,getProjectDetails
 
 # 初始化数据
 logger = Handler.logger
@@ -16,7 +16,9 @@ class TestResource(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.project = add_project()
+        cls.pjtion01= getProjectDetails()
+        cls.pjtion02 = getProjectDetails()
+        cls.pjtion03 = getProjectDetails()
 
     def setUp(self) -> None:
         pass
@@ -28,18 +30,30 @@ class TestResource(unittest.TestCase):
 
     @ddt.data(*test_data)
     def test_resource(self,test_info):
+        # print(self.organId)
+        # print(self.resultId)
+        # print(self.pid01)
 
         data = test_info["data"]
         if "#token#" in data:
             data = data.replace("#token#", env_data.yaml["test"]["token"])
         if "#timestamp#" in data:
             data = data.replace("#timestamp#", str(int(time.time())))
-        if "#pid#" in data:
-            data = data.replace("#pid#", str(self.project["pid"]))
+        if "#organId01#" in data:
+            data = data.replace("#organId01#", str(self.pjtion01[1]))
+        if "#resultId01#" in data:
+            data = data.replace("#resultId01#", str(self.pjtion01[0]))
+        if "#organId02#" in data:
+            data = data.replace("#organId02#", str(self.pjtion02[1]))
+        if "#organId03#" in data:
+            data = data.replace("#organId03#", str(self.pjtion03[1]))
+        if "#resultId03#" in data:
+            data = data.replace("#resultId03#", str(self.pjtion03[0]))
+        print(data)
 
 
         actual = requests_handler.visit(
-            url=env_data.yaml["host2"] + test_info["url"],
+            url=env_data.yaml["host4"] + test_info["url"],
             method=test_info["method"],
             # headers=json.loads(test_info["header"]),
             data=json.loads(data)

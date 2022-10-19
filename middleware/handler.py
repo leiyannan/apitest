@@ -104,12 +104,22 @@ class Handler():
     @property
     def projectId(self):
         # 联邦项目id
-        return add_project()['projectId']
+        return add_project()[0]
 
     @property
-    def pid(self):
-        # 本地项目id
-        return add_project()['pid']
+    def pid01(self):
+        # test1本地项目id
+        return add_project()[1]
+
+    @property
+    def pid02(self):
+        # test1本地项目id
+        return getprojectlist()[1]
+
+    @property
+    def resultId(self):
+        # test1本地项目id
+        return getProjectDetails()[0]
 
 
 
@@ -232,9 +242,9 @@ def add_project():
     if "#organId02#" in data:
         data = data.replace("#organId02#", Handler().yaml["test"]["organId02"])
     if "#resourceFusionId01#" in data:
-        data = data.replace("#resourceFusionId01#", str(Handler.resourceFusionId01))
+        data = data.replace("#resourceFusionId01#", str(Handler().resourceFusionId01))
     if "#resourceFusionId02#" in data:
-        data = data.replace("#resourceFusionId02#", str(Handler.resourceFusionId02))
+        data = data.replace("#resourceFusionId02#", str(Handler().resourceFusionId02))
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
     resp = requests_handler.visit(
@@ -245,19 +255,44 @@ def add_project():
     )
 
     projectId = resp['result']['projectId']
-    pid = resp['result']['id']
-    return {"projectId":projectId,"pid":pid}
+    pid01 = resp['result']['id']
+    return projectId,pid01
 
-def getProjectDetails():
-    # test2请求项目详情，获得项目资源真实ID，以便进行项目审核、资源审核
-    data = '{"id":"#projectId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+def getprojectlist():
+    # test2请求项目列表，获得第一条项目的本地ID，以便进行项目详情接口请求
+    projectId,pid01 = add_project()
+    data = '{"pageNo":1,"pageSize":10,"timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
-    if "#projectId#" in data:
-        data = data.replace("#projectId#", str(Handler().projectId))
     if "#token#" in data:
         data = data.replace("#token#", Handler().yaml["test"]["token"])
     print(data)
+
+    resp = requests_handler.visit(
+        url=Handler.yaml["host4"] + "/project/getProjectList",
+        method="get",
+        # headers=json.loads(test_info["header"]),
+        params=json.loads(data)
+    )
+    list = resp["result"]["data"]
+    projectid02 = []
+    for dict in list:
+        projectid02.append(dict["projectId"])
+    pid_key = projectid02.index(str(projectId))
+    pid02 = list[pid_key]["id"]
+
+    return pid01,pid02
+
+def getProjectDetails():
+    pid01,pid02 = getprojectlist()
+    # test2请求项目详情，获得项目资源真实ID，以便进行项目审核、资源审核
+    data = '{"id":"#pid02#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+    if "#timestamp#" in data:
+        data = data.replace("#timestamp#", str(int(time.time())))
+    if "#pid02#" in data:
+        data = data.replace("#pid02#", str(pid02))
+    if "#token#" in data:
+        data = data.replace("#token#", Handler().yaml["test"]["token"])
 
     resp = requests_handler.visit(
         url=Handler.yaml["host4"] + "/project/getProjectDetails",
@@ -266,7 +301,41 @@ def getProjectDetails():
         params=json.loads(data)
     )
     #
-    return resp
+    resultId = resp["result"]["organs"][1]["resources"][0]["id"]
+    organId = resp["result"]["organs"][1]["id"]
+    return resultId,organId,pid01
+
+def Projectapproval():
+    resultId,organId,pid01 = getProjectDetails()
+    data = '{"type":"#type#","id":"#id#","auditStatus":1,"auditOpinion":"审核项目","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+    if "#timestamp#" in data:
+        data = data.replace("#timestamp#", str(int(time.time())))
+    if "#token#" in data:
+        data = data.replace("#token#", Handler().yaml["test"]["token"])
+
+    projectdata = data.replace("#type#", str(1))
+    projectdata = projectdata.replace("#id#", str(organId))
+    resourcedata = data.replace("#type#", str(2))
+    resourcedata = resourcedata.replace("#id#", str(resultId))
+    print(projectdata)
+    print(resourcedata)
+
+    resp = requests_handler.visit(
+        url=Handler.yaml["host4"] + "/project/approval",
+        method="post",
+        # headers=json.loads(test_info["header"]),
+        data=json.loads(projectdata)
+    )
+    resp = requests_handler.visit(
+        url=Handler.yaml["host4"] + "/project/approval",
+        method="post",
+        # headers=json.loads(test_info["header"]),
+        data=json.loads(resourcedata)
+    )
+
+    return resp,pid01
+
+
 
 
 if __name__ == "__main__":
@@ -283,12 +352,15 @@ if __name__ == "__main__":
     #print(Handler().resourceFusionId01)
     #print(Handler().resourceFusionId02)
     # print(add_project())
-    print(getProjectDetails())
+    #print(getprojectlist())
+    #print(getProjectDetails())
     # print(add_resource())
+    #print(Handler().projectId)
 
     # 测试登录函数，由于登录加入滑动图片验证码，且错误率高，则使用万能token
     # print(login())
     # print(Handler().token_test1)
     # print(Handler().token_test2)
+    print(Projectapproval())
 
 
