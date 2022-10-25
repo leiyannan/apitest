@@ -552,3 +552,14 @@
 2022-10-19 20:14:09,439--test_resource.py--hanghao:62--INFO:添加失败-关键词为空：测试用例通过
 2022-10-19 20:14:09,648--test_resource.py--hanghao:62--INFO:添加失败-授权方式为空：测试用例通过
 2022-10-19 20:14:09,899--test_resource.py--hanghao:62--INFO:添加成功-授权方式为私有：测试用例通过
+2022-10-20 10:35:52,405--test_project_approval.py--hanghao:68--INFO:审核项目01-同意：测试用例通过
+2022-10-20 10:35:52,597--test_project_approval.py--hanghao:68--INFO:审核资源01-同意：测试用例通过
+2022-10-20 10:35:52,695--test_project_approval.py--hanghao:68--INFO:审核已审核过的项目：测试用例通过
+2022-10-20 10:35:52,780--test_project_approval.py--hanghao:68--INFO:审核已审核过的资源：测试用例通过
+2022-10-20 10:35:52,860--test_project_approval.py--hanghao:68--INFO:审核失败—type=3：测试用例通过
+2022-10-20 10:35:52,941--test_project_approval.py--hanghao:68--INFO:审核失败—类型为空：测试用例通过
+2022-10-20 10:35:53,015--test_project_approval.py--hanghao:68--INFO:审核失败—id为空：测试用例通过
+2022-10-20 10:35:53,101--test_project_approval.py--hanghao:68--INFO:审核失败—状态为空：测试用例通过
+2022-10-20 10:35:53,279--test_project_approval.py--hanghao:68--INFO:审核项目02-拒绝：测试用例通过
+2022-10-20 10:35:53,451--test_project_approval.py--hanghao:68--INFO:审核项目03-同意：测试用例通过
+2022-10-20 10:35:53,631--test_project_approval.py--hanghao:68--INFO:审核资源03-拒绝：测试用例通过
