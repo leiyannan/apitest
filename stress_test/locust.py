@@ -146,6 +146,7 @@ class UserBehavior_workflow1(TaskSet):
             print("模型返回失败")
 
 
+
 class WebSiteUser(HttpUser):
     host = "http://test1.primihub.com/prod-api"
     tasks = [UserBehavior_workflow1]
