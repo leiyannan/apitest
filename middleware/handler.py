@@ -361,8 +361,9 @@ def runTask_xgb():
         method="get",
         params=json.loads(data)
     )
+    xgb_taskId = resp["result"]["taskId"]
 
-    return resp
+    return xgb_taskId
 
 
 
