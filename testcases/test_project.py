@@ -60,14 +60,14 @@ class TestResource(unittest.TestCase):
         print(actual)
         expected_dict = eval(test_info["expected"])
         print(expected_dict)
-        # # 断言：code和msg
-        # try:
-        #     for key, value in expected_dict.items():
-        #         self.assertTrue(value == actual[key])
-        #     logger.info("{}：测试用例通过".format(test_info["title"]))
-        # except AssertionError as e:
-        #     logger.error("{}：测试用例无法通过：{}".format(test_info["title"],e))
-        #     raise e
+        # 断言：code和msg
+        try:
+            for key, value in expected_dict.items():
+                self.assertTrue(value == actual[key])
+            logger.info("{}：测试用例通过".format(test_info["title"]))
+        except AssertionError as e:
+            logger.error("{}：测试用例无法通过：{}".format(test_info["title"],e))
+            raise e
 
 
 if __name__ == '__main__':

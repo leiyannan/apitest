@@ -33,6 +33,8 @@ class TestLogin(unittest.TestCase):
         publicKeyName = result["publicKeyName"]
         return publicKeyName, publicKey
 
+
+
     @ddt.data(*test_data)
     def test_login(self,test_info):
         publicKeyName, publicKey = self.getkey()
