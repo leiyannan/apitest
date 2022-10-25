@@ -319,8 +319,6 @@ def saveModelAndComponent():
                              "output": {"cell": "38d66ca5-e0aa-436d-af0f-94a5f469eb21", "port": "port1"}}]},
               "timestamp": str(int(time.time())), "nonce": 853, "token": Handler().yaml["test"]["token"]}
 
-
-
     data02 = json.dumps(data02)
 
     if "#organId01#" in data02:
