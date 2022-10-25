@@ -103,75 +103,9 @@ class Handler():
         return getProjectDetails()[0]
 
 
-
-# def getkey_test1():
-#     key_url = "http://test1.primihub.com/prod-api/sys/common/getValidatePublicKey?timestamp=" + str(
-#             int(time.time())) + "&nonce=" + str(random.randint(0, 9))
-#     result = requests.get(key_url).json()["result"]
-#     publicKey = result["publicKey"]
-#     publicKeyName = result["publicKeyName"]
-#     pubKey = rsa.PublicKey.load_pkcs1_openssl_pem(key_str.format(publicKey).encode())
-#     passwd = Handler.yaml['user01']["userPassword"]
-#     cryptedMessage = rsa.encrypt(passwd.encode(encoding="utf-8"), pubKey)
-#     key_str_text = base64.b64encode(cryptedMessage)
-#
-#     return publicKeyName, key_str_text
-
-# def login_test1():
-#     """登录测试账号"""
-#     publicKeyName, key_str_text = getkey_test1()
-#     data1 = {"userAccount":Handler.yaml['user01']["userAccount"],
-#              "validateKeyName":publicKeyName,
-#              "timestamp":str(int(time.time())),
-#              "nonce":str(random.randint(0, 9)),
-#              "userPassword":key_str_text}
-#     res = requests_handler.visit(
-#         url=Handler.yaml["host1"]+"/sys/user/login",
-#         method="post",
-#         data=data1
-#     )
-#     # 提取token、
-#     token_test1 = res['result']['token']
-#     user_id_test1 = res["result"]["sysUser"]["userId"]
-#
-#     return {"token":token_test1,"user_id":user_id_test1}
-#
-#
-# def getkey_test2():
-#     key_url = "http://test2.primihub.com/prod-api/sys/common/getValidatePublicKey?timestamp=" + str(
-#             int(time.time())) + "&nonce=" + str(random.randint(0, 9))
-#     result = requests.get(key_url).json()["result"]
-#     publicKey = result["publicKey"]
-#     publicKeyName = result["publicKeyName"]
-#     pubKey = rsa.PublicKey.load_pkcs1_openssl_pem(key_str.format(publicKey).encode())
-#     passwd = Handler.yaml['user02']["userPassword"]
-#     cryptedMessage = rsa.encrypt(passwd.encode(encoding="utf-8"), pubKey)
-#     key_str_text = base64.b64encode(cryptedMessage)
-#
-#     return publicKeyName, key_str_text
-#
-# def login_test2():
-#     """登录测试账号"""
-#     publicKeyName, key_str_text = getkey_test2()
-#     data = {"userAccount":Handler.yaml['user02']["userAccount"],
-#              "validateKeyName":publicKeyName,
-#              "timestamp":str(int(time.time())),
-#              "nonce":str(random.randint(0, 9)),
-#              "userPassword":key_str_text}
-#     res = requests_handler.visit(
-#         url=Handler.yaml["host3"]+"/sys/user/login",
-#         method="post",
-#         data=data
-#     )
-#     # 提取token、
-#     token_test2 = res['result']['token']
-#     user_id_test2 = res["result"]["sysUser"]["userId"]
-#
-#     return {"token":token_test2,"user_id":user_id_test2}
-
 def add_resource01():
     # test1环境添加资源
-    data:str = '{"resourceName":"#resourceName#","resourceDesc":"ceasd","tags":["sdf"],"resourceSource":1,"resourceAuthType":1,"fileId":1210,"fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"y","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":#timestamp#,"nonce":248,"token":"#token#"}'
+    data:str = '{"resourceName":"#resourceName#","resourceDesc":"55555","tags":["555"],"resourceSource":1,"resourceAuthType":1,"fileId":1228,"fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"y","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"#timestamp#","nonce":691,"token":"#token#"}'
     if "#token#" in data:
         data = data.replace("#token#", Handler().yaml["test"]["token"])
     if "#timestamp#" in data:
@@ -291,7 +225,7 @@ def getProjectDetails():
 
 def Projectapproval():
     resultId,organId,pid01 = getProjectDetails()
-    data = '{"type":"#type#","id":"#id#","auditStatus":1,"auditOpinion":"审核项目","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+    data = '{"type":"#type#","id":"#id#","auditStatus":1,"auditOpinion":"审核项目&资源","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
     if "#token#" in data:
@@ -301,24 +235,134 @@ def Projectapproval():
     projectdata = projectdata.replace("#id#", str(organId))
     resourcedata = data.replace("#type#", str(2))
     resourcedata = resourcedata.replace("#id#", str(resultId))
-    print(projectdata)
-    print(resourcedata)
 
-    resp = requests_handler.visit(
+    resp01 = requests_handler.visit(
         url=Handler.yaml["host4"] + "/project/approval",
         method="post",
-        # headers=json.loads(test_info["header"]),
         data=json.loads(projectdata)
     )
-    resp = requests_handler.visit(
+    resp02 = requests_handler.visit(
         url=Handler.yaml["host4"] + "/project/approval",
         method="post",
-        # headers=json.loads(test_info["header"]),
         data=json.loads(resourcedata)
     )
 
-    return resp,pid01
+    return resp02,pid01
 
+def saveModelAndComponent():
+    projectId = Projectapproval()[1]
+    data = '{"param":{"projectId":"#projectId#","isDraft":0,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
+    if "#timestamp#" in data:
+        data = data.replace("#timestamp#", str(int(time.time())))
+    if "#projectId#" in data:
+        data = data.replace("#projectId#", str(projectId))
+    if "#token#" in data:
+        data = data.replace("#token#", Handler().yaml["test"]["token"])
+
+    resp = requests_handler.visit(
+        url=Handler.yaml["host2"] + "/model/saveModelAndComponent",
+        method="post",
+        json=json.loads(data)
+    )
+    modelId = resp["result"]["modelId"]
+
+    requests_data = '{"projectId":"#projectId#","organId":"#organId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+    if "#timestamp#" in requests_data:
+        requests_data = requests_data.replace("#timestamp#", str(int(time.time())))
+    if "#projectId#" in requests_data:
+        requests_data = requests_data.replace("#projectId#", str(projectId))
+    if "#token#" in requests_data:
+        requests_data = requests_data.replace("#token#", Handler().yaml["test"]["token"])
+
+    requests_data01 = requests_data.replace("#organId#", Handler().yaml["test"]["organId01"])
+    requests_data02 = requests_data.replace("#organId#", Handler().yaml["test"]["organId02"])
+
+    resourceId01 = requests_handler.visit(
+        url = Handler.yaml["host2"] + "/project/getProjectResourceData",
+        method="get",
+        params=json.loads(requests_data01)
+    )["result"][0]["resourceId"]
+
+    resourceId02 = requests_handler.visit(
+        url = Handler.yaml["host2"] + "/project/getProjectResourceData",
+        method="get",
+        params=json.loads(requests_data02)
+    )["result"][0]["resourceId"]
+
+    data02 = {"param": {"projectId": str(projectId), "modelId": str(modelId), "isDraft": 1, "modelComponents": [
+        {"frontComponentId": "495a09b3-4744-4058-9688-6772e5791de4", "coordinateX": 140.5, "coordinateY": 100,
+         "width": 120, "height": 40, "shape": "start-node", "componentCode": "start", "componentName": "开始",
+         "componentValues": [{"key": "taskName", "val": "纵向xgb任务"}, {"key": "taskDesc", "val": "纵向xgb任务描述"}],
+         "input": [], "output": [
+            {"frontComponentId": "0b838296-d584-48c2-acd0-9702eec0562e", "componentCode": "dataSet",
+             "componentName": "选择数据集", "portId": "port1", "pointType": "edge", "pointJson": ""}]},
+        {"frontComponentId": "0b838296-d584-48c2-acd0-9702eec0562e", "coordinateX": 170, "coordinateY": 260,
+         "width": 180, "height": 50, "shape": "dag-node", "componentCode": "dataSet", "componentName": "选择数据集",
+         "componentValues": [{"key": "selectData",
+                              "val": "[{\"organId\":\"#organId01#\",\"organName\":\"PrimiHub01\",\"resourceId\":\"#resourceId01#\",\"resourceName\":\"#resourceName01#\",\"resourceRowsCount\":50,\"resourceColumnCount\":7,\"resourceContainsY\":1,\"auditStatus\":1,\"participationIdentity\":1,\"fileHandleField\":[\"Class\",\"y\",\"x1\",\"x2\",\"x3\",\"x4\",\"x5\"],\"calculationField\":\"Class\"},{\"organId\":\"#organId02#\",\"organName\":\"PrimiHub02\",\"resourceId\":\"#resourceId02#\",\"resourceName\":\"#resourceName02#\",\"resourceRowsCount\":50,\"resourceColumnCount\":7,\"resourceContainsY\":0,\"auditStatus\":1,\"participationIdentity\":2,\"fileHandleField\":[\"x6\",\"x7\",\"x8\",\"x9\",\"x10\",\"x11\",\"x12\"],\"calculationField\":\"x6\"}]"}],
+         "input": [{"frontComponentId": "495a09b3-4744-4058-9688-6772e5791de4", "componentCode": "start",
+                    "componentName": "开始", "portId": "port2", "pointType": "edge", "pointJson": ""}], "output": [
+            {"frontComponentId": "38d66ca5-e0aa-436d-af0f-94a5f469eb21", "componentCode": "model",
+             "componentName": "模型选择", "portId": "port1", "pointType": "edge", "pointJson": ""}]},
+        {"frontComponentId": "38d66ca5-e0aa-436d-af0f-94a5f469eb21", "coordinateX": 60, "coordinateY": 420,
+         "width": 180, "height": 50, "shape": "dag-node", "componentCode": "model", "componentName": "模型选择",
+         "componentValues": [{"key": "modelType", "val": "2"}, {"key": "modelName", "val": "纵向xgb模型"},
+                             {"key": "modelDesc", "val": "纵向xgb模型描述"}, {"key": "arbiterOrgan", "val": ""}], "input": [
+            {"frontComponentId": "0b838296-d584-48c2-acd0-9702eec0562e", "componentCode": "dataSet",
+             "componentName": "选择数据集", "portId": "port2", "pointType": "edge", "pointJson": ""}], "output": []}],
+                        "modelPointComponents": [
+                            {"frontComponentId": "1148b089-b45f-4d53-bdc3-bfd0c02f8b4e", "shape": "edge",
+                             "input": {"cell": "495a09b3-4744-4058-9688-6772e5791de4", "port": "port2"},
+                             "output": {"cell": "0b838296-d584-48c2-acd0-9702eec0562e", "port": "port1"}},
+                            {"frontComponentId": "1e0604de-73cc-4a27-b05f-2c8acdca7cc2", "shape": "edge",
+                             "input": {"cell": "0b838296-d584-48c2-acd0-9702eec0562e", "port": "port2"},
+                             "output": {"cell": "38d66ca5-e0aa-436d-af0f-94a5f469eb21", "port": "port1"}}]},
+              "timestamp": str(int(time.time())), "nonce": 853, "token": Handler().yaml["test"]["token"]}
+
+
+
+    data02 = json.dumps(data02)
+
+    if "#organId01#" in data02:
+        data02 = data02.replace("#organId01#", Handler().yaml["test"]["organId01"])
+    if "#resourceId01#" in data02:
+        data02 = data02.replace("#resourceId01#", resourceId01)
+    if "#resourceName01#" in data02:
+        data02 = data02.replace("#resourceName01#", Handler().yaml["test_name"]["resourceName01"])
+    if "#organId02#" in data02:
+        data02 = data02.replace("#organId02#", Handler().yaml["test"]["organId02"])
+    if "#resourceId02#" in data02:
+        data02 = data02.replace("#resourceId02#", resourceId02)
+    if "#resourceName02#" in data02:
+        data02 = data02.replace("#resourceName02#", Handler().yaml["test_name"]["resourceName02"])
+    print(data02)
+
+
+    resp = requests_handler.visit(
+        url=Handler.yaml["host2"] + "/model/saveModelAndComponent",
+        method="post",
+        json=json.loads(data02)
+    )
+    modelId = resp["result"]["modelId"]
+
+    return modelId
+
+def runTask_xgb():
+    modelId = saveModelAndComponent()
+    data = '{"modelId":"#modelId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+    if "#timestamp#" in data:
+        data = data.replace("#timestamp#", str(int(time.time())))
+    if "#modelId#" in data:
+        data = data.replace("#modelId#", str(modelId))
+    if "#token#" in data:
+        data = data.replace("#token#", Handler().yaml["test"]["token"])
+    resp = requests_handler.visit(
+        url=Handler.yaml["host2"] + "/model/runTaskModel",
+        method="get",
+        params=json.loads(data)
+    )
+
+    return resp
 
 
 
@@ -335,16 +379,18 @@ if __name__ == "__main__":
     # print(Handler().projectId)
     #print(Handler().resourceFusionId01)
     #print(Handler().resourceFusionId02)
-    print(add_project())
+    # print(add_project())
     #print(getprojectlist())
     #print(getProjectDetails())
     # print(add_resource())
     #print(Handler().projectId)
 
-    # 测试登录函数，由于登录加入滑动图片验证码，且错误率高，则使用万能token
+    # 测试登录函数，由于登录加入滑动图片验证码认证错误率高，则使用万能token
     # print(login())
     # print(Handler().token_test1)
     # print(Handler().token_test2)
     # print(Projectapproval())
+    # print(saveModelAndComponent())
+    print(runTask_xgb())
 
 
