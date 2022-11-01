@@ -36,13 +36,13 @@ class TestResource(unittest.TestCase):
         if "#token#" in data:
             data = data.replace("#token#", env_data.yaml["test"]["token"])
         if "#serverAddress#" in data:
-            data = data.replace("#serverAddress#", env_data.yaml["test"]["serverAddress"])
+            data = data.replace("#serverAddress#", env_data.socketserver)
         if "#projectName01#" in data:
             data = data.replace("#projectName01#", env_data.yaml["test_name"]["projectName01"])
         if "#organId01#" in data:
-            data = data.replace("#organId01#", env_data.yaml["test"]["organId01"])
+            data = data.replace("#organId01#", env_data.organId01)
         if "#organId02#" in data:
-            data = data.replace("#organId02#", env_data.yaml["test"]["organId02"])
+            data = data.replace("#organId02#", env_data.organId02)
         if "#resourceFusionId01#" in data:
             data = data.replace("#resourceFusionId01#", str(self.resourceId01))
         if "#resourceFusionId02#" in data:
@@ -52,7 +52,7 @@ class TestResource(unittest.TestCase):
 
 
         actual = requests_handler.visit(
-            url=env_data.yaml["host2"] + test_info["url"],
+            url=env_data.yaml["host1"] + test_info["url"],
             method=test_info["method"],
             headers=json.loads(test_info["header"]),
             json=json.loads(data)

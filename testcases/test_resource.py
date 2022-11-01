@@ -11,6 +11,8 @@ logger = Handler.logger
 env_data = Handler()
 test_data = Handler.excel.read_data("resource")
 
+
+
 @ddt.ddt
 class TestResource(unittest.TestCase):
 
@@ -19,6 +21,7 @@ class TestResource(unittest.TestCase):
         # cls.token = yaml["test"]["token"]
         # cls.userid = yaml["test"]["userid"]
         cls.resourceId = env_data.resourceId01
+        cls.fieldList = env_data.fieldList
 
     def setUp(self) -> None:
         self.db = env_data.db_class()
@@ -33,6 +36,12 @@ class TestResource(unittest.TestCase):
         if "#token#" in data:
             data = data.replace("#token#",env_data.yaml["test"]["token"])
 
+        if "#fileId01#" in data:
+            data = data.replace("#fileId01#",env_data.yaml["test"]["fileId01"])
+
+        if "#fieldList#" in data:
+            data = data.replace("#fieldList#",self.fieldList)
+
         if "#timestamp#" in data:
             data = data.replace("#timestamp#",str(int(time.time())))
 
@@ -45,12 +54,12 @@ class TestResource(unittest.TestCase):
         #         one=False
         #     )
         #     print(len(before_resource))
+        print(data)
 
 
         actual = requests_handler.visit(
-            url=env_data.yaml["host2"] + test_info["url"],
+            url=env_data.yaml["host1"] + test_info["url"],
             method=test_info["method"],
-            #headers=json.loads(test_info["header"]),
             json=json.loads(data)
         )
         print(actual)

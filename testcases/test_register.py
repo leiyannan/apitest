@@ -1,14 +1,17 @@
+import os
 import random
 import time
 import unittest
 import ddt
 
-from common import requests_handler
+from common import requests_handler, yaml_handler
 from middleware.handler import Handler,MysqlHandlerMid
+from config import config
 
 # 初始化数据
 logger = Handler.logger
 test_data = Handler.excel.read_data("register")
+yaml = yaml_handler.read_yaml(os.path.join(config.CONFIG_PATH, "config.yaml"))
 
 @ddt.ddt
 class TestRegister(unittest.TestCase):
@@ -21,13 +24,13 @@ class TestRegister(unittest.TestCase):
             test_info["data"] = test_info['data'].replace("#phone#",phone)
 
         data = eval(test_info["data"])
-        # print(data)
+
         # data.update(Handler.add_params)
         data["timestamp"] = str(int(time.time()))
         data["nonce"] = str(random.randint(0, 9))
         # 访问接口
         actual = requests_handler.visit(
-            url=test_info["url"],
+            url=yaml["host1"] + test_info["url"],
             method=test_info["method"],
             data=data,
         )
@@ -54,14 +57,6 @@ class TestRegister(unittest.TestCase):
             logger.error("{}：测试用例无法通过：{}".format(test_info["title"],e))
             raise e
 
-            # if actual["code"] == 0:
-            #     # 如果注册成功，数据库当代中需要有这个手机号码的记录
-            #     db = MysqlHandlerMid()
-            #     # 查询数据库当中有没有插入账号注册成功的记录
-            #     sql_code = "select * from privacy_test1.sys_user where user_account={};".format(data["userAccount"])
-            #     user = db.query(sql_code)
-            #         # 测试通过
-            #     self.assertTrue(user)
 
 
     def random_phone(self):

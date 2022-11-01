@@ -69,6 +69,11 @@ class Handler():
         return add_resource01()["resourceFusionId01"]
 
     @property
+    def fieldList(self):
+        # test1本地资源
+        return getdataresource()
+
+    @property
     def resourceId02(self):
         # test2本地资源ID
         return add_resource01()["resourceId02"]
@@ -98,40 +103,140 @@ class Handler():
         # test1本地项目id
         return getProjectDetails()[0]
 
+    @property
+    def organId01(self):
+        # test1机构id
+        return getLocalOrganInfo()[0]
+
+    @property
+    def organName01(self):
+        # test1机构名称
+        return getLocalOrganInfo()[1]
+
+    @property
+    def socketserver(self):
+        # test1中心节点
+        return getLocalOrganInfo()[2]
+
+    @property
+    def organId02(self):
+        # test1机构id
+        return getLocalOrganInfo()[3]
+
+    @property
+    def organName02(self):
+        # test1机构名称
+        return getLocalOrganInfo()[4]
+
+    @property
+    def organId03(self):
+        # test1机构id
+        return getLocalOrganInfo()[5]
+
+    @property
+    def organName03(self):
+        # test1机构名称
+        return getLocalOrganInfo()[6]
+
+
+def getLocalOrganInfo():
+    #获取当前环境的机构ID级中心节点地址
+    data = '{"timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+    if "#token#" in data:
+        data = data.replace("#token#", Handler().yaml["test"]["token"])
+    if "#timestamp#" in data:
+        data = data.replace("#timestamp#", str(int(time.time())))
+    resp01 = requests_handler.visit(
+        url=Handler.yaml["host1"] + "/sys/organ/getLocalOrganInfo",
+        method="get",
+        # headers=json.loads(test_info["header"]),
+        params=json.loads(data)
+    )
+    organId01 = resp01["result"]["sysLocalOrganInfo"]["organId"]
+    organName01 = resp01["result"]["sysLocalOrganInfo"]["organName"]
+    socketserver = resp01["result"]["sysLocalOrganInfo"]["fusionList"][0]["serverAddress"]
+
+    resp02 = requests_handler.visit(
+        url=Handler.yaml["host2"] + "/sys/organ/getLocalOrganInfo",
+        method="get",
+        # headers=json.loads(test_info["header"]),
+        params=json.loads(data)
+    )
+    organId02 = resp02["result"]["sysLocalOrganInfo"]["organId"]
+    organName02 = resp02["result"]["sysLocalOrganInfo"]["organName"]
+
+    resp03 = requests_handler.visit(
+        url=Handler.yaml["host3"] + "/sys/organ/getLocalOrganInfo",
+        method="get",
+        # headers=json.loads(test_info["header"]),
+        params=json.loads(data)
+    )
+    organId03 = resp03["result"]["sysLocalOrganInfo"]["organId"]
+    organName03 = resp03["result"]["sysLocalOrganInfo"]["organName"]
+
+    return organId01,organName01,socketserver,organId02,organName02,organId03,organName03
 
 def add_resource01():
     # test1环境添加资源
-    data:str = '{"resourceName":"#resourceName#","resourceDesc":"55555","tags":["555"],"resourceSource":1,"resourceAuthType":1,"fileId":1228,"fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"y","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"#timestamp#","nonce":691,"token":"#token#"}'
+    data:str = '{"resourceName":"#resourceName#","resourceDesc":"55555","tags":["555"],"resourceSource":1,"resourceAuthType":1,"fileId":"#fileId01#","fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"y","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"#timestamp#","nonce":691,"token":"#token#"}'
     if "#token#" in data:
         data = data.replace("#token#", Handler().yaml["test"]["token"])
+    if "#fileId01#" in data:
+        data = data.replace("#fileId01#", Handler().yaml["test"]["fileId01"])
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
     if "#resourceName#" in data:
         data = data.replace("#resourceName#", Handler().yaml["test_name"]["resourceName01"])
 
     resp = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/resource/saveorupdateresource",
+        url=Handler.yaml["host1"] + "/data/resource/saveorupdateresource",
         method="post",
         # headers=json.loads(test_info["header"]),
         json=json.loads(data)
     )
+    print(resp)
     resourceId01 = resp["result"]["resourceId"]
     resourceFusionId01 = resp["result"]["resourceFusionId"]
     print(resourceFusionId01)
     return {"resourceId01":resourceId01, "resourceFusionId01":resourceFusionId01}
 
-def add_resource02():
-    # test2环境添加资源
-    data:str = '{"resourceName":"#resourceName#","resourceDesc":"资源描述","tags":["test"],"resourceSource":1,"resourceAuthType":1,"fileId":1159,"fieldList":[{"fieldId":null,"fieldName":"x6","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x7","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x8","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x9","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x10","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x11","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x12","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"#timestamp#","nonce":212,"token":"#token#"}'
+def getdataresource():
+
+    data = '{"resourceId":"#resourceId#","timestamp":"#timestamp#","nonce":622,"token":"#token#"}'
     if "#token#" in data:
         data = data.replace("#token#", Handler().yaml["test"]["token"])
+    if "#timestamp#" in data:
+        data = data.replace("#timestamp#", str(int(time.time())))
+    if "#resourceId#" in data:
+        data = data.replace("#resourceId#", str(Handler().resourceId01))
+    resp = requests_handler.visit(
+        url=Handler.yaml["host1"] + "/data/resource/getdataresource",
+        method="get",
+        # headers=json.loads(test_info["header"]),
+        params=json.loads(data)
+    )
+    fieldList = resp["result"]["fieldList"]
+    for line in fieldList:
+        del line["createDate"]
+        del line["fieldAs"]
+    fieldList = str(fieldList).replace("'", '"').replace("False", "0").replace("None", "null").replace(" ", "")
+    return fieldList
+
+
+def add_resource02():
+    # test2环境添加资源
+    data:str = '{"resourceName":"#resourceName#","resourceDesc":"资源描述","tags":["test"],"resourceSource":1,"resourceAuthType":1,"fileId":"#fileId02#","fieldList":[{"fieldId":null,"fieldName":"x6","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x7","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x8","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x9","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x10","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x11","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x12","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"#timestamp#","nonce":212,"token":"#token#"}'
+    if "#token#" in data:
+        data = data.replace("#token#", Handler().yaml["test"]["token"])
+    if "#fileId02#" in data:
+        data = data.replace("#fileId02#", Handler().yaml["test"]["fileId02"])
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
     if "#resourceName#" in data:
         data = data.replace("#resourceName#", Handler().yaml["test_name"]["resourceName02"])
 
     resp = requests_handler.visit(
-        url=Handler.yaml["host4"] + "/resource/saveorupdateresource",
+        url=Handler.yaml["host2"] + "/data/resource/saveorupdateresource",
         method="post",
         # headers=json.loads(test_info["header"]),
         json=json.loads(data)
@@ -147,13 +252,13 @@ def add_project():
     if "#token#" in data:
         data = data.replace("#token#", Handler().yaml["test"]["token"])
     if "#serverAddress#" in data:
-        data = data.replace("#serverAddress#", Handler().yaml["test"]["serverAddress"])
+        data = data.replace("#serverAddress#", str(Handler().socketserver))
     if "#projectName01#" in data:
         data = data.replace("#projectName01#", Handler().yaml["test_name"]["projectName01"])
     if "#organId01#" in data:
-        data = data.replace("#organId01#", Handler().yaml["test"]["organId01"])
+        data = data.replace("#organId01#", str(Handler().organId01))
     if "#organId02#" in data:
-        data = data.replace("#organId02#", Handler().yaml["test"]["organId02"])
+        data = data.replace("#organId02#", str(Handler().organId02))
     if "#resourceFusionId01#" in data:
         data = data.replace("#resourceFusionId01#", str(Handler().resourceFusionId01))
     if "#resourceFusionId02#" in data:
@@ -162,7 +267,7 @@ def add_project():
         data = data.replace("#timestamp#", str(int(time.time())))
     print(data)
     resp = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/project/saveOrUpdateProject",
+        url=Handler.yaml["host1"] + "/data/project/saveOrUpdateProject",
         method="post",
         # headers=json.loads(test_info["header"]),
         json=json.loads(data)
@@ -183,7 +288,7 @@ def getprojectlist():
     print(data)
 
     resp = requests_handler.visit(
-        url=Handler.yaml["host4"] + "/project/getProjectList",
+        url=Handler.yaml["host2"] + "/data/project/getProjectList",
         method="get",
         # headers=json.loads(test_info["header"]),
         params=json.loads(data)
@@ -209,7 +314,7 @@ def getProjectDetails():
         data = data.replace("#token#", Handler().yaml["test"]["token"])
 
     resp = requests_handler.visit(
-        url=Handler.yaml["host4"] + "/project/getProjectDetails",
+        url=Handler.yaml["host2"] + "/data/project/getProjectDetails",
         method="get",
         # headers=json.loads(test_info["header"]),
         params=json.loads(data)
@@ -233,12 +338,12 @@ def Projectapproval():
     resourcedata = resourcedata.replace("#id#", str(resultId))
 
     resp01 = requests_handler.visit(
-        url=Handler.yaml["host4"] + "/project/approval",
+        url=Handler.yaml["host2"] + "/data/project/approval",
         method="post",
         data=json.loads(projectdata)
     )
     resp02 = requests_handler.visit(
-        url=Handler.yaml["host4"] + "/project/approval",
+        url=Handler.yaml["host2"] + "/data/project/approval",
         method="post",
         data=json.loads(resourcedata)
     )
@@ -256,7 +361,7 @@ def saveModelAndComponent():
         data = data.replace("#token#", Handler().yaml["test"]["token"])
 
     resp = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/model/saveModelAndComponent",
+        url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
         method="post",
         json=json.loads(data)
     )
@@ -270,17 +375,17 @@ def saveModelAndComponent():
     if "#token#" in requests_data:
         requests_data = requests_data.replace("#token#", Handler().yaml["test"]["token"])
 
-    requests_data01 = requests_data.replace("#organId#", Handler().yaml["test"]["organId01"])
-    requests_data02 = requests_data.replace("#organId#", Handler().yaml["test"]["organId02"])
+    requests_data01 = requests_data.replace("#organId#", str(Handler().organId01))
+    requests_data02 = requests_data.replace("#organId#", str(Handler().organId02))
 
     resourceId01 = requests_handler.visit(
-        url = Handler.yaml["host2"] + "/project/getProjectResourceData",
+        url = Handler.yaml["host1"] + "/data/project/getProjectResourceData",
         method="get",
         params=json.loads(requests_data01)
     )["result"][0]["resourceId"]
 
     resourceId02 = requests_handler.visit(
-        url = Handler.yaml["host2"] + "/project/getProjectResourceData",
+        url = Handler.yaml["host1"] + "/data/project/getProjectResourceData",
         method="get",
         params=json.loads(requests_data02)
     )["result"][0]["resourceId"]
@@ -318,13 +423,13 @@ def saveModelAndComponent():
     data02 = json.dumps(data02)
 
     if "#organId01#" in data02:
-        data02 = data02.replace("#organId01#", Handler().yaml["test"]["organId01"])
+        data02 = data02.replace("#organId01#", str(Handler().organId01))
     if "#resourceId01#" in data02:
         data02 = data02.replace("#resourceId01#", resourceId01)
     if "#resourceName01#" in data02:
         data02 = data02.replace("#resourceName01#", Handler().yaml["test_name"]["resourceName01"])
     if "#organId02#" in data02:
-        data02 = data02.replace("#organId02#", Handler().yaml["test"]["organId02"])
+        data02 = data02.replace("#organId02#", str(Handler().organId02))
     if "#resourceId02#" in data02:
         data02 = data02.replace("#resourceId02#", resourceId02)
     if "#resourceName02#" in data02:
@@ -333,7 +438,7 @@ def saveModelAndComponent():
 
 
     resp = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/model/saveModelAndComponent",
+        url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
         method="post",
         json=json.loads(data02)
     )
@@ -351,13 +456,15 @@ def runTask_xgb():
     if "#token#" in data:
         data = data.replace("#token#", Handler().yaml["test"]["token"])
     resp = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/model/runTaskModel",
+        url=Handler.yaml["host1"] + "/data/model/runTaskModel",
         method="get",
         params=json.loads(data)
     )
     xgb_taskId = resp["result"]["taskId"]
 
     return xgb_taskId
+
+
 
 
 
@@ -374,18 +481,27 @@ if __name__ == "__main__":
     # print(Handler().projectId)
     #print(Handler().resourceFusionId01)
     #print(Handler().resourceFusionId02)
-    # print(add_project())
+
+    #print(getLocalOrganInfo())
+    # print(Handler().organId01)
+    # print(Handler().organId02)
+    # print(Handler().organId03)
+    # print(Handler().socketserver)
+    #print(add_resource01())
+    #print(add_resource02())
+    #print(add_project())
     #print(getprojectlist())
     #print(getProjectDetails())
-    # print(add_resource())
-    #print(Handler().projectId)
-
-    # 测试登录函数，由于登录加入滑动图片验证码认证错误率高，则使用万能token
-    # print(login())
-    # print(Handler().token_test1)
-    # print(Handler().token_test2)
-    # print(Projectapproval())
-    # print(saveModelAndComponent())
+    #print(Projectapproval())
+    #print(saveModelAndComponent())
     print(runTask_xgb())
+    #print(getdataresource())
+    #print(Handler().fieldList)
+    #print(getLocalOrganInfo())
+
+
+
+
+
 
 

@@ -53,7 +53,7 @@ class TestResource(unittest.TestCase):
 
 
         actual = requests_handler.visit(
-            url=env_data.yaml["host4"] + test_info["url"],
+            url=env_data.yaml["host2"] + test_info["url"],
             method=test_info["method"],
             # headers=json.loads(test_info["header"]),
             data=json.loads(data)

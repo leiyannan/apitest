@@ -26,16 +26,13 @@ user02:
 test:
   token: "excalibur_forever_ABCDEFGHIJKLMN"
   userid: "1"
-  organId01: "db540d4b-3ace-406d-9b10-ece67278c395"
-  organId02: "2cad8338-2e8c-4768-904d-2b598a7e3298"
-  organId03: "5c11d9dc-7d39-4d76-95fb-5f8da28388f4"
-  serverAddress: "http://fusion.primihub.svc.cluster.local:8080/"
+  fileId01: "1"
+  fileId02: "1"
 
-host1: http://test1.primihub.com/prod-api
-host2: http://test1.primihub.com/prod-api/data
+host1: http://172.21.3.16:30811/prod-api
+host2: http://172.21.3.59:30811/prod-api
+host3: http://172.21.3.108:30811/prod-api
 
-host3: http://test2.primihub.com/prod-api
-host4: http://test2.primihub.com/prod-api/data
 
 test_name:
   resourceName01: "test1-的新资源"
