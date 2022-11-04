@@ -88,62 +88,62 @@ class UserBehavior_workflow1(TaskSet):
     #     else:
     #         print("pir返回失败")
 
-    # # psi任务
-    # @task(4)
-    # def psi(self):
-    #     # 构造测试数据
-    #     token = self.test_login()
-    #     psi_url = "/data/psi/saveDataPsi"
-    #     data = {
-    #         "ownOrganId": "8bf56ee6-b004-4ada-b078-591acb22b324",
-    #         "ownResourceId": 60,
-    #         "ownKeyword": "guaranteetype",
-    #         "otherOrganId": "2cad8338-2e8c-4768-904d-2b598a7e3298",
-    #         "otherResourceId": "2b598a7e3298-a56a37fa-0456-400e-bd5d-3a1390418b0c",
-    #         "otherKeyword": "guaranteetype",
-    #         "outputFormat": "0",
-    #         "outputFilePathType": "0",
-    #         "outputContent": "0",
-    #         "resultOrgan[0]": "8bf56ee6-b004-4ada-b078-591acb22b324",
-    #         "resultOrganIds": "8bf56ee6-b004-4ada-b078-591acb22b324",
-    #         "outputNoRepeat": "0",
-    #         "resultName": "testpsi-testpsi",
-    #         "remarks": '描述',
-    #         "serverAddress": "http://fusion.primihub.svc.cluster.local:8080/",
-    #         "psiTag":'0',
-    #         "ownOrganName": "test1",
-    #         "otherOrganName": "test2",
-    #         "timestamp": str(int(time.time())),
-    #         "nonce": str(random.randint(0, 9)),
-    #         "token": token
-    #     }
-    #     # assert isinstance(self.client.get(psi_url, data).json, object)
-    #     res = self.client.post(psi_url, data).json()
-    #     loc = res["code"]
-    #     if loc == 0:
-    #         print("psi返回成功")
-    #     else:
-    #         print("psi返回失败")
-
-    # tasks = {test_login: 2, test_search: 3, test_reg: 1}
-
-    # mid任务
+    # psi任务
     @task(4)
-    def mid(self):
+    def psi(self):
+        # 构造测试数据
         token = self.test_login()
+        psi_url = "/data/psi/saveDataPsi"
         data = {
-            "taskId": 109,
+            "ownOrganId": "8bf56ee6-b004-4ada-b078-591acb22b324",
+            "ownResourceId": 60,
+            "ownKeyword": "guaranteetype",
+            "otherOrganId": "2cad8338-2e8c-4768-904d-2b598a7e3298",
+            "otherResourceId": "2b598a7e3298-a56a37fa-0456-400e-bd5d-3a1390418b0c",
+            "otherKeyword": "guaranteetype",
+            "outputFormat": "0",
+            "outputFilePathType": "0",
+            "outputContent": "0",
+            "resultOrgan[0]": "8bf56ee6-b004-4ada-b078-591acb22b324",
+            "resultOrganIds": "8bf56ee6-b004-4ada-b078-591acb22b324",
+            "outputNoRepeat": "0",
+            "resultName": "testpsi-testpsi",
+            "remarks": '描述',
+            "serverAddress": "http://fusion.primihub.svc.cluster.local:8080/",
+            "psiTag":'0',
+            "ownOrganName": "test1",
+            "otherOrganName": "test2",
             "timestamp": str(int(time.time())),
             "nonce": str(random.randint(0, 9)),
             "token": token
         }
-        mid_url = "/data/model/restartTaskModel"
-        res = self.client.get(mid_url, params=data).json()
+        # assert isinstance(self.client.get(psi_url, data).json, object)
+        res = self.client.post(psi_url, data).json()
         loc = res["code"]
         if loc == 0:
-            print("模型返回成功")
+            print("psi返回成功")
         else:
-            print("模型返回失败")
+            print("psi返回失败")
+
+    # tasks = {test_login: 2, test_search: 3, test_reg: 1}
+
+    # mid任务
+    # @task(4)
+    # def mid(self):
+    #     token = self.test_login()
+    #     data = {
+    #         "taskId": 109,
+    #         "timestamp": str(int(time.time())),
+    #         "nonce": str(random.randint(0, 9)),
+    #         "token": token
+    #     }
+    #     mid_url = "/data/model/restartTaskModel"
+    #     res = self.client.get(mid_url, params=data).json()
+    #     loc = res["code"]
+    #     if loc == 0:
+    #         print("模型返回成功")
+    #     else:
+    #         print("模型返回失败")
 
 
 

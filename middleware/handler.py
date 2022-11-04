@@ -1,9 +1,11 @@
-
+import base64
 import json
 import os
-
 import time
+import random
 
+import requests
+import rsa
 from pymysql.cursors import DictCursor
 
 from common import yaml_handler, excel_handler, logging_handler,requests_handler
@@ -400,7 +402,7 @@ def saveModelAndComponent():
         {"frontComponentId": "0b838296-d584-48c2-acd0-9702eec0562e", "coordinateX": 170, "coordinateY": 260,
          "width": 180, "height": 50, "shape": "dag-node", "componentCode": "dataSet", "componentName": "选择数据集",
          "componentValues": [{"key": "selectData",
-                              "val": "[{\"organId\":\"#organId01#\",\"organName\":\"PrimiHub01\",\"resourceId\":\"#resourceId01#\",\"resourceName\":\"#resourceName01#\",\"resourceRowsCount\":50,\"resourceColumnCount\":7,\"resourceContainsY\":1,\"auditStatus\":1,\"participationIdentity\":1,\"fileHandleField\":[\"Class\",\"y\",\"x1\",\"x2\",\"x3\",\"x4\",\"x5\"],\"calculationField\":\"Class\"},{\"organId\":\"#organId02#\",\"organName\":\"PrimiHub02\",\"resourceId\":\"#resourceId02#\",\"resourceName\":\"#resourceName02#\",\"resourceRowsCount\":50,\"resourceColumnCount\":7,\"resourceContainsY\":0,\"auditStatus\":1,\"participationIdentity\":2,\"fileHandleField\":[\"x6\",\"x7\",\"x8\",\"x9\",\"x10\",\"x11\",\"x12\"],\"calculationField\":\"x6\"}]"}],
+                              "val": "[{\"organId\":\"#organId01#\",\"organName\":\"#organName01#\",\"resourceId\":\"#resourceId01#\",\"resourceName\":\"#resourceName01#\",\"resourceRowsCount\":50,\"resourceColumnCount\":7,\"resourceContainsY\":1,\"auditStatus\":1,\"participationIdentity\":1,\"fileHandleField\":[\"Class\",\"y\",\"x1\",\"x2\",\"x3\",\"x4\",\"x5\"],\"calculationField\":\"Class\"},{\"organId\":\"#organId02#\",\"organName\":\"#organName02#\",\"resourceId\":\"#resourceId02#\",\"resourceName\":\"#resourceName02#\",\"resourceRowsCount\":50,\"resourceColumnCount\":7,\"resourceContainsY\":0,\"auditStatus\":1,\"participationIdentity\":2,\"fileHandleField\":[\"x6\",\"x7\",\"x8\",\"x9\",\"x10\",\"x11\",\"x12\"],\"calculationField\":\"x6\"}]"}],
          "input": [{"frontComponentId": "495a09b3-4744-4058-9688-6772e5791de4", "componentCode": "start",
                     "componentName": "开始", "portId": "port2", "pointType": "edge", "pointJson": ""}], "output": [
             {"frontComponentId": "38d66ca5-e0aa-436d-af0f-94a5f469eb21", "componentCode": "model",
@@ -424,12 +426,16 @@ def saveModelAndComponent():
 
     if "#organId01#" in data02:
         data02 = data02.replace("#organId01#", str(Handler().organId01))
+    if "#organName01#" in data02:
+        data02 = data02.replace("#organName01#", str(Handler().organName01))
     if "#resourceId01#" in data02:
         data02 = data02.replace("#resourceId01#", resourceId01)
     if "#resourceName01#" in data02:
         data02 = data02.replace("#resourceName01#", Handler().yaml["test_name"]["resourceName01"])
     if "#organId02#" in data02:
         data02 = data02.replace("#organId02#", str(Handler().organId02))
+    if "#organName02#" in data02:
+        data02 = data02.replace("#organName02#", str(Handler().organName02))
     if "#resourceId02#" in data02:
         data02 = data02.replace("#resourceId02#", resourceId02)
     if "#resourceName02#" in data02:
@@ -465,7 +471,73 @@ def runTask_xgb():
     return xgb_taskId
 
 
-
+# 登录，获取登录token及用户ID
+# def getkey_test1():
+#     key_url = "http://test1.primihub.com/prod-api/sys/common/getValidatePublicKey?timestamp=" + str(
+#             int(time.time())) + "&nonce=" + str(random.randint(0, 9))
+#     result = requests.get(key_url).json()["result"]
+#     publicKey = result["publicKey"]
+#     publicKeyName = result["publicKeyName"]
+#     pubKey = rsa.PublicKey.load_pkcs1_openssl_pem(key_str.format(publicKey).encode())
+#     passwd ="123456" # Handler.yaml['user01']["userPassword"]
+#     cryptedMessage = rsa.encrypt(passwd.encode(encoding="utf-8"), pubKey)
+#     key_str_text = base64.b64encode(cryptedMessage)
+#
+#     return publicKeyName, key_str_text
+#
+# def login_test1():
+#     """登录测试账号"""
+#     publicKeyName, key_str_text = getkey_test1()
+#     data1 = {"userAccount":"test",# Handler.yaml['user01']["userAccount"]
+#              "validateKeyName":publicKeyName,
+#              "timestamp":str(int(time.time())),
+#              "nonce":str(random.randint(0, 9)),
+#              "userPassword":key_str_text
+#              }
+#     res = requests_handler.visit(
+#         url=Handler.yaml["host1"]+"/sys/user/login",
+#         method="post",
+#         data=data1
+#     )
+#     # 提取token、
+#     print(res)
+#     token_test1 = res['result']['token']
+#     user_id_test1 = res["result"]["sysUser"]["userId"]
+#
+#     return {"token":token_test1,"user_id":user_id_test1}
+#
+#
+# def getkey_test2():
+#     key_url = "http://test2.primihub.com/prod-api/sys/common/getValidatePublicKey?timestamp=" + str(
+#             int(time.time())) + "&nonce=" + str(random.randint(0, 9))
+#     result = requests.get(key_url).json()["result"]
+#     publicKey = result["publicKey"]
+#     publicKeyName = result["publicKeyName"]
+#     pubKey = rsa.PublicKey.load_pkcs1_openssl_pem(key_str.format(publicKey).encode())
+#     passwd = Handler.yaml['user02']["userPassword"]
+#     cryptedMessage = rsa.encrypt(passwd.encode(encoding="utf-8"), pubKey)
+#     key_str_text = base64.b64encode(cryptedMessage)
+#
+#     return publicKeyName, key_str_text
+#
+# def login_test2():
+#     """登录测试账号"""
+#     publicKeyName, key_str_text = getkey_test2()
+#     data = {"userAccount":Handler.yaml['user02']["userAccount"],
+#              "validateKeyName":publicKeyName,
+#              "timestamp":str(int(time.time())),
+#              "nonce":str(random.randint(0, 9)),
+#              "userPassword":key_str_text}
+#     res = requests_handler.visit(
+#         url=Handler.yaml["host3"]+"/sys/user/login",
+#         method="post",
+#         data=data
+#     )
+#     # 提取token、
+#     token_test2 = res['result']['token']
+#     user_id_test2 = res["result"]["sysUser"]["userId"]
+#
+#     return {"token":token_test2,"user_id":user_id_test2}
 
 
 if __name__ == "__main__":
@@ -481,6 +553,8 @@ if __name__ == "__main__":
     # print(Handler().projectId)
     #print(Handler().resourceFusionId01)
     #print(Handler().resourceFusionId02)
+    #print(getkey_test1())
+    #print(login_test1())
 
     #print(getLocalOrganInfo())
     # print(Handler().organId01)
@@ -494,10 +568,11 @@ if __name__ == "__main__":
     #print(getProjectDetails())
     #print(Projectapproval())
     #print(saveModelAndComponent())
-    print(runTask_xgb())
     #print(getdataresource())
     #print(Handler().fieldList)
     #print(getLocalOrganInfo())
+    print(runTask_xgb())
+
 
 
 
