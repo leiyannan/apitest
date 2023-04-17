@@ -46,7 +46,7 @@ class TestResource(unittest.TestCase):
         if "#resourceFusionId01#" in data:
             data = data.replace("#resourceFusionId01#", str(self.resourceId01))
         if "#resourceFusionId02#" in data:
-            data = data.replace("#resourceFusionId02#", str(self.resourceId02))
+            data = data.replace("#resourceFusionId02#", str(self.resourceId01))
         if "#timestamp#" in data:
             data = data.replace("#timestamp#", str(int(time.time())))
 

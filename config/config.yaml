@@ -9,8 +9,8 @@ logger:
   file_level: "INFO"
 
 db:
-  host: "118.190.39.100"
-  port: 27936
+  host: "192.168.99.13"
+  port: 30306
   user: "primihub"
   password: "primihub@123"
   charset: "utf8"
@@ -27,11 +27,11 @@ test:
   token: "excalibur_forever_ABCDEFGHIJKLMN"
   userid: "1"
   fileId01: "1351"
-  fileId02: "1350"
+  fileId02: "1159"
 
-host1: https://node1.primihub.com/prod-api
-host2: https://node2.primihub.com/prod-api
-host3: https://node3.primihub.com/prod-api
+host1: http://test1.primihub.com/prod-api
+host2: http://test2.primihub.com/prod-api
+host3: http://test3.primihub.com/prod-api
 
 
 test_name:
