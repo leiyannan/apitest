@@ -15,33 +15,33 @@ db:
   password: "primihub@123"
   charset: "utf8"
 
-user01:
-  userAccount: "test"
-  userPassword: "123456"
-
-user02:
-  userAccount: "test"
-  userPassword: "123456"
-
-test:
-  token: "excalibur_forever_ABCDEFGHIJKLMN"
-  userid: "1"
-  fileId01: "1351"
-  fileId02: "1159"
 
 host1: http://test1.primihub.com/prod-api
 host2: http://test2.primihub.com/prod-api
 host3: http://test3.primihub.com/prod-api
 
+user:
+  userAccount: "admin"
+  userPassword: "123456"
 
-test_name:
-  resourceName01: "test1-xgbhost资源"
-  resourceName02: "test2-xgbguest资源"
-  psiresource01: "test1-psi资源"
-  psiresource02: "test2-psi资源"
-  lrresource01: "test1-lr资源"
-  lrresource02: "test2-lr资源"
-  projectName01: "测试新建项目"
+test_data:
+#  resourceName01: "test1-xgbhost资源"
+#  resourceName02: "test2-xgbguest资源"
+  psi_data_01: "psi_a"
+  psi_data_02: "psi_b"
+  pir_data: "pir"
+  h_lr_host: "训练_横向lr_host"
+  h_lr_guest: "训练_横向lr_guest"
+  yc_lr_host: "推理_横向lr"
+
+  v_host: "训练_纵向xgb_lr_host"
+  v_guest: "训练_纵向xgb_lr_guest"
+  yc_v_host: "推理_纵向xgb_lr_host"
+  yc_v_guest: "推理_纵向xgb_lr_guest"
+
+  mpc_lr_01: "mpc-lr_1"
+  mpc_lr_02: "mpc-lr_2"
+  mpc_lr_03: "mpc-lr_3"
 
 
 

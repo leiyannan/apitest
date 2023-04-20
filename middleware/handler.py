@@ -11,6 +11,7 @@ from pymysql.cursors import DictCursor
 from common import yaml_handler, excel_handler, logging_handler,requests_handler
 from common.mysql_handler import MysqlHandler
 from config import config
+from requests_toolbelt import MultipartEncoder
 
 key_str = '''
     -----BEGIN PUBLIC KEY-----
@@ -61,198 +62,281 @@ class Handler():
     db_class = MysqlHandlerMid
 
     @property
-    def resourceId01(self):
-        # test1本地资源ID
-        return add_resource01()["resourceId01"]
+    def token01(self):
+        return login_test(host1)["token"]
 
     @property
-    def resourceFusionId01(self):
-        # test1联邦资源ID
-        return add_resource01()["resourceFusionId01"]
+    def token02(self):
+        return login_test(host2)["token"]
 
     @property
-    def fieldList(self):
-        # test1本地资源
-        return getdataresource()
+    def token03(self):
+        return login_test(host3)["token"]
+
 
     @property
-    def resourceId02(self):
-        # test2本地资源ID
-        return add_resource01()["resourceId02"]
+    def user_id01(self):
+        return login_test(host1)["user_id"]
 
     @property
-    def resourceFusionId02(self):
-        # test2联邦资源ID
-        return add_resource02()["resourceFusionId02"]
+    def user_id02(self):
+        return login_test(host2)["user_id"]
 
     @property
-    def projectId(self):
-        # 联邦项目id
-        return add_project()[0]
+    def user_id03(self):
+        return login_test(host3)["user_id"]
 
-    @property
-    def pid01(self):
-        # test1本地项目id
-        return add_project()[1]
-
-    @property
-    def pid02(self):
-        # test1本地项目id
-        return getprojectlist()[1]
-
-    @property
-    def resultId(self):
-        # test1本地项目id
-        return getProjectDetails()[0]
-
+   # 获取机构ID、name和中心节点地址
     @property
     def organId01(self):
-        # test1机构id
-        return getLocalOrganInfo()[0]
+        return getLocalOrganInfo(host1)[0]
+
+    @property
+    def organId02(self):
+        return getLocalOrganInfo(host2)[0]
+
+    @property
+    def organId03(self):
+        return getLocalOrganInfo(host3)[0]
 
     @property
     def organName01(self):
-        # test1机构名称
-        return getLocalOrganInfo()[1]
+        return getLocalOrganInfo(host1)[1]
+
+    @property
+    def organName02(self):
+        return getLocalOrganInfo(host2)[1]
+
+    @property
+    def organName03(self):
+        return getLocalOrganInfo(host3)[1]
 
     @property
     def socketserver(self):
         # test1中心节点
-        return getLocalOrganInfo()[2]
+        return getLocalOrganInfo(host1)[2]
+
+    # host123上传文件分别获取fileId
+    @property
+    def fileId01(self):
+        return add_resource(host=host1)["fileId"]
 
     @property
-    def organId02(self):
-        # test1机构id
-        return getLocalOrganInfo()[3]
+    def fileId02(self):
+        return add_resource(host=host2)["fileId"]
 
     @property
-    def organName02(self):
-        # test1机构名称
-        return getLocalOrganInfo()[4]
+    def fileId03(self):
+        return add_resource(host=host3)["fileId"]
+
+
+    # host123上传文件分别获取fieldList
+    @property
+    def fieldList01(self):
+        return add_resource(host=host1)["fieldList"]
 
     @property
-    def organId03(self):
-        # test1机构id
-        return getLocalOrganInfo()[5]
+    def fieldList02(self):
+        return add_resource(host=host2)["fieldList"]
 
     @property
-    def organName03(self):
-        # test1机构名称
-        return getLocalOrganInfo()[6]
+    def fieldList03(self):
+        return add_resource(host=host3)["fieldList"]
+
+    # host123上传资源分别获取本地资源ID
+    @property
+    def resourceId01(self):
+        return add_resource(host=host1)["resourceId"]
+    @property
+    def resourceId02(self):
+        return add_resource(host=host2)["resourceId"]
+    @property
+    def resourceId03(self):
+        return add_resource(host = host3)["resourceId"]
+
+    # host123上传资源分别获取联邦资源ID
+    @property
+    def resourceFusionId01(self):
+        return add_resource(host = host1)["resourceFusionId"]
+
+    @property
+    def resourceFusionId02(self):
+        return add_resource(host = host2)["resourceFusionId"]
+
+    @property
+    def resourceFusionId03(self):
+        return add_resource(host = host3)["resourceFusionId"]
 
 
-def getLocalOrganInfo():
+    @property
+    def projectId(self):
+        # 新创建的未审核host1联邦项目id
+        return add_project()[0]
+
+    @property
+    def pid01(self):
+        # 获取host1已审核的项目本地ID
+        return Projectapproval()
+
+    @property
+    def pid02(self):
+        # test2本地项目id
+        return getProjectDetails()[1]
+
+    @property
+    def resultId(self):
+        # 获取host2本地资源ID
+        return getProjectDetails()[0]
+
+
+
+
+host1 = Handler.yaml["host1"]
+host2 = Handler.yaml["host2"]
+host3 = Handler.yaml["host3"]
+
+# 登录，获取登录token及用户ID
+def login_test(host):
+    key_url = host + "/sys/common/getValidatePublicKey?timestamp=" + str(
+            int(time.time())) + "&nonce=" + str(random.randint(0, 9))
+    result = requests.get(key_url).json()["result"]
+    publicKey = result["publicKey"]
+    publicKeyName = result["publicKeyName"]
+    pubKey = rsa.PublicKey.load_pkcs1_openssl_pem(key_str.format(publicKey).encode())
+    passwd =Handler.yaml['user']["userPassword"]
+    cryptedMessage = rsa.encrypt(passwd.encode(encoding="utf-8"), pubKey)
+    key_str_text = base64.b64encode(cryptedMessage)
+
+
+    data = {"userAccount":Handler.yaml['user']["userAccount"],# Handler.yaml['user01']["userAccount"]
+             "validateKeyName":publicKeyName,
+             "timestamp":str(int(time.time())),
+             "nonce":str(random.randint(0, 9)),
+             "userPassword":key_str_text
+             }
+    res = requests_handler.visit(
+        url=host+"/sys/user/login",
+        method="post",
+        data=data
+    )
+    # 提取token、
+    # print(res)
+    token_test = res['result']['token']
+    user_id = res["result"]["sysUser"]["userId"]
+
+    return {"token":token_test,"user_id":user_id}
+
+
+def getLocalOrganInfo(host):
     #获取当前环境的机构ID级中心节点地址
+    host1 = Handler.yaml["host1"]
+    host2 = Handler.yaml["host2"]
+    host3 = Handler.yaml["host3"]
+    token = login_test(host)["token"]
+
     data = '{"timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
+        data = data.replace("#token#", token)
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
-    resp01 = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/sys/organ/getLocalOrganInfo",
-        method="get",
-        # headers=json.loads(test_info["header"]),
-        params=json.loads(data)
-    )
-    organId01 = resp01["result"]["sysLocalOrganInfo"]["organId"]
-    organName01 = resp01["result"]["sysLocalOrganInfo"]["organName"]
-    socketserver = resp01["result"]["sysLocalOrganInfo"]["fusionList"][0]["serverAddress"]
-
-    resp02 = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/sys/organ/getLocalOrganInfo",
-        method="get",
-        # headers=json.loads(test_info["header"]),
-        params=json.loads(data)
-    )
-    organId02 = resp02["result"]["sysLocalOrganInfo"]["organId"]
-    organName02 = resp02["result"]["sysLocalOrganInfo"]["organName"]
-
-    resp03 = requests_handler.visit(
-        url=Handler.yaml["host3"] + "/sys/organ/getLocalOrganInfo",
-        method="get",
-        # headers=json.loads(test_info["header"]),
-        params=json.loads(data)
-    )
-    organId03 = resp03["result"]["sysLocalOrganInfo"]["organId"]
-    organName03 = resp03["result"]["sysLocalOrganInfo"]["organName"]
-
-    return organId01,organName01,socketserver,organId02,organName02,organId03,organName03
-
-def add_resource01():
-    # test1环境添加资源
-    data:str = '{"resourceName":"#resourceName#","resourceDesc":"55555","tags":["555"],"resourceSource":1,"resourceAuthType":1,"fileId":"#fileId01#","fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"y","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"#timestamp#","nonce":691,"token":"#token#"}'
-    if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
-    if "#fileId01#" in data:
-        data = data.replace("#fileId01#", Handler().yaml["test"]["fileId01"])
-    if "#timestamp#" in data:
-        data = data.replace("#timestamp#", str(int(time.time())))
-    if "#resourceName#" in data:
-        data = data.replace("#resourceName#", Handler().yaml["test_name"]["resourceName01"])
-
     resp = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/data/resource/saveorupdateresource",
-        method="post",
+        url=host + "/sys/organ/getLocalOrganInfo",
+        method="get",
         # headers=json.loads(test_info["header"]),
-        json=json.loads(data)
+        params=json.loads(data)
     )
-    print(resp)
-    resourceId01 = resp["result"]["resourceId"]
-    resourceFusionId01 = resp["result"]["resourceFusionId"]
-    print(resourceFusionId01)
-    return {"resourceId01":resourceId01, "resourceFusionId01":resourceFusionId01}
+    organId = resp["result"]["sysLocalOrganInfo"]["organId"]
+    organName = resp["result"]["sysLocalOrganInfo"]["organName"]
+    socketserver = resp["result"]["sysLocalOrganInfo"]["fusionList"][0]["serverAddress"]
 
-def getdataresource():
+    return organId,organName,socketserver
 
-    data = '{"resourceId":"#resourceId#","timestamp":"#timestamp#","nonce":622,"token":"#token#"}'
+
+
+def add_resource(host ,filename="PSI-用户数据B.csv"):
+    timestamp = str(int(time.time()))
+    host1 = Handler.yaml["host1"]
+    host2 = Handler.yaml["host2"]
+    host3 = Handler.yaml["host3"]
+    token = login_test(host)["token"]
+
+    # 上传文件
+    binFile = open(os.path.join(config.DATA_PATH, filename), "rb")
+
+    headers = {}
+    multipart_encoder = MultipartEncoder(
+        fields={
+            "file": (filename, binFile.read()),
+            "fileSource": "1",
+            'timestamp': timestamp,
+            'nonce': "123",
+            'token': token
+        },
+        boundary='----WebKitFormBoundaryJ2aGzfsg35YqeT7X'
+    )
+    binFile.close()
+
+    headers['Content-Type'] = multipart_encoder.content_type
+
+    actual = requests_handler.visit(
+        url=host + '/sys/file/upload',
+        data=multipart_encoder,
+        headers=headers)
+
+    fileId = actual["result"]["sysFile"]["fileId"]
+
+    # 获取fieldList
+    data = '{"fileId":"#fileId#","timestamp":"#timestamp#","nonce":622,"token":"#token#"}'
     if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
+        data = data.replace("#token#", token)
     if "#timestamp#" in data:
-        data = data.replace("#timestamp#", str(int(time.time())))
-    if "#resourceId#" in data:
-        data = data.replace("#resourceId#", str(Handler().resourceId01))
+        data = data.replace("#timestamp#", timestamp)
+    if "#fileId#" in data:
+        data = data.replace("#fileId#", str(fileId))
     resp = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/data/resource/getdataresource",
+        url=host + "/data/resource/resourceFilePreview",
         method="get",
         # headers=json.loads(test_info["header"]),
         params=json.loads(data)
     )
     fieldList = resp["result"]["fieldList"]
+    fileId = resp["result"]["fileId"]
     for line in fieldList:
         del line["createDate"]
         del line["fieldAs"]
     fieldList = str(fieldList).replace("'", '"').replace("False", "0").replace("None", "null").replace(" ", "")
-    return fieldList
 
-
-def add_resource02():
-    # test2环境添加资源
-    data:str = '{"resourceName":"#resourceName#","resourceDesc":"资源描述","tags":["test"],"resourceSource":1,"resourceAuthType":1,"fileId":"#fileId02#","fieldList":[{"fieldId":null,"fieldName":"x6","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x7","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x8","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x9","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x10","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x11","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x12","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"#timestamp#","nonce":212,"token":"#token#"}'
+    # 添加资源--提交
+    data:str = '{"resourceName":"#resourceName#","resourceDesc":"55555","tags":["555"],"resourceSource":1,"resourceAuthType":1,"fileId":#fileId01#,"fieldList":#fieldList#,"fusionOrganList":[],"timestamp":"#timestamp#","nonce":691,"token":"#token#"}'
     if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
-    if "#fileId02#" in data:
-        data = data.replace("#fileId02#", Handler().yaml["test"]["fileId02"])
+        data = data.replace("#token#", token)
+    if "#fileId01#" in data:
+        data = data.replace("#fileId01#", str(fileId))
+    if "#fieldList#" in data:
+        data = data.replace("#fieldList#", fieldList)
     if "#timestamp#" in data:
-        data = data.replace("#timestamp#", str(int(time.time())))
+        data = data.replace("#timestamp#", timestamp)
     if "#resourceName#" in data:
-        data = data.replace("#resourceName#", Handler().yaml["test_name"]["resourceName02"])
+        data = data.replace("#resourceName#",filename )
 
-    resp = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/data/resource/saveorupdateresource",
+    resp02 = requests_handler.visit(
+        url=host + "/data/resource/saveorupdateresource",
         method="post",
         # headers=json.loads(test_info["header"]),
         json=json.loads(data)
     )
-    resourceId02 = resp["result"]["resourceId"]
-    resourceFusionId02 = resp["result"]["resourceFusionId"]
-    print(resourceFusionId02)
-    return {"resourceId02":resourceId02,"resourceFusionId02":resourceFusionId02}
+    #print(resp02)
+    resourceId = resp02["result"]["resourceId"]
+    resourceFusionId = resp02["result"]["resourceFusionId"]
+    #print(resourceFusionId)
+    return {"host":host,"resourceId":resourceId, "resourceFusionId":resourceFusionId,"fileId":fileId,"fieldList":fieldList}
+
 
 def add_project():
-    # 使用test1和test2的新增资源，在test1环境新建项目
+    # 使用host1和host2的新增资源，并使用该资源 在host1环境新建项目
     data:str = '{"serverAddress":"#serverAddress#","projectName":"#projectName01#","projectDesc":"new_project","projectOrgans":[{"organId":"#organId02#","participationIdentity":2,"resourceIds":["#resourceFusionId02#"]},{"organId":"#organId01#","participationIdentity":1,"resourceIds":["#resourceFusionId01#"]}],"timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
+        data = data.replace("#token#", Handler().token01)
     if "#serverAddress#" in data:
         data = data.replace("#serverAddress#", str(Handler().socketserver))
     if "#projectName01#" in data:
@@ -267,28 +351,30 @@ def add_project():
         data = data.replace("#resourceFusionId02#", str(Handler().resourceFusionId02))
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
-    print(data)
+    # print(data)
     resp = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/data/project/saveOrUpdateProject",
+        url= Handler.yaml["host1"] + "/data/project/saveOrUpdateProject",
         method="post",
         # headers=json.loads(test_info["header"]),
         json=json.loads(data)
     )
-
     projectId = resp['result']['projectId']
     pid01 = resp['result']['id']
     return projectId,pid01
 
-def getprojectlist():
+def getProjectDetails():
+
+    token = Handler().token02
+    timestamp = str(int(time.time()))
+
     # test2请求项目列表，获得第一条项目的本地ID，以便进行项目详情接口请求
     projectId,pid01 = add_project()
     data = '{"pageNo":1,"pageSize":10,"timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in data:
-        data = data.replace("#timestamp#", str(int(time.time())))
+        data = data.replace("#timestamp#", timestamp)
     if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
-    print(data)
-
+        data = data.replace("#token#", token)
+    #print(data)
     resp = requests_handler.visit(
         url=Handler.yaml["host2"] + "/data/project/getProjectList",
         method="get",
@@ -302,18 +388,14 @@ def getprojectlist():
     pid_key = projectid02.index(str(projectId))
     pid02 = list[pid_key]["id"]
 
-    return pid01,pid02
-
-def getProjectDetails():
-    pid01,pid02 = getprojectlist()
-    # test2请求项目详情，获得项目资源真实ID，以便进行项目审核、资源审核
+    # host2请求项目详情，获得项目中使用host2资源的本地ID，以便进行项目审核、资源审核
     data = '{"id":"#pid02#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in data:
-        data = data.replace("#timestamp#", str(int(time.time())))
+        data = data.replace("#timestamp#", timestamp)
     if "#pid02#" in data:
         data = data.replace("#pid02#", str(pid02))
     if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
+        data = data.replace("#token#", token)
 
     resp = requests_handler.visit(
         url=Handler.yaml["host2"] + "/data/project/getProjectDetails",
@@ -321,46 +403,60 @@ def getProjectDetails():
         # headers=json.loads(test_info["header"]),
         params=json.loads(data)
     )
-    #
+    #获取host2本地资源ID
     resultId = resp["result"]["organs"][1]["resources"][0]["id"]
+    # 获取host2本地机构ID
     organId = resp["result"]["organs"][1]["id"]
-    return resultId,organId,pid01
-
+    return resultId,organId,pid01,pid02
+#
 def Projectapproval():
-    resultId,organId,pid01 = getProjectDetails()
+
+    token = Handler().token02
+    timestamp = str(int(time.time()))
+    resultId, organId, pid01,pid02 = getProjectDetails()
+    # 审核项目及资源
     data = '{"type":"#type#","id":"#id#","auditStatus":1,"auditOpinion":"审核项目&资源","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in data:
-        data = data.replace("#timestamp#", str(int(time.time())))
+        data = data.replace("#timestamp#", timestamp)
     if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
+        data = data.replace("#token#", token)
 
     projectdata = data.replace("#type#", str(1))
     projectdata = projectdata.replace("#id#", str(organId))
+
     resourcedata = data.replace("#type#", str(2))
     resourcedata = resourcedata.replace("#id#", str(resultId))
 
+
+    # 审核项目--同意
     resp01 = requests_handler.visit(
         url=Handler.yaml["host2"] + "/data/project/approval",
         method="post",
         data=json.loads(projectdata)
     )
+    # print(resp01)
+
+    # 审核资源---同意
     resp02 = requests_handler.visit(
         url=Handler.yaml["host2"] + "/data/project/approval",
         method="post",
         data=json.loads(resourcedata)
     )
+    # print(resp02)
+    return approvalpid01
 
-    return resp02,pid01
+def saveModel_v_xgb():
 
-def saveModelAndComponent():
-    projectId = Projectapproval()[1]
+    token = Handler().token01
+    timestamp = str(int(time.time()))
+    projectId = Projectapproval()
     data = '{"param":{"projectId":"#projectId#","isDraft":0,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
     if "#projectId#" in data:
         data = data.replace("#projectId#", str(projectId))
     if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
+        data = data.replace("#token#", token)
 
     resp = requests_handler.visit(
         url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
@@ -442,7 +538,6 @@ def saveModelAndComponent():
         data02 = data02.replace("#resourceName02#", Handler().yaml["test_name"]["resourceName02"])
     print(data02)
 
-
     resp = requests_handler.visit(
         url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
         method="post",
@@ -453,7 +548,7 @@ def saveModelAndComponent():
     return modelId
 
 def runTask_xgb():
-    modelId = saveModelAndComponent()
+    modelId = saveModel_v_xgb()
     data = '{"modelId":"#modelId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
@@ -471,107 +566,19 @@ def runTask_xgb():
     return xgb_taskId
 
 
-# 登录，获取登录token及用户ID
-# def getkey_test1():
-#     key_url = "http://test1.primihub.com/prod-api/sys/common/getValidatePublicKey?timestamp=" + str(
-#             int(time.time())) + "&nonce=" + str(random.randint(0, 9))
-#     result = requests.get(key_url).json()["result"]
-#     publicKey = result["publicKey"]
-#     publicKeyName = result["publicKeyName"]
-#     pubKey = rsa.PublicKey.load_pkcs1_openssl_pem(key_str.format(publicKey).encode())
-#     passwd ="123456" # Handler.yaml['user01']["userPassword"]
-#     cryptedMessage = rsa.encrypt(passwd.encode(encoding="utf-8"), pubKey)
-#     key_str_text = base64.b64encode(cryptedMessage)
-#
-#     return publicKeyName, key_str_text
-#
-# def login_test1():
-#     """登录测试账号"""
-#     publicKeyName, key_str_text = getkey_test1()
-#     data1 = {"userAccount":"test",# Handler.yaml['user01']["userAccount"]
-#              "validateKeyName":publicKeyName,
-#              "timestamp":str(int(time.time())),
-#              "nonce":str(random.randint(0, 9)),
-#              "userPassword":key_str_text
-#              }
-#     res = requests_handler.visit(
-#         url=Handler.yaml["host1"]+"/sys/user/login",
-#         method="post",
-#         data=data1
-#     )
-#     # 提取token、
-#     print(res)
-#     token_test1 = res['result']['token']
-#     user_id_test1 = res["result"]["sysUser"]["userId"]
-#
-#     return {"token":token_test1,"user_id":user_id_test1}
-#
-#
-# def getkey_test2():
-#     key_url = "http://test2.primihub.com/prod-api/sys/common/getValidatePublicKey?timestamp=" + str(
-#             int(time.time())) + "&nonce=" + str(random.randint(0, 9))
-#     result = requests.get(key_url).json()["result"]
-#     publicKey = result["publicKey"]
-#     publicKeyName = result["publicKeyName"]
-#     pubKey = rsa.PublicKey.load_pkcs1_openssl_pem(key_str.format(publicKey).encode())
-#     passwd = Handler.yaml['user02']["userPassword"]
-#     cryptedMessage = rsa.encrypt(passwd.encode(encoding="utf-8"), pubKey)
-#     key_str_text = base64.b64encode(cryptedMessage)
-#
-#     return publicKeyName, key_str_text
-#
-# def login_test2():
-#     """登录测试账号"""
-#     publicKeyName, key_str_text = getkey_test2()
-#     data = {"userAccount":Handler.yaml['user02']["userAccount"],
-#              "validateKeyName":publicKeyName,
-#              "timestamp":str(int(time.time())),
-#              "nonce":str(random.randint(0, 9)),
-#              "userPassword":key_str_text}
-#     res = requests_handler.visit(
-#         url=Handler.yaml["host3"]+"/sys/user/login",
-#         method="post",
-#         data=data
-#     )
-#     # 提取token、
-#     token_test2 = res['result']['token']
-#     user_id_test2 = res["result"]["sysUser"]["userId"]
-#
-#     return {"token":token_test2,"user_id":user_id_test2}
+
 
 
 if __name__ == "__main__":
     data_path = Handler.conf.DATA_PATH
-    # print(Handler.yaml["excel"]["file"])
-    # print(Handler.logger)
-    # db = MysqlHandlerMid()
-    # # print(Handler.userId)
-    # # data = db.query("select * from privacy_test1.data_resource where user_id= 4;",one=False)
-    # data = db.query("select * from privacy_test1.data_resource where user_id={}".format(Handler().user_id), one=False)
-    # print(data)
-    # print(Handler().token_test1)
-    # print(Handler().projectId)
-    #print(Handler().resourceFusionId01)
-    #print(Handler().resourceFusionId02)
-    #print(getkey_test1())
-    #print(login_test1())
 
-    #print(getLocalOrganInfo())
-    # print(Handler().organId01)
-    # print(Handler().organId02)
-    # print(Handler().organId03)
-    # print(Handler().socketserver)
-    #print(add_resource01())
-    #print(add_resource02())
-    #print(add_project())
-    #print(getprojectlist())
-    #print(getProjectDetails())
-    #print(Projectapproval())
-    #print(saveModelAndComponent())
-    #print(getdataresource())
-    #print(Handler().fieldList)
-    #print(getLocalOrganInfo())
-    print(runTask_xgb())
+    #print(runTask_xgb())
+    #print(resourceFilePreview01())
+    #print(add_resource(host = host3))
+    #print(Handler().resourceId03)
+    #print(Handler().fileId01)
+    #print((Handler().projectId))
+    print(Projectapproval())
 
 
 

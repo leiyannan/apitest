@@ -17,6 +17,7 @@ class TestResource(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.pid = env_data.pid01
+        cls.token = env_data.token01
 
     def setUp(self) -> None:
         pass
@@ -31,7 +32,7 @@ class TestResource(unittest.TestCase):
 
         data = test_info["data"]
         if "#token#" in data:
-            data = data.replace("#token#", env_data.yaml["test"]["token"])
+            data = data.replace("#token#", self.token)
         if "#timestamp#" in data:
             data = data.replace("#timestamp#", str(int(time.time())))
         if "#pid#" in data:

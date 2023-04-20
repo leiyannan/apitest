@@ -19,6 +19,7 @@ class TestResource(unittest.TestCase):
         cls.pjtion01= getProjectDetails()
         cls.pjtion02 = getProjectDetails()
         cls.pjtion03 = getProjectDetails()
+        cls.token = env_data.token02
 
     def setUp(self) -> None:
         pass
@@ -36,7 +37,7 @@ class TestResource(unittest.TestCase):
 
         data = test_info["data"]
         if "#token#" in data:
-            data = data.replace("#token#", env_data.yaml["test"]["token"])
+            data = data.replace("#token#", self.token)
         if "#timestamp#" in data:
             data = data.replace("#timestamp#", str(int(time.time())))
         if "#organId01#" in data:

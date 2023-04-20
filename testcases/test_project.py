@@ -18,6 +18,9 @@ class TestResource(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.resourceId01 = env_data.resourceFusionId01
         cls.resourceId02 = env_data.resourceFusionId02
+        cls.organId01 = env_data.organId01
+        cls.organId02 = env_data.organId02
+        cls.token = env_data.token01
 
 
     def setUp(self) -> None:
@@ -34,21 +37,24 @@ class TestResource(unittest.TestCase):
 
         data = test_info["data"]
         if "#token#" in data:
-            data = data.replace("#token#", env_data.yaml["test"]["token"])
+            data = data.replace("#token#", self.token)
         if "#serverAddress#" in data:
             data = data.replace("#serverAddress#", env_data.socketserver)
         if "#projectName01#" in data:
             data = data.replace("#projectName01#", env_data.yaml["test_name"]["projectName01"])
         if "#organId01#" in data:
-            data = data.replace("#organId01#", env_data.organId01)
+            data = data.replace("#organId01#", self.organId01)
         if "#organId02#" in data:
-            data = data.replace("#organId02#", env_data.organId02)
+            data = data.replace("#organId02#", self.organId02)
         if "#resourceFusionId01#" in data:
             data = data.replace("#resourceFusionId01#", str(self.resourceId01))
         if "#resourceFusionId02#" in data:
-            data = data.replace("#resourceFusionId02#", str(self.resourceId01))
+            data = data.replace("#resourceFusionId02#", str(self.resourceId02))
         if "#timestamp#" in data:
             data = data.replace("#timestamp#", str(int(time.time())))
+
+
+        print(data)
 
 
         actual = requests_handler.visit(

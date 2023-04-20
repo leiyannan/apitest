@@ -5,14 +5,17 @@ import ddt
 
 from common import requests_handler, yaml_handler
 from middleware.handler import Handler
+from middleware import handler
+
 
 # 初始化数据
 logger = Handler.logger
 env_data = Handler()
 test_data = Handler.excel.read_data("resource")
 
-
-
+# resp = handler.add_resource()
+# fieldList = resp["fieldList"]
+# fileId = resp["fileId"]
 @ddt.ddt
 class TestResource(unittest.TestCase):
 
@@ -21,7 +24,10 @@ class TestResource(unittest.TestCase):
         # cls.token = yaml["test"]["token"]
         # cls.userid = yaml["test"]["userid"]
         cls.resourceId = env_data.resourceId01
-        cls.fieldList = env_data.fieldList
+        cls.fileId01 = env_data.fileId01
+        cls.fieldList01 = env_data.fieldList01
+        cls.token = env_data.token01
+
 
     def setUp(self) -> None:
         self.db = env_data.db_class()
@@ -34,13 +40,13 @@ class TestResource(unittest.TestCase):
 
         data = test_info["data"]
         if "#token#" in data:
-            data = data.replace("#token#",env_data.yaml["test"]["token"])
+            data = data.replace("#token#",self.token)
 
         if "#fileId01#" in data:
-            data = data.replace("#fileId01#",env_data.yaml["test"]["fileId01"])
+            data = data.replace("#fileId01#",str(self.fileId01))
 
         if "#fieldList#" in data:
-            data = data.replace("#fieldList#",self.fieldList)
+            data = data.replace("#fieldList#",self.fieldList01)
 
         if "#timestamp#" in data:
             data = data.replace("#timestamp#",str(int(time.time())))
