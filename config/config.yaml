@@ -25,23 +25,21 @@ user:
   userPassword: "123456"
 
 test_data:
-#  resourceName01: "test1-xgbhost资源"
-#  resourceName02: "test2-xgbguest资源"
-  psi_data_01: "psi_a"
-  psi_data_02: "psi_b"
-  pir_data: "pir"
-  h_lr_host: "训练_横向lr_host"
-  h_lr_guest: "训练_横向lr_guest"
-  yc_lr_host: "推理_横向lr"
+  psi_data_01: "psi_a.csv"
+  psi_data_02: "psi_b.csv"
+  pir_data: "pir.csv"
+  h_lr_host: "训练_横向lr_host.csv"
+  h_lr_guest: "训练_横向lr_guest.csv"
+  yc_lr_host: "推理_横向lr.csv"
 
-  v_host: "训练_纵向xgb_lr_host"
-  v_guest: "训练_纵向xgb_lr_guest"
-  yc_v_host: "推理_纵向xgb_lr_host"
-  yc_v_guest: "推理_纵向xgb_lr_guest"
+  v_host: "训练_纵向xgb_lr_host.csv"
+  v_guest: "训练_纵向xgb_lr_guest.csv"
+  yc_v_host: "推理_纵向xgb_lr_host.csv"
+  yc_v_guest: "推理_纵向xgb_lr_guest.csv"
 
-  mpc_lr_01: "mpc-lr_1"
-  mpc_lr_02: "mpc-lr_2"
-  mpc_lr_03: "mpc-lr_3"
+  mpc_lr_01: "mpc-lr_1.csv"
+  mpc_lr_02: "mpc-lr_2.csv"
+  mpc_lr_03: "mpc-lr_3.csv"
 
 
 
