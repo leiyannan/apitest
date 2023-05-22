@@ -112,8 +112,8 @@ class Handler():
         return getLocalOrganInfo(host3)[1]
 
     @property
-    def socketserver(self):
-        # test1中心节点
+    def publicKey(self):
+        # test1公钥
         return getLocalOrganInfo(host1)[2]
 
     # host123上传文件分别获取fileId
@@ -154,6 +154,67 @@ class Handler():
     def resourceId03(self):
         return add_resource(host = host3)["resourceId"]
 
+    # host1--注册各项任务的测试数据--host方--本地资源ID
+    @property
+    def train_xgb_host(self):
+        return add_resource(host= host1,filename=Handler.yaml["test_data"]["train_xgb_host"])["resourceId"]
+
+    def test_xgb_host(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_v_host"])["resourceId"]
+
+    @property
+    def train_lr_host(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["train_lr_host"])["resourceId"]
+
+    def test_lr_host(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_lr"])["resourceId"]
+
+    @property
+    def train_mpc_01(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["mpc_lr_01"])["resourceId"]
+
+    @property
+    def psi_a(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["psi_a"])["resourceId"]
+
+    # host2--注册各项任务的测试数据--guest方
+    @property
+    def train_xgb_guest(self):
+        return add_resource(host= host2,filename=Handler.yaml["test_data"]["train_xgb_guest"])["resourceId"]
+
+    @property
+    def test_xgb_guest(self):
+        return add_resource(host= host2,filename=Handler.yaml["test_data"]["test_v_guest"])["resourceId"]
+
+    @property
+    def train_lr_guest(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["train_lr_guest"])["resourceId"]
+
+    @property
+    def test_lr_guest(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lr"])["resourceId"]
+
+    @property
+    def train_mpc_02(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["mpc_lr_02"])["resourceId"]
+
+    @property
+    def psi_b(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["psi_b"])["resourceId"]
+
+    @property
+    def pir_data(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["pir_data"])["resourceId"]
+
+    # host3--注册各项任务的测试数据--guest方
+    @property
+    def train_mpc_03(self):
+        return add_resource(host=host3, filename=Handler.yaml["test_data"]["mpc_lr_03"])["resourceId"]
+
+
+
+
+
     # host123上传资源分别获取联邦资源ID
     @property
     def resourceFusionId01(self):
@@ -166,6 +227,66 @@ class Handler():
     @property
     def resourceFusionId03(self):
         return add_resource(host = host3)["resourceFusionId"]
+
+    # host1--注册各项任务的测试数据--host方--本地资源ID
+    @property
+    def train_xgb_host_FusionId(self):
+        return add_resource(host= host1,filename=Handler.yaml["test_data"]["train_xgb_host"])["resourceFusionId"]
+
+    @property
+    def test_xgb_host_FusionId(self):
+        return add_resource(host= host1,filename=Handler.yaml["test_data"]["test_v_host"])["resourceFusionId"]
+
+    @property
+    def train_lr_host_FusionId(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["train_lr_host"])["resourceFusionId"]
+
+    @property
+    def test_lr_host_FusionId(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_lr"])["resourceFusionId"]
+
+    @property
+    def train_mpc_01_FusionId(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["mpc_lr_01"])["resourceFusionId"]
+
+    @property
+    def psi_a_FusionId(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["psi_a"])["resourceFusionId"]
+
+    # host2--注册各项任务的测试数据--guest方
+    @property
+    def train_xgb_guest_FusionId(self):
+        return add_resource(host= host2,filename=Handler.yaml["test_data"]["train_xgb_guest"])["resourceFusionId"]
+
+    @property
+    def test_xgb_guest_FusionId(self):
+        return add_resource(host= host2,filename=Handler.yaml["test_data"]["test_v_guest"])["resourceFusionId"]
+
+    @property
+    def train_lr_guest_FusionId(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["train_lr_guest"])["resourceFusionId"]
+
+    @property
+    def test_lr_guest_FusionId(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lr"])["resourceFusionId"]
+
+    @property
+    def train_mpc_02_FusionId(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["mpc_lr_02"])["resourceFusionId"]
+
+    @property
+    def psi_b_FusionId(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["psi_b"])["resourceFusionId"]
+
+    @property
+    def pir_data_FusionId(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["pir_data"])["resourceFusionId"]
+
+    # host3--注册各项任务的测试数据--第三方
+    @property
+    def train_mpc_03_FusionId(self):
+        return add_resource(host=host3, filename=Handler.yaml["test_data"]["mpc_lr_03"])["resourceFusionId"]
+
 
 
     @property
@@ -239,21 +360,23 @@ def getLocalOrganInfo(host):
         data = data.replace("#token#", token)
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
+
     resp = requests_handler.visit(
         url=host + "/sys/organ/getLocalOrganInfo",
         method="get",
         # headers=json.loads(test_info["header"]),
         params=json.loads(data)
     )
+    # print(resp)
     organId = resp["result"]["sysLocalOrganInfo"]["organId"]
     organName = resp["result"]["sysLocalOrganInfo"]["organName"]
-    socketserver = resp["result"]["sysLocalOrganInfo"]["fusionList"][0]["serverAddress"]
+    publicKey = resp["result"]["sysLocalOrganInfo"]["publicKey"]
 
-    return organId,organName,socketserver
+    return organId,organName,publicKey
 
 
 
-def add_resource(host ,filename="PSI-用户数据B.csv"):
+def add_resource(host ,filename="训练_纵向xgb_lr_host.csv"):
     timestamp = str(int(time.time()))
     host1 = Handler.yaml["host1"]
     host2 = Handler.yaml["host2"]
@@ -333,22 +456,41 @@ def add_resource(host ,filename="PSI-用户数据B.csv"):
 
 
 def add_project():
-    # 使用host1和host2的新增资源，并使用该资源 在host1环境新建项目
-    data:str = '{"serverAddress":"#serverAddress#","projectName":"#projectName01#","projectDesc":"new_project","projectOrgans":[{"organId":"#organId02#","participationIdentity":2,"resourceIds":["#resourceFusionId02#"]},{"organId":"#organId01#","participationIdentity":1,"resourceIds":["#resourceFusionId01#"]}],"timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+    # 使用host1和host2、host3的新增资源，并使用该资源 在host1环境新建项目
+    data:str = '{"projectName": "测试项目","projectDesc": "测试项目","projectOrgans": [{"organId": "#organId02#","participationIdentity": 2,"resourceIds": ["#train_xgb_guest_FusionId#", "#test_xgb_guest_FusionId#", "#train_lr_guest_FusionId#", "#test_lr_guest_FusionId#", "#train_mpc_02_FusionId#"]}, {"organId": "#organId03#","participationIdentity": 2,"resourceIds": ["#train_mpc_03_FusionId#"]}, {"organId": "#organId01#","participationIdentity": 1,"resourceIds": ["#train_xgb_host_FusionId#", "#test_xgb_host_FusionId#", "#train_lr_host_FusionId#", "#test_lr_host_FusionId#", "#train_mpc_01_FusionId#"]}],"timestamp": #timestamp#,"nonce": 439,"token": "#token#"}'
     if "#token#" in data:
         data = data.replace("#token#", Handler().token01)
-    if "#serverAddress#" in data:
-        data = data.replace("#serverAddress#", str(Handler().socketserver))
-    if "#projectName01#" in data:
-        data = data.replace("#projectName01#", Handler().yaml["test_name"]["projectName01"])
     if "#organId01#" in data:
         data = data.replace("#organId01#", str(Handler().organId01))
     if "#organId02#" in data:
         data = data.replace("#organId02#", str(Handler().organId02))
-    if "#resourceFusionId01#" in data:
-        data = data.replace("#resourceFusionId01#", str(Handler().resourceFusionId01))
-    if "#resourceFusionId02#" in data:
-        data = data.replace("#resourceFusionId02#", str(Handler().resourceFusionId02))
+    if "#organId03#" in data:
+        data = data.replace("#organId03#", str(Handler().organId03))
+
+    if "#train_xgb_host_FusionId#" in data:
+        data = data.replace("#train_xgb_host_FusionId#", str(Handler().train_xgb_host_FusionId))
+    if "#test_xgb_host_FusionId#" in data:
+        data = data.replace("#test_xgb_host_FusionId#", str(Handler().test_xgb_host_FusionId))
+
+    if "#train_lr_host_FusionId#" in data:
+        data = data.replace("#train_lr_host_FusionId#", str(Handler().train_lr_host_FusionId))
+    if "#test_lr_host_FusionId#" in data:
+        data = data.replace("#test_lr_host_FusionId#", str(Handler().test_lr_host_FusionId))
+    if "#train_mpc_01_FusionId#" in data:
+        data = data.replace("#train_mpc_01_FusionId#", str(Handler().train_mpc_01_FusionId))
+    if "#train_xgb_guest_FusionId#" in data:
+        data = data.replace("#train_xgb_guest_FusionId#", str(Handler().train_xgb_guest_FusionId))
+    if "#test_xgb_guest_FusionId#" in data:
+        data = data.replace("#test_xgb_guest_FusionId#", str(Handler().test_xgb_guest_FusionId))
+    if "#train_lr_guest_FusionId#" in data:
+        data = data.replace("#train_lr_guest_FusionId#", str(Handler().train_lr_guest_FusionId))
+    if "#test_lr_guest_FusionId#" in data:
+        data = data.replace("#test_lr_guest_FusionId#", str(Handler().test_lr_guest_FusionId))
+    if "#train_mpc_02_FusionId#" in data:
+        data = data.replace("#train_mpc_02_FusionId#", str(Handler().train_mpc_02_FusionId))
+    if "#train_mpc_03_FusionId#" in data:
+        data = data.replace("#train_mpc_03_FusionId#", str(Handler().train_mpc_03_FusionId))
+
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", str(int(time.time())))
     # print(data)
@@ -362,9 +504,11 @@ def add_project():
     pid01 = resp['result']['id']
     return projectId,pid01
 
-def getProjectDetails():
 
-    token = Handler().token02
+def getProjectDetails(host=host2):
+    token = login_test(host)["token"]
+    host2 = Handler.yaml["host2"]
+    host3 = Handler.yaml["host3"]
     timestamp = str(int(time.time()))
 
     # test2请求项目列表，获得第一条项目的本地ID，以便进行项目详情接口请求
@@ -376,7 +520,7 @@ def getProjectDetails():
         data = data.replace("#token#", token)
     #print(data)
     resp = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/data/project/getProjectList",
+        url=host + "/data/project/getProjectList",
         method="get",
         # headers=json.loads(test_info["header"]),
         params=json.loads(data)
@@ -398,22 +542,30 @@ def getProjectDetails():
         data = data.replace("#token#", token)
 
     resp = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/data/project/getProjectDetails",
+        url=host + "/data/project/getProjectDetails",
         method="get",
         # headers=json.loads(test_info["header"]),
         params=json.loads(data)
     )
+
     #获取host2本地资源ID
-    resultId = resp["result"]["organs"][1]["resources"][0]["id"]
+    resources = resp["result"]["organs"][1]["resources"]
     # 获取host2本地机构ID
     organId = resp["result"]["organs"][1]["id"]
-    return resultId,organId,pid01,pid02
-#
-def Projectapproval():
 
-    token = Handler().token02
+    resourcesid = []
+    for i in resources:
+        resourcesid.append(i["id"])
+
+    return resourcesid,organId,pid01,pid02
+
+#
+def Projectapproval(host=host2):
+    token = login_test(host)["token"]
+    host2 = Handler.yaml["host2"]
+    host3 = Handler.yaml["host3"]
     timestamp = str(int(time.time()))
-    resultId, organId, pid01,pid02 = getProjectDetails()
+    resourcesid, organId, pid01,pid02 = getProjectDetails()
     # 审核项目及资源
     data = '{"type":"#type#","id":"#id#","auditStatus":1,"auditOpinion":"审核项目&资源","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in data:
@@ -425,12 +577,13 @@ def Projectapproval():
     projectdata = projectdata.replace("#id#", str(organId))
 
     resourcedata = data.replace("#type#", str(2))
-    resourcedata = resourcedata.replace("#id#", str(resultId))
+    resourcedata = resourcedata.replace("#id#",str(resourcesid[0]))
+
 
 
     # 审核项目--同意
     resp01 = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/data/project/approval",
+        url=host+ "/data/project/approval",
         method="post",
         data=json.loads(projectdata)
     )
@@ -438,12 +591,12 @@ def Projectapproval():
 
     # 审核资源---同意
     resp02 = requests_handler.visit(
-        url=Handler.yaml["host2"] + "/data/project/approval",
+        url=host + "/data/project/approval",
         method="post",
         data=json.loads(resourcedata)
     )
     # print(resp02)
-    return approvalpid01
+    return pid01
 
 def saveModel_v_xgb():
 
@@ -452,7 +605,7 @@ def saveModel_v_xgb():
     projectId = Projectapproval()
     data = '{"param":{"projectId":"#projectId#","isDraft":0,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
     if "#timestamp#" in data:
-        data = data.replace("#timestamp#", str(int(time.time())))
+        data = data.replace("#timestamp#", timestamp)
     if "#projectId#" in data:
         data = data.replace("#projectId#", str(projectId))
     if "#token#" in data:
@@ -467,7 +620,7 @@ def saveModel_v_xgb():
 
     requests_data = '{"projectId":"#projectId#","organId":"#organId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in requests_data:
-        requests_data = requests_data.replace("#timestamp#", str(int(time.time())))
+        requests_data = requests_data.replace("#timestamp#", timestamp)
     if "#projectId#" in requests_data:
         requests_data = requests_data.replace("#projectId#", str(projectId))
     if "#token#" in requests_data:
@@ -475,18 +628,30 @@ def saveModel_v_xgb():
 
     requests_data01 = requests_data.replace("#organId#", str(Handler().organId01))
     requests_data02 = requests_data.replace("#organId#", str(Handler().organId02))
+    requests_data03 = requests_data.replace("#organId#", str(Handler().organId03))
 
-    resourceId01 = requests_handler.visit(
+    result01 = requests_handler.visit(
         url = Handler.yaml["host1"] + "/data/project/getProjectResourceData",
         method="get",
         params=json.loads(requests_data01)
-    )["result"][0]["resourceId"]
+    )["result"]
 
-    resourceId02 = requests_handler.visit(
+    result02 = requests_handler.visit(
         url = Handler.yaml["host1"] + "/data/project/getProjectResourceData",
         method="get",
         params=json.loads(requests_data02)
-    )["result"][0]["resourceId"]
+    )["result"]
+
+    result03 = requests_handler.visit(
+        url = Handler.yaml["host1"] + "/data/project/getProjectResourceData",
+        method="get",
+        params=json.loads(requests_data03)
+    )["result"]
+
+    if Handler.yaml["train_xgb_host"] in result01:
+
+
+
 
     data02 = {"param": {"projectId": str(projectId), "modelId": str(modelId), "isDraft": 1, "modelComponents": [
         {"frontComponentId": "495a09b3-4744-4058-9688-6772e5791de4", "coordinateX": 140.5, "coordinateY": 100,
@@ -577,7 +742,7 @@ if __name__ == "__main__":
     #print(add_resource(host = host3))
     #print(Handler().resourceId03)
     #print(Handler().fileId01)
-    #print((Handler().projectId))
+    # print((Handler().organId01))
     print(Projectapproval())
 
 
