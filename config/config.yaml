@@ -16,30 +16,30 @@ db:
   charset: "utf8"
 
 
-host1: http://test1.primihub.com/prod-api
-host2: http://test2.primihub.com/prod-api
-host3: http://test3.primihub.com/prod-api
+host1: http://192.168.99.31:30811/prod-api
+host2: http://192.168.99.31:30812/prod-api
+host3: http://192.168.99.31:30813/prod-api
 
 user:
   userAccount: "admin"
   userPassword: "123456"
 
 test_data:
-  psi_data_01: "psi_a.csv"
-  psi_data_02: "psi_b.csv"
+  psi_a: "psi_a.csv"
+  psi_b: "psi_b.csv"
   pir_data: "pir.csv"
-  h_lr_host: "训练_横向lr_host.csv"
-  h_lr_guest: "训练_横向lr_guest.csv"
-  yc_lr_host: "推理_横向lr.csv"
+  train_lr_host: "训练_横向lr_host.csv"
+  train_lr_guest: "训练_横向lr_guest.csv"
+  test_lr: "推理_横向lr.csv"
 
-  v_host: "训练_纵向xgb_lr_host.csv"
-  v_guest: "训练_纵向xgb_lr_guest.csv"
-  yc_v_host: "推理_纵向xgb_lr_host.csv"
-  yc_v_guest: "推理_纵向xgb_lr_guest.csv"
+  train_xgb_host: "训练_纵向xgb_lr_host.csv"
+  train_xgb_guest: "训练_纵向xgb_lr_guest.csv"
+  test_v_host: "推理_纵向xgb_lr_host.csv"
+  test_v_guest: "推理_纵向xgb_lr_guest.csv"
 
-  mpc_lr_01: "mpc-lr_1.csv"
-  mpc_lr_02: "mpc-lr_2.csv"
-  mpc_lr_03: "mpc-lr_3.csv"
+  mpc_lr_01: "mpc_lr_1.csv"
+  mpc_lr_02: "mpc_lr_2.csv"
+  mpc_lr_03: "mpc_lr_3.csv"
 
 
 
