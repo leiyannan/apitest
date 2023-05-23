@@ -20,3 +20,5 @@
 #### （3）修改测试数据---test_data，首先将测试用的csv文件放置data目录下，替换相应任务的测试数据
 
 ### 三、进入根目录，执行python run.py即可
+
+### 四、若想快速发起所有任务，进入 /middlemware，执行Python3 handler.py即可
