@@ -781,7 +781,7 @@ def saveModel_v_xgb():
         "output": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37","port": "port1"}},{"frontComponentId": "9a924166-e20f-4f0e-acd2-0186caff9364","shape": "edge","input": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37",
           "port": "port2"},"output": {"cell": "eb315941-fbb1-4988-8808-fb887827362d","port": "port1"}}]},"timestamp": timestamp,"nonce": 729,"token": token}
 
-    hlr_data =
+    hlr_data = ''
 
 
 
