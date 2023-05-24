@@ -1465,3 +1465,84 @@
 2023-04-20 20:19:37,777--test_project_approval.py--hanghao:69--INFO:审核资源03-拒绝：测试用例通过
 2023-04-20 20:22:58,865--test_project_close_open.py--hanghao:54--INFO:禁用项目：测试用例通过
 2023-04-20 20:23:01,015--test_project_close_open.py--hanghao:54--INFO:启用项目：测试用例通过
+2023-05-24 11:03:39,540--test_project_approval.py--hanghao:69--INFO:审核失败—id为空：测试用例通过
+2023-05-24 11:04:02,408--test_project_close_open.py--hanghao:54--INFO:禁用项目：测试用例通过
+2023-05-24 11:04:02,700--test_project_close_open.py--hanghao:54--INFO:启用项目：测试用例通过
+2023-05-24 11:04:02,809--test_register.py--hanghao:55--INFO:注册失败-验证码错误：测试用例通过
+2023-05-24 11:04:03,065--test_register.py--hanghao:55--INFO:注册失败-密码为空：测试用例通过
+2023-05-24 11:04:03,184--test_register.py--hanghao:55--INFO:注册失败-确认密码为空：测试用例通过
+2023-05-24 11:04:03,290--test_register.py--hanghao:55--INFO:注册失败-验证码为空：测试用例通过
+2023-05-24 11:04:03,392--test_register.py--hanghao:57--ERROR:注册失败-账号已注册：测试用例无法通过：False is not true
+2023-05-24 11:04:03,497--test_register.py--hanghao:55--INFO:两次密码不一致：测试用例通过
+2023-05-24 11:04:03,797--test_register.py--hanghao:57--ERROR:注册成功：测试用例无法通过：False is not true
+2023-05-24 11:04:08,714--test_resource.py--hanghao:77--INFO:添加资源：测试用例通过
+2023-05-24 11:04:09,429--test_resource.py--hanghao:77--INFO:编辑资源：测试用例通过
+2023-05-24 11:04:09,718--test_resource.py--hanghao:77--INFO:添加失败-资源名称为空：测试用例通过
+2023-05-24 11:04:09,976--test_resource.py--hanghao:77--INFO:添加失败-资源描述为空：测试用例通过
+2023-05-24 11:04:10,246--test_resource.py--hanghao:77--INFO:添加失败-关键词为空：测试用例通过
+2023-05-24 11:04:10,525--test_resource.py--hanghao:77--INFO:添加失败-授权方式为空：测试用例通过
+2023-05-24 11:04:11,012--test_resource.py--hanghao:77--INFO:添加成功-授权方式为私有：测试用例通过
+2023-05-24 11:08:24,770--test_project.py--hanghao:73--INFO:添加失败-项目名称为空：测试用例通过
+2023-05-24 11:09:20,975--test_project.py--hanghao:73--INFO:添加项目-成功：测试用例通过
+2023-05-24 11:09:21,088--test_project.py--hanghao:73--INFO:添加失败-项目名称为空：测试用例通过
+2023-05-24 11:33:40,661--test_project_approval.py--hanghao:69--INFO:审核项目01-同意：测试用例通过
+2023-05-24 11:33:40,861--test_project_approval.py--hanghao:69--INFO:审核资源01-同意：测试用例通过
+2023-05-24 11:33:40,974--test_project_approval.py--hanghao:69--INFO:审核已审核过的项目：测试用例通过
+2023-05-24 11:33:41,084--test_project_approval.py--hanghao:69--INFO:审核已审核过的资源：测试用例通过
+2023-05-24 11:33:41,194--test_project_approval.py--hanghao:69--INFO:审核失败—type=3：测试用例通过
+2023-05-24 11:33:41,308--test_project_approval.py--hanghao:69--INFO:审核失败—类型为空：测试用例通过
+2023-05-24 11:33:41,417--test_project_approval.py--hanghao:69--INFO:审核失败—id为空：测试用例通过
+2023-05-24 11:33:41,528--test_project_approval.py--hanghao:69--INFO:审核失败—状态为空：测试用例通过
+2023-05-24 11:33:41,759--test_project_approval.py--hanghao:69--INFO:审核项目02-拒绝：测试用例通过
+2023-05-24 11:33:41,996--test_project_approval.py--hanghao:69--INFO:审核项目03-同意：测试用例通过
+2023-05-24 11:33:42,202--test_project_approval.py--hanghao:69--INFO:审核资源03-拒绝：测试用例通过
+2023-05-24 11:35:48,717--test_project.py--hanghao:73--INFO:添加项目-成功：测试用例通过
+2023-05-24 11:35:48,824--test_project.py--hanghao:73--INFO:添加失败-项目名称为空：测试用例通过
+2023-05-24 11:36:40,944--test_project_approval.py--hanghao:69--INFO:审核项目01-同意：测试用例通过
+2023-05-24 11:36:41,126--test_project_approval.py--hanghao:69--INFO:审核资源01-同意：测试用例通过
+2023-05-24 11:36:41,238--test_project_approval.py--hanghao:69--INFO:审核已审核过的项目：测试用例通过
+2023-05-24 11:36:41,345--test_project_approval.py--hanghao:69--INFO:审核已审核过的资源：测试用例通过
+2023-05-24 11:36:41,454--test_project_approval.py--hanghao:69--INFO:审核失败—type=3：测试用例通过
+2023-05-24 11:36:41,558--test_project_approval.py--hanghao:69--INFO:审核失败—类型为空：测试用例通过
+2023-05-24 11:36:41,658--test_project_approval.py--hanghao:69--INFO:审核失败—id为空：测试用例通过
+2023-05-24 11:36:41,761--test_project_approval.py--hanghao:69--INFO:审核失败—状态为空：测试用例通过
+2023-05-24 11:36:41,991--test_project_approval.py--hanghao:69--INFO:审核项目02-拒绝：测试用例通过
+2023-05-24 11:36:42,218--test_project_approval.py--hanghao:69--INFO:审核项目03-同意：测试用例通过
+2023-05-24 11:36:42,390--test_project_approval.py--hanghao:69--INFO:审核资源03-拒绝：测试用例通过
+2023-05-24 11:37:02,117--test_project_close_open.py--hanghao:54--INFO:禁用项目：测试用例通过
+2023-05-24 11:37:02,340--test_project_close_open.py--hanghao:54--INFO:启用项目：测试用例通过
+2023-05-24 11:37:02,447--test_register.py--hanghao:55--INFO:注册失败-验证码错误：测试用例通过
+2023-05-24 11:37:02,660--test_register.py--hanghao:55--INFO:注册失败-密码为空：测试用例通过
+2023-05-24 11:37:02,766--test_register.py--hanghao:55--INFO:注册失败-确认密码为空：测试用例通过
+2023-05-24 11:37:02,873--test_register.py--hanghao:55--INFO:注册失败-验证码为空：测试用例通过
+2023-05-24 11:37:02,983--test_register.py--hanghao:57--ERROR:注册失败-账号已注册：测试用例无法通过：False is not true
+2023-05-24 11:37:03,099--test_register.py--hanghao:55--INFO:两次密码不一致：测试用例通过
+2023-05-24 11:37:03,403--test_register.py--hanghao:57--ERROR:注册成功：测试用例无法通过：False is not true
+2023-05-24 11:37:08,042--test_resource.py--hanghao:77--INFO:添加资源：测试用例通过
+2023-05-24 11:37:08,599--test_resource.py--hanghao:77--INFO:编辑资源：测试用例通过
+2023-05-24 11:37:08,867--test_resource.py--hanghao:77--INFO:添加失败-资源名称为空：测试用例通过
+2023-05-24 11:37:09,133--test_resource.py--hanghao:77--INFO:添加失败-资源描述为空：测试用例通过
+2023-05-24 11:37:09,395--test_resource.py--hanghao:77--INFO:添加失败-关键词为空：测试用例通过
+2023-05-24 11:37:09,673--test_resource.py--hanghao:77--INFO:添加失败-授权方式为空：测试用例通过
+2023-05-24 11:37:10,193--test_resource.py--hanghao:77--INFO:添加成功-授权方式为私有：测试用例通过
+2023-05-24 11:39:42,090--test_register.py--hanghao:55--INFO:注册失败-验证码错误：测试用例通过
+2023-05-24 11:39:42,399--test_register.py--hanghao:55--INFO:注册失败-密码为空：测试用例通过
+2023-05-24 11:39:42,515--test_register.py--hanghao:55--INFO:注册失败-确认密码为空：测试用例通过
+2023-05-24 11:39:42,638--test_register.py--hanghao:55--INFO:注册失败-验证码为空：测试用例通过
+2023-05-24 11:39:42,748--test_register.py--hanghao:57--ERROR:注册失败-账号已注册：测试用例无法通过：False is not true
+2023-05-24 11:39:42,873--test_register.py--hanghao:55--INFO:两次密码不一致：测试用例通过
+2023-05-24 11:39:43,201--test_register.py--hanghao:57--ERROR:注册成功：测试用例无法通过：False is not true
+2023-05-24 13:52:39,212--test_register.py--hanghao:55--INFO:注册失败-验证码错误：测试用例通过
+2023-05-24 13:52:39,403--test_register.py--hanghao:55--INFO:注册失败-密码为空：测试用例通过
+2023-05-24 13:52:39,519--test_register.py--hanghao:55--INFO:注册失败-确认密码为空：测试用例通过
+2023-05-24 13:52:39,633--test_register.py--hanghao:55--INFO:注册失败-验证码为空：测试用例通过
+2023-05-24 13:52:39,749--test_register.py--hanghao:57--ERROR:注册失败-账号已注册：测试用例无法通过：False is not true
+2023-05-24 13:52:39,872--test_register.py--hanghao:55--INFO:两次密码不一致：测试用例通过
+2023-05-24 13:52:40,204--test_register.py--hanghao:57--ERROR:注册成功：测试用例无法通过：False is not true
+2023-05-24 13:53:35,329--test_register.py--hanghao:55--INFO:注册失败-验证码错误：测试用例通过
+2023-05-24 13:53:35,672--test_register.py--hanghao:55--INFO:注册失败-密码为空：测试用例通过
+2023-05-24 13:53:35,786--test_register.py--hanghao:55--INFO:注册失败-确认密码为空：测试用例通过
+2023-05-24 13:53:35,896--test_register.py--hanghao:55--INFO:注册失败-验证码为空：测试用例通过
+2023-05-24 13:53:36,012--test_register.py--hanghao:57--ERROR:注册失败-账号已注册：测试用例无法通过：False is not true
+2023-05-24 13:53:36,127--test_register.py--hanghao:55--INFO:两次密码不一致：测试用例通过
+2023-05-24 13:53:36,472--test_register.py--hanghao:57--ERROR:注册成功：测试用例无法通过：False is not true

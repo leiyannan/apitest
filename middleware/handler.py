@@ -505,118 +505,157 @@ def add_project():
     return projectId,pid01
 
 
-def getProjectDetails(host=host2):
-    token = login_test(host)["token"]
+def getProjectDetails():
     host2 = Handler.yaml["host2"]
     host3 = Handler.yaml["host3"]
     timestamp = str(int(time.time()))
-
-    # test2请求项目列表，获得第一条项目的本地ID，以便进行项目详情接口请求
     projectId,pid01 = add_project()
-    data = '{"pageNo":1,"pageSize":10,"timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
-    if "#timestamp#" in data:
-        data = data.replace("#timestamp#", timestamp)
-    if "#token#" in data:
-        data = data.replace("#token#", token)
-    #print(data)
-    resp = requests_handler.visit(
-        url=host + "/data/project/getProjectList",
-        method="get",
-        # headers=json.loads(test_info["header"]),
-        params=json.loads(data)
-    )
-    list = resp["result"]["data"]
-    projectid02 = []
-    for dict in list:
-        projectid02.append(dict["projectId"])
-    pid_key = projectid02.index(str(projectId))
-    pid02 = list[pid_key]["id"]
 
-    # host2请求项目详情，获得项目中使用host2资源的本地ID，以便进行项目审核、资源审核
-    data = '{"id":"#pid02#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
-    if "#timestamp#" in data:
-        data = data.replace("#timestamp#", timestamp)
-    if "#pid02#" in data:
-        data = data.replace("#pid02#", str(pid02))
-    if "#token#" in data:
-        data = data.replace("#token#", token)
+    # test2、3请求项目列表，获得第一条项目的本地ID，以便进行项目详情接口请求
+    pid=[]
+    resourcesid=[]
+    organId=[]
+    host = [host2,host3]
+    for item in host:
+        token = login_test(item)["token"]
+        data = '{"pageNo":1,"pageSize":10,"timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+        if "#timestamp#" in data:
+            data = data.replace("#timestamp#", timestamp)
+        if "#token#" in data:
+            data = data.replace("#token#", token)
+        #print(data)
+        resp = requests_handler.visit(
+            url=item + "/data/project/getProjectList",
+            method="get",
+            # headers=json.loads(test_info["header"]),
+            params=json.loads(data)
+        )
+        list = resp["result"]["data"]
+        projectid02 = []
+        for dict in list:
+            projectid02.append(dict["projectId"])
+        pid_key = projectid02.index(str(projectId))
+        pid02=list[pid_key]["id"]
 
-    resp = requests_handler.visit(
-        url=host + "/data/project/getProjectDetails",
-        method="get",
-        # headers=json.loads(test_info["header"]),
-        params=json.loads(data)
-    )
+        # host2、3请求项目详情，获得项目中使用host2资源的本地ID，以便进行项目审核、资源审核
+        data = '{"id":"#pid02#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+        if "#timestamp#" in data:
+            data = data.replace("#timestamp#", timestamp)
+        if "#pid02#" in data:
+            data = data.replace("#pid02#", str(pid02))
+        if "#token#" in data:
+            data = data.replace("#token#", token)
 
-    #获取host2本地资源ID
-    resources = resp["result"]["organs"][1]["resources"]
-    # 获取host2本地机构ID
-    organId = resp["result"]["organs"][1]["id"]
+        resp = requests_handler.visit(
+            url=item + "/data/project/getProjectDetails",
+            method="get",
+            # headers=json.loads(test_info["header"]),
+            params=json.loads(data)
+        )
+        #print(resp)
+        #获取host2联邦资源ID
+        resources = resp["result"]["organs"][1]["resources"]
+        id = []
+        for i in resources:
+            id.append(i["id"])
 
-    resourcesid = []
-    for i in resources:
-        resourcesid.append(i["id"])
-
-    return resourcesid,organId,pid01,pid02
+        resourcesid.append(id)
+        # 获取host2本地机构ID
+        Id = resp["result"]["organs"][1]["id"]
+        organId.append(Id)
+        pid.append(pid02)
+        #print(resourcesid,organId,pid01,pid)
+    return resourcesid,organId,pid01,pid
 
 #
-def Projectapproval(host=host2):
-    token = login_test(host)["token"]
+def Projectapproval():
     host2 = Handler.yaml["host2"]
     host3 = Handler.yaml["host3"]
     timestamp = str(int(time.time()))
-    resourcesid, organId, pid01,pid02 = getProjectDetails()
+    resourcesid, organId, pid01,pid = getProjectDetails()
+
     # 审核项目及资源
-    data = '{"type":"#type#","id":"#id#","auditStatus":1,"auditOpinion":"审核项目&资源","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
-    if "#timestamp#" in data:
-        data = data.replace("#timestamp#", timestamp)
-    if "#token#" in data:
-        data = data.replace("#token#", token)
+    host = [host2,host3]
+    for item in host:
+        token = login_test(item)["token"]
+        if item == host2:
+            data = '{"type":"#type#","id":"#id#","auditStatus":1,"auditOpinion":"审核项目&资源","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+            if "#timestamp#" in data:
+                data = data.replace("#timestamp#", timestamp)
+            if "#token#" in data:
+                data = data.replace("#token#", token)
 
-    projectdata = data.replace("#type#", str(1))
-    projectdata = projectdata.replace("#id#", str(organId))
+            projectdata = data.replace("#type#", str(1))
+            projectdata = projectdata.replace("#id#", str(organId[0]))
 
-    resourcedata = data.replace("#type#", str(2))
-    resourcedata = resourcedata.replace("#id#",str(resourcesid[0]))
+            # resourcedata = data.replace("#type#", str(2))
+            # 审核项目--同意
+            resp01 = requests_handler.visit(
+                url=item+ "/data/project/approval",
+                method="post",
+                data=json.loads(projectdata)
+            )
+            # print(resp01)
 
+            # 审核资源---同意
+            for item2 in resourcesid[0]:
+                resp02 = requests_handler.visit(
+                    url=item + "/data/project/approval",
+                    method="post",
+                    data={"type":2,"id":item2,"auditStatus":1,"auditOpinion":"审核项目&资源","timestamp":str(int(time.time())),"nonce":622,"token":token}
+                )
 
+        else:
+            data = '{"type":"#type#","id":"#id#","auditStatus":1,"auditOpinion":"审核项目&资源","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+            if "#timestamp#" in data:
+                data = data.replace("#timestamp#", timestamp)
+            if "#token#" in data:
+                data = data.replace("#token#", token)
 
-    # 审核项目--同意
-    resp01 = requests_handler.visit(
-        url=host+ "/data/project/approval",
-        method="post",
-        data=json.loads(projectdata)
-    )
-    # print(resp01)
+            projectdata = data.replace("#type#", str(1))
+            projectdata = projectdata.replace("#id#", str(organId[1]))
 
-    # 审核资源---同意
-    resp02 = requests_handler.visit(
-        url=host + "/data/project/approval",
-        method="post",
-        data=json.loads(resourcedata)
-    )
-    # print(resp02)
+            # resourcedata = data.replace("#type#", str(2))
+            # 审核项目--同意
+            resp01 = requests_handler.visit(
+                url=item + "/data/project/approval",
+                method="post",
+                data=json.loads(projectdata)
+            )
+            # print(resp01)
+
+            # 审核资源---同意
+            for item2 in resourcesid[1]:
+                resp02 = requests_handler.visit(
+                    url=item + "/data/project/approval",
+                    method="post",
+                    data={"type": 2, "id": item2, "auditStatus": 1, "auditOpinion": "审核项目&资源",
+                          "timestamp": str(int(time.time())), "nonce": 622, "token": token}
+                )
     return pid01
 
-def saveModel_v_xgb():
 
+def saveModel_v_xgb():
     token = Handler().token01
     timestamp = str(int(time.time()))
     projectId = Projectapproval()
-    data = '{"param":{"projectId":"#projectId#","isDraft":0,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
+    modelId_save = {"xgb_modelId":"xgb_modelId","hlr_modelId":"hlr_modelId","mpc_modelId":"mpc_modelId"}
+    data = '{"param":{"projectId":"#projectId#","isDraft":1,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", timestamp)
     if "#projectId#" in data:
         data = data.replace("#projectId#", str(projectId))
     if "#token#" in data:
-        data = data.replace("#token#", token)
+        data = data.replace("#token#", token)#
 
-    resp = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
-        method="post",
-        json=json.loads(data)
-    )
-    modelId = resp["result"]["modelId"]
+    for key in modelId_save:
+        resp = requests_handler.visit(
+            url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
+            method="post",
+            json=json.loads(data)
+        )
+        modelId_save[key] = resp["result"]["modelId"]
+
 
     requests_data = '{"projectId":"#projectId#","organId":"#organId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in requests_data:
@@ -624,7 +663,7 @@ def saveModel_v_xgb():
     if "#projectId#" in requests_data:
         requests_data = requests_data.replace("#projectId#", str(projectId))
     if "#token#" in requests_data:
-        requests_data = requests_data.replace("#token#", Handler().yaml["test"]["token"])
+        requests_data = requests_data.replace("#token#", token)
 
     requests_data01 = requests_data.replace("#organId#", str(Handler().organId01))
     requests_data02 = requests_data.replace("#organId#", str(Handler().organId02))
@@ -648,87 +687,151 @@ def saveModel_v_xgb():
         params=json.loads(requests_data03)
     )["result"]
 
-    if Handler.yaml["train_xgb_host"] in result01:
+
+    xgb_vel = []
+    hlr_vel = []
+    mpclr_vel = []
+
+    for dict01 in result01:
+        if Handler.yaml["test_data"]["train_xgb_host"] == dict01["resourceName"]:
+            xgb_host_vel = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+                            'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
+                            'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
+                            'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
+                            'calculationField':dict01["fileHandleField"],'derivation': str(dict01["derivation"])}
+            xgb_vel.append(xgb_host_vel)
+
+        if Handler.yaml["test_data"]["train_lr_host"] == dict01["resourceName"]:
+            hlr_host_vel = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+                            'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
+                            'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
+                            'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
+                            'calculationField':dict01["fileHandleField"],'derivation': str(dict01["derivation"])}
+            hlr_vel.append(hlr_host_vel)
+
+        if Handler.yaml["test_data"]["mpc_lr_01"] == dict01["resourceName"]:
+            mpclr_01_vel = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+                            'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
+                            'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
+                            'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
+                            'calculationField':dict01["fileHandleField"],'derivation': str(dict01["derivation"])}
+
+            mpclr_vel.append(mpclr_01_vel)
+    # return train_xgb_host,train_lr_host,mpc_lr_01
+
+    for dict02 in result02:
+        if Handler.yaml["test_data"]["train_xgb_guest"] == dict02["resourceName"]:
+            xgb_guest_vel = {'organId': str(dict02["organId"]),'resourceId': str(dict02["resourceId"]),'resourceName': str(dict02["resourceName"]),
+                            'resourceRowsCount': dict02["resourceRowsCount"], 'resourceColumnCount': dict02["resourceColumnCount"],
+                            'resourceContainsY': dict02["resourceContainsY"], 'auditStatus': dict02["auditStatus"],
+                            'participationIdentity': dict02["participationIdentity"],'fileHandleField':dict02["fileHandleField"] ,
+                            'calculationField':dict02["fileHandleField"],'derivation': str(dict02["derivation"])}
+            xgb_vel.append(xgb_guest_vel)
+
+        if Handler.yaml["test_data"]["train_lr_guest"] == dict02["resourceName"]:
+            hlr_guest_vel = {'organId': str(dict02["organId"]), 'resourceId': str(dict02["resourceId"]),
+                             'resourceName': str(dict02["resourceName"]),
+                             'resourceRowsCount': dict02["resourceRowsCount"],
+                             'resourceColumnCount': dict02["resourceColumnCount"],
+                             'resourceContainsY': dict02["resourceContainsY"], 'auditStatus': dict02["auditStatus"],
+                             'participationIdentity': dict02["participationIdentity"],
+                             'fileHandleField': dict02["fileHandleField"],
+                             'calculationField': dict02["fileHandleField"], 'derivation': str(dict02["derivation"])}
+            hlr_vel.append(hlr_guest_vel)
+
+
+        if Handler.yaml["test_data"]["mpc_lr_02"] == dict02["resourceName"]:
+            mpclr_02_vel = {'organId': str(dict02["organId"]), 'resourceId': str(dict02["resourceId"]),
+                             'resourceName': str(dict02["resourceName"]),
+                             'resourceRowsCount': dict02["resourceRowsCount"],
+                             'resourceColumnCount': dict02["resourceColumnCount"],
+                             'resourceContainsY': dict02["resourceContainsY"], 'auditStatus': dict02["auditStatus"],
+                             'participationIdentity': dict02["participationIdentity"],
+                             'fileHandleField': dict02["fileHandleField"],
+                             'calculationField': dict02["fileHandleField"], 'derivation': str(dict02["derivation"])}
+            mpclr_vel.append(mpclr_02_vel)
+
+
+    for dict03 in result03:
+        if Handler.yaml["test_data"]["mpc_lr_03"] == dict03["resourceName"]:
+            mpclr_03_vel = {'organId': str(dict03["organId"]), 'resourceId': str(dict03["resourceId"]),
+                            'resourceName': str(dict03["resourceName"]),
+                            'resourceRowsCount': dict03["resourceRowsCount"],
+                            'resourceColumnCount': dict03["resourceColumnCount"],
+                            'resourceContainsY': dict03["resourceContainsY"], 'auditStatus': dict03["auditStatus"],
+                            'participationIdentity': dict03["participationIdentity"],
+                            'fileHandleField': dict03["fileHandleField"],
+                            'calculationField': dict03["fileHandleField"], 'derivation': str(dict03["derivation"])}
+            mpclr_vel.append(mpclr_03_vel)
 
 
 
+    xgb_data:str = {"param": {"projectId": str(projectId),"modelId": str(modelId_save["xgb_modelId"]),"isDraft": 1,"modelComponents": [
+        {"frontComponentId": "0c894164-cc3f-4812-8a13-16ace76ebb6b","coordinateX": 710,"coordinateY": 100,"width": 120,"height": 40,"shape": "start-node",
+        "componentCode": "start","componentName": "开始","componentValues": [{"key": "taskName","val": "纵向xgb任务"},{"key": "taskDesc","val": "纵向xgb任务"}],"input": [],"output": [
+          {"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37","componentCode": "dataSet","componentName": "选择数据集","portId": "port1","pointType": "edge","pointJson": ""}]},
+        {"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37","coordinateX": 650,"coordinateY": 250,"width": 180,"height": 50,"shape": "dag-node",
+        "componentCode": "dataSet","componentName": "选择数据集","componentValues": [{"key": "selectData","val": json.dumps(xgb_vel)}],
+         "input": [{"frontComponentId": "0c894164-cc3f-4812-8a13-16ace76ebb6b","componentCode": "start","componentName": "开始","portId": "port2","pointType": "edge","pointJson": ""}],
+         "output": [{"frontComponentId": "eb315941-fbb1-4988-8808-fb887827362d","componentCode": "model","componentName": "模型选择","portId": "port1","pointType": "edge","pointJson": ""}]},
+        {"frontComponentId": "eb315941-fbb1-4988-8808-fb887827362d","coordinateX": 650,"coordinateY": 413,"width": 180,"height": 50,"shape": "dag-node","componentCode": "model","componentName": "模型选择",
+        "componentValues": [{"key": "modelType","val": "2"},
+          {"key": "numTree","val": 5},{"key": "maxDepth","val": 5},{"key": "regLambda","val": "1"},{"key": "minChildWeight","val": 3},
+          {"key": "isEncrypted","val": "true"},{"key": "mergeGh","val": "true"},{"key": "rayGroup","val": "true"},{"key": "sampleType","val": "random"},
+          {"key": "featureSample","val": "true"},{"key": "modelName","val": "纵向xgb模型"},{"key": "modelDesc","val": "纵向xgb模型"}],
+        "input": [{"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37","componentCode": "dataSet","componentName": "选择数据集","portId": "port2","pointType": "edge","pointJson": ""}],"output": []}],"modelPointComponents": [{
+        "frontComponentId": "d1804655-6591-4962-9dc2-753323f83346","shape": "edge","input": {"cell": "0c894164-cc3f-4812-8a13-16ace76ebb6b","port": "port2"},
+        "output": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37","port": "port1"}},{"frontComponentId": "9a924166-e20f-4f0e-acd2-0186caff9364","shape": "edge","input": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37",
+          "port": "port2"},"output": {"cell": "eb315941-fbb1-4988-8808-fb887827362d","port": "port1"}}]},"timestamp": timestamp,"nonce": 729,"token": token}
 
-    data02 = {"param": {"projectId": str(projectId), "modelId": str(modelId), "isDraft": 1, "modelComponents": [
-        {"frontComponentId": "495a09b3-4744-4058-9688-6772e5791de4", "coordinateX": 140.5, "coordinateY": 100,
-         "width": 120, "height": 40, "shape": "start-node", "componentCode": "start", "componentName": "开始",
-         "componentValues": [{"key": "taskName", "val": "纵向xgb任务"}, {"key": "taskDesc", "val": "纵向xgb任务描述"}],
-         "input": [], "output": [
-            {"frontComponentId": "0b838296-d584-48c2-acd0-9702eec0562e", "componentCode": "dataSet",
-             "componentName": "选择数据集", "portId": "port1", "pointType": "edge", "pointJson": ""}]},
-        {"frontComponentId": "0b838296-d584-48c2-acd0-9702eec0562e", "coordinateX": 170, "coordinateY": 260,
-         "width": 180, "height": 50, "shape": "dag-node", "componentCode": "dataSet", "componentName": "选择数据集",
-         "componentValues": [{"key": "selectData",
-                              "val": "[{\"organId\":\"#organId01#\",\"organName\":\"#organName01#\",\"resourceId\":\"#resourceId01#\",\"resourceName\":\"#resourceName01#\",\"resourceRowsCount\":50,\"resourceColumnCount\":7,\"resourceContainsY\":1,\"auditStatus\":1,\"participationIdentity\":1,\"fileHandleField\":[\"Class\",\"y\",\"x1\",\"x2\",\"x3\",\"x4\",\"x5\"],\"calculationField\":\"Class\"},{\"organId\":\"#organId02#\",\"organName\":\"#organName02#\",\"resourceId\":\"#resourceId02#\",\"resourceName\":\"#resourceName02#\",\"resourceRowsCount\":50,\"resourceColumnCount\":7,\"resourceContainsY\":0,\"auditStatus\":1,\"participationIdentity\":2,\"fileHandleField\":[\"x6\",\"x7\",\"x8\",\"x9\",\"x10\",\"x11\",\"x12\"],\"calculationField\":\"x6\"}]"}],
-         "input": [{"frontComponentId": "495a09b3-4744-4058-9688-6772e5791de4", "componentCode": "start",
-                    "componentName": "开始", "portId": "port2", "pointType": "edge", "pointJson": ""}], "output": [
-            {"frontComponentId": "38d66ca5-e0aa-436d-af0f-94a5f469eb21", "componentCode": "model",
-             "componentName": "模型选择", "portId": "port1", "pointType": "edge", "pointJson": ""}]},
-        {"frontComponentId": "38d66ca5-e0aa-436d-af0f-94a5f469eb21", "coordinateX": 60, "coordinateY": 420,
-         "width": 180, "height": 50, "shape": "dag-node", "componentCode": "model", "componentName": "模型选择",
-         "componentValues": [{"key": "modelType", "val": "2"}, {"key": "modelName", "val": "纵向xgb模型"},
-                             {"key": "modelDesc", "val": "纵向xgb模型描述"}, {"key": "arbiterOrgan", "val": ""}], "input": [
-            {"frontComponentId": "0b838296-d584-48c2-acd0-9702eec0562e", "componentCode": "dataSet",
-             "componentName": "选择数据集", "portId": "port2", "pointType": "edge", "pointJson": ""}], "output": []}],
-                        "modelPointComponents": [
-                            {"frontComponentId": "1148b089-b45f-4d53-bdc3-bfd0c02f8b4e", "shape": "edge",
-                             "input": {"cell": "495a09b3-4744-4058-9688-6772e5791de4", "port": "port2"},
-                             "output": {"cell": "0b838296-d584-48c2-acd0-9702eec0562e", "port": "port1"}},
-                            {"frontComponentId": "1e0604de-73cc-4a27-b05f-2c8acdca7cc2", "shape": "edge",
-                             "input": {"cell": "0b838296-d584-48c2-acd0-9702eec0562e", "port": "port2"},
-                             "output": {"cell": "38d66ca5-e0aa-436d-af0f-94a5f469eb21", "port": "port1"}}]},
-              "timestamp": str(int(time.time())), "nonce": 853, "token": Handler().yaml["test"]["token"]}
 
-    data02 = json.dumps(data02)
+    hlr_data:str ={ "param":{"projectId":str(projectId),"modelId":str(modelId_save["hlr_modelId"]),"isDraft":1,"modelComponents":[{"frontComponentId":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","coordinateX":710,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始",
+                  "componentValues":[{"key":"taskName","val":"横向lr-DPSGD"},{"key":"taskDesc","val":"横向lr-DPSGD"}],"input":[],"output":[{"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","componentCode":"dataSet","componentName":"选择数据集","portId":"port1","pointType":"edge","pointJson":""}]},
+                  {"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","coordinateX":680,"coordinateY":227,"width":180,"height":50,"shape":"dag-node","componentCode":"dataSet","componentName":"选择数据集",
+                   "componentValues":[{"key":"selectData","val":json.dumps(hlr_vel)}],"input":[{"frontComponentId":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","componentCode":"start","componentName":"开始","portId":"port2","pointType":"edge","pointJson":""}],
+                   "output":[{"frontComponentId":"381c6a40-c09b-448c-b065-700e0c3886f5","componentCode":"model","componentName":"模型选择","portId":"port1","pointType":"edge","pointJson":""}]},
+                  {"frontComponentId":"381c6a40-c09b-448c-b065-700e0c3886f5","coordinateX":660,"coordinateY":390,"width":180,"height":50,"shape":"dag-node","componentCode":"model","componentName":"模型选择","componentValues":[{"key":"modelType","val":"3"},{"key":"arbiterOrgan","val":"c8770d1e-d34d-48d7-bd83-a00c426fd4d3"},
+                   {"key":"encryption","val":"DPSGD"},{"key":"delta","val":"0.0001"},{"key":"noiseMultiplier","val":"2.0"},{"key":"l2NormClip","val":"1.0"},{"key":"secureMode","val":"true"},{"key":"alpha","val":"0.0001"},{"key":"batchSize","val":1},{"key":"maxIter","val":5},{"key":"modelName","val":"横向lr-DPSGD"},{"key":"modelDesc","val":"横向lr-DPSGD"}],
+                   "input":[{"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","componentCode":"dataSet","componentName":"选择数据集","portId":"port2","pointType":"edge","pointJson":""}],"output":[]}],"modelPointComponents":[{"frontComponentId":"d69e97be-0fd1-4b71-ac0b-975f2af1eb79","shape":"edge","input":{"cell":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","port":"port2"},
+                   "output":{"cell":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","port":"port1"}},{"frontComponentId":"3b09d79d-c562-46de-9098-466f45b6fcd8","shape":"edge","input":{"cell":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","port":"port2"},"output":{"cell":"381c6a40-c09b-448c-b065-700e0c3886f5","port":"port1"}}]},
+                    "timestamp":timestamp,"nonce":326,"token":token}
 
-    if "#organId01#" in data02:
-        data02 = data02.replace("#organId01#", str(Handler().organId01))
-    if "#organName01#" in data02:
-        data02 = data02.replace("#organName01#", str(Handler().organName01))
-    if "#resourceId01#" in data02:
-        data02 = data02.replace("#resourceId01#", resourceId01)
-    if "#resourceName01#" in data02:
-        data02 = data02.replace("#resourceName01#", Handler().yaml["test_name"]["resourceName01"])
-    if "#organId02#" in data02:
-        data02 = data02.replace("#organId02#", str(Handler().organId02))
-    if "#organName02#" in data02:
-        data02 = data02.replace("#organName02#", str(Handler().organName02))
-    if "#resourceId02#" in data02:
-        data02 = data02.replace("#resourceId02#", resourceId02)
-    if "#resourceName02#" in data02:
-        data02 = data02.replace("#resourceName02#", Handler().yaml["test_name"]["resourceName02"])
-    print(data02)
+    task_data_id = {"xgb_data":xgb_data,"hlr_data":hlr_data}
+    modelId_run = {"xgb_model_id":"xgb_model_id","hlr_model_id":"hlr_model_id"}
+    for key in task_data_id:
+        resp = requests_handler.visit(
+            url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
+            method="post",
+            json=json.loads(json.dumps(task_data_id[key]))
+        )
+        # xgb_modelId = resp["result"]["modelId"]
+        task_data_id[key]=resp["result"]["modelId"]
 
-    resp = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
-        method="post",
-        json=json.loads(data02)
-    )
-    modelId = resp["result"]["modelId"]
-
-    return modelId
+    return task_data_id
 
 def runTask_xgb():
-    modelId = saveModel_v_xgb()
-    data = '{"modelId":"#modelId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
-    if "#timestamp#" in data:
-        data = data.replace("#timestamp#", str(int(time.time())))
-    if "#modelId#" in data:
-        data = data.replace("#modelId#", str(modelId))
-    if "#token#" in data:
-        data = data.replace("#token#", Handler().yaml["test"]["token"])
-    resp = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/data/model/runTaskModel",
-        method="get",
-        params=json.loads(data)
-    )
-    xgb_taskId = resp["result"]["taskId"]
+    task_data_id = saveModel_v_xgb()
+    print(task_data_id)
+    task_id = []
+    for key in task_data_id:
 
-    return xgb_taskId
+        data = '{"modelId":"#modelId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+        if "#timestamp#" in data:
+            data = data.replace("#timestamp#", str(int(time.time())))
+        if "#modelId#" in data:
+            data = data.replace("#modelId#", str(task_data_id[key]))
+        if "#token#" in data:
+            data = data.replace("#token#", Handler().token01)
+        resp = requests_handler.visit(
+            url=Handler.yaml["host1"] + "/data/model/runTaskModel",
+            method="get",
+            params=json.loads(data)
+        )
+        print(resp)
+        taskId = resp["result"]["taskId"]
+        task_id.append(taskId)
+
+    return task_id
 
 
 
@@ -743,7 +846,7 @@ if __name__ == "__main__":
     #print(Handler().resourceId03)
     #print(Handler().fileId01)
     # print((Handler().organId01))
-    print(Projectapproval())
+    print(getProjectDetails())
 
 
 
