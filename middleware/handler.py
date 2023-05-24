@@ -640,21 +640,21 @@ def saveModel_v_xgb():
     timestamp = str(int(time.time()))
     projectId = Projectapproval()
     modelId_save = {"xgb_modelId":"xgb_modelId","hlr_modelId":"hlr_modelId","mpc_modelId":"mpc_modelId"}
-    data = '{"param":{"projectId":"#projectId#","isDraft":1,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
-    if "#timestamp#" in data:
-        data = data.replace("#timestamp#", timestamp)
-    if "#projectId#" in data:
-        data = data.replace("#projectId#", str(projectId))
-    if "#token#" in data:
-        data = data.replace("#token#", token)#
-
-    for key in modelId_save:
-        resp = requests_handler.visit(
-            url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
-            method="post",
-            json=json.loads(data)
-        )
-        modelId_save[key] = resp["result"]["modelId"]
+    # data = '{"param":{"projectId":"#projectId#","isDraft":1,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
+    # if "#timestamp#" in data:
+    #     data = data.replace("#timestamp#", timestamp)
+    # if "#projectId#" in data:
+    #     data = data.replace("#projectId#", str(projectId))
+    # if "#token#" in data:
+    #     data = data.replace("#token#", token)#
+    #
+    # for key in modelId_save:
+    #     resp = requests_handler.visit(
+    #         url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
+    #         method="post",
+    #         json=json.loads(data)
+    #     )
+    #     modelId_save[key] = resp["result"]["modelId"]
 
 
     requests_data = '{"projectId":"#projectId#","organId":"#organId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
@@ -766,7 +766,7 @@ def saveModel_v_xgb():
 
 
 
-    xgb_data:str = {"param": {"projectId": str(projectId),"modelId": str(modelId_save["xgb_modelId"]),"isDraft": 1,"modelComponents": [
+    xgb_data:str = {"param": {"projectId": str(projectId),"isDraft": 1,"modelComponents": [
         {"frontComponentId": "0c894164-cc3f-4812-8a13-16ace76ebb6b","coordinateX": 710,"coordinateY": 100,"width": 120,"height": 40,"shape": "start-node",
         "componentCode": "start","componentName": "开始","componentValues": [{"key": "taskName","val": "纵向xgb任务"},{"key": "taskDesc","val": "纵向xgb任务"}],"input": [],"output": [
           {"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37","componentCode": "dataSet","componentName": "选择数据集","portId": "port1","pointType": "edge","pointJson": ""}]},
@@ -785,7 +785,7 @@ def saveModel_v_xgb():
           "port": "port2"},"output": {"cell": "eb315941-fbb1-4988-8808-fb887827362d","port": "port1"}}]},"timestamp": timestamp,"nonce": 729,"token": token}
 
 
-    hlr_data:str ={ "param":{"projectId":str(projectId),"modelId":str(modelId_save["hlr_modelId"]),"isDraft":1,"modelComponents":[{"frontComponentId":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","coordinateX":710,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始",
+    hlr_data:str ={ "param":{"projectId":str(projectId),"isDraft":1,"modelComponents":[{"frontComponentId":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","coordinateX":710,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始",
                   "componentValues":[{"key":"taskName","val":"横向lr-DPSGD"},{"key":"taskDesc","val":"横向lr-DPSGD"}],"input":[],"output":[{"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","componentCode":"dataSet","componentName":"选择数据集","portId":"port1","pointType":"edge","pointJson":""}]},
                   {"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","coordinateX":680,"coordinateY":227,"width":180,"height":50,"shape":"dag-node","componentCode":"dataSet","componentName":"选择数据集",
                    "componentValues":[{"key":"selectData","val":json.dumps(hlr_vel)}],"input":[{"frontComponentId":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","componentCode":"start","componentName":"开始","portId":"port2","pointType":"edge","pointJson":""}],
@@ -846,7 +846,7 @@ if __name__ == "__main__":
     #print(Handler().resourceId03)
     #print(Handler().fileId01)
     # print((Handler().organId01))
-    print(getProjectDetails())
+    print(runTask_xgb())
 
 
 
