@@ -41,15 +41,15 @@ class TestResource(unittest.TestCase):
         if "#timestamp#" in data:
             data = data.replace("#timestamp#", str(int(time.time())))
         if "#organId01#" in data:
-            data = data.replace("#organId01#", str(self.pjtion01[1]))
+            data = data.replace("#organId01#", str(self.pjtion01[1][0]))
         if "#resultId01#" in data:
-            data = data.replace("#resultId01#", str(self.pjtion01[0]))
+            data = data.replace("#resultId01#", str(self.pjtion01[0][0][0]))
         if "#organId02#" in data:
-            data = data.replace("#organId02#", str(self.pjtion02[1]))
+            data = data.replace("#organId02#", str(self.pjtion02[1][0]))
         if "#organId03#" in data:
-            data = data.replace("#organId03#", str(self.pjtion03[1]))
+            data = data.replace("#organId03#", str(self.pjtion03[1][0]))
         if "#resultId03#" in data:
-            data = data.replace("#resultId03#", str(self.pjtion03[0]))
+            data = data.replace("#resultId03#", str(self.pjtion03[0][0][0]))
         print(data)
 
 

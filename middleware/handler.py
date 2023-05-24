@@ -639,20 +639,23 @@ def saveModel_v_xgb():
     token = Handler().token01
     timestamp = str(int(time.time()))
     projectId = Projectapproval()
-    data = '{"param":{"projectId":"#projectId#","isDraft":0,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
+    modelId_save = {"xgb_modelId":"xgb_modelId","hlr_modelId":"hlr_modelId","mpc_modelId":"mpc_modelId"}
+    data = '{"param":{"projectId":"#projectId#","isDraft":1,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
     if "#timestamp#" in data:
         data = data.replace("#timestamp#", timestamp)
     if "#projectId#" in data:
         data = data.replace("#projectId#", str(projectId))
     if "#token#" in data:
-        data = data.replace("#token#", token)
+        data = data.replace("#token#", token)#
 
-    resp = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
-        method="post",
-        json=json.loads(data)
-    )
-    modelId = resp["result"]["modelId"]
+    for key in modelId_save:
+        resp = requests_handler.visit(
+            url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
+            method="post",
+            json=json.loads(data)
+        )
+        modelId_save[key] = resp["result"]["modelId"]
+
 
     requests_data = '{"projectId":"#projectId#","organId":"#organId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in requests_data:
@@ -763,7 +766,7 @@ def saveModel_v_xgb():
 
 
 
-    xgb_data:str = {"param": {"projectId": str(projectId),"modelId": str(modelId),"isDraft": 1,"modelComponents": [
+    xgb_data:str = {"param": {"projectId": str(projectId),"modelId": str(modelId_save["xgb_modelId"]),"isDraft": 1,"modelComponents": [
         {"frontComponentId": "0c894164-cc3f-4812-8a13-16ace76ebb6b","coordinateX": 710,"coordinateY": 100,"width": 120,"height": 40,"shape": "start-node",
         "componentCode": "start","componentName": "开始","componentValues": [{"key": "taskName","val": "纵向xgb任务"},{"key": "taskDesc","val": "纵向xgb任务"}],"input": [],"output": [
           {"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37","componentCode": "dataSet","componentName": "选择数据集","portId": "port1","pointType": "edge","pointJson": ""}]},
@@ -781,37 +784,54 @@ def saveModel_v_xgb():
         "output": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37","port": "port1"}},{"frontComponentId": "9a924166-e20f-4f0e-acd2-0186caff9364","shape": "edge","input": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37",
           "port": "port2"},"output": {"cell": "eb315941-fbb1-4988-8808-fb887827362d","port": "port1"}}]},"timestamp": timestamp,"nonce": 729,"token": token}
 
-    hlr_data = ''
 
+    hlr_data:str ={ "param":{"projectId":str(projectId),"modelId":str(modelId_save["hlr_modelId"]),"isDraft":1,"modelComponents":[{"frontComponentId":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","coordinateX":710,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始",
+                  "componentValues":[{"key":"taskName","val":"横向lr-DPSGD"},{"key":"taskDesc","val":"横向lr-DPSGD"}],"input":[],"output":[{"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","componentCode":"dataSet","componentName":"选择数据集","portId":"port1","pointType":"edge","pointJson":""}]},
+                  {"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","coordinateX":680,"coordinateY":227,"width":180,"height":50,"shape":"dag-node","componentCode":"dataSet","componentName":"选择数据集",
+                   "componentValues":[{"key":"selectData","val":json.dumps(hlr_vel)}],"input":[{"frontComponentId":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","componentCode":"start","componentName":"开始","portId":"port2","pointType":"edge","pointJson":""}],
+                   "output":[{"frontComponentId":"381c6a40-c09b-448c-b065-700e0c3886f5","componentCode":"model","componentName":"模型选择","portId":"port1","pointType":"edge","pointJson":""}]},
+                  {"frontComponentId":"381c6a40-c09b-448c-b065-700e0c3886f5","coordinateX":660,"coordinateY":390,"width":180,"height":50,"shape":"dag-node","componentCode":"model","componentName":"模型选择","componentValues":[{"key":"modelType","val":"3"},{"key":"arbiterOrgan","val":"c8770d1e-d34d-48d7-bd83-a00c426fd4d3"},
+                   {"key":"encryption","val":"DPSGD"},{"key":"delta","val":"0.0001"},{"key":"noiseMultiplier","val":"2.0"},{"key":"l2NormClip","val":"1.0"},{"key":"secureMode","val":"true"},{"key":"alpha","val":"0.0001"},{"key":"batchSize","val":1},{"key":"maxIter","val":5},{"key":"modelName","val":"横向lr-DPSGD"},{"key":"modelDesc","val":"横向lr-DPSGD"}],
+                   "input":[{"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","componentCode":"dataSet","componentName":"选择数据集","portId":"port2","pointType":"edge","pointJson":""}],"output":[]}],"modelPointComponents":[{"frontComponentId":"d69e97be-0fd1-4b71-ac0b-975f2af1eb79","shape":"edge","input":{"cell":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","port":"port2"},
+                   "output":{"cell":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","port":"port1"}},{"frontComponentId":"3b09d79d-c562-46de-9098-466f45b6fcd8","shape":"edge","input":{"cell":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","port":"port2"},"output":{"cell":"381c6a40-c09b-448c-b065-700e0c3886f5","port":"port1"}}]},
+                    "timestamp":timestamp,"nonce":326,"token":token}
 
+    task_data_id = {"xgb_data":xgb_data,"hlr_data":hlr_data}
+    modelId_run = {"xgb_model_id":"xgb_model_id","hlr_model_id":"hlr_model_id"}
+    for key in task_data_id:
+        resp = requests_handler.visit(
+            url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
+            method="post",
+            json=json.loads(json.dumps(task_data_id[key]))
+        )
+        # xgb_modelId = resp["result"]["modelId"]
+        task_data_id[key]=resp["result"]["modelId"]
 
-    resp = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
-        method="post",
-        json=json.loads(json.dumps(xgb_data))
-    )
-
-    xgb_modelId = resp["result"]["modelId"]
-
-    return xgb_modelId
+    return task_data_id
 
 def runTask_xgb():
-    xgb_modelId = saveModel_v_xgb()
-    data = '{"modelId":"#modelId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
-    if "#timestamp#" in data:
-        data = data.replace("#timestamp#", str(int(time.time())))
-    if "#modelId#" in data:
-        data = data.replace("#modelId#", str(xgb_modelId))
-    if "#token#" in data:
-        data = data.replace("#token#", Handler().token01)
-    resp = requests_handler.visit(
-        url=Handler.yaml["host1"] + "/data/model/runTaskModel",
-        method="get",
-        params=json.loads(data)
-    )
-    xgb_taskId = resp["result"]["taskId"]
+    task_data_id = saveModel_v_xgb()
+    print(task_data_id)
+    task_id = []
+    for key in task_data_id:
 
-    return xgb_taskId
+        data = '{"modelId":"#modelId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
+        if "#timestamp#" in data:
+            data = data.replace("#timestamp#", str(int(time.time())))
+        if "#modelId#" in data:
+            data = data.replace("#modelId#", str(task_data_id[key]))
+        if "#token#" in data:
+            data = data.replace("#token#", Handler().token01)
+        resp = requests_handler.visit(
+            url=Handler.yaml["host1"] + "/data/model/runTaskModel",
+            method="get",
+            params=json.loads(data)
+        )
+        print(resp)
+        taskId = resp["result"]["taskId"]
+        task_id.append(taskId)
+
+    return task_id
 
 
 
@@ -826,7 +846,7 @@ if __name__ == "__main__":
     #print(Handler().resourceId03)
     #print(Handler().fileId01)
     # print((Handler().organId01))
-    print(runTask_xgb())
+    print(getProjectDetails())
 
 
 

@@ -38,10 +38,10 @@ class TestResource(unittest.TestCase):
         data = test_info["data"]
         if "#token#" in data:
             data = data.replace("#token#", self.token)
-        if "#serverAddress#" in data:
-            data = data.replace("#serverAddress#", env_data.socketserver)
+        # if "#serverAddress#" in data:
+        #     data = data.replace("#serverAddress#", env_data.socketserver)
         if "#projectName01#" in data:
-            data = data.replace("#projectName01#", env_data.yaml["test_name"]["projectName01"])
+            data = data.replace("#projectName01#", "测试项目用例")
         if "#organId01#" in data:
             data = data.replace("#organId01#", self.organId01)
         if "#organId02#" in data:
