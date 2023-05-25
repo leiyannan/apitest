@@ -1546,3 +1546,7 @@
 2023-05-24 13:53:36,012--test_register.py--hanghao:57--ERROR:注册失败-账号已注册：测试用例无法通过：False is not true
 2023-05-24 13:53:36,127--test_register.py--hanghao:55--INFO:两次密码不一致：测试用例通过
 2023-05-24 13:53:36,472--test_register.py--hanghao:57--ERROR:注册成功：测试用例无法通过：False is not true
+2023-05-25 17:18:54,802--train_task.py--hanghao:59--INFO:审核失败—id为空：测试用例通过
+2023-05-25 18:28:10,540--train_task.py--hanghao:68--INFO:纵向xgb_默认配置：测试用例通过
+2023-05-25 18:51:39,411--train_task.py--hanghao:76--INFO:纵向xgb_默认配置：测试用例通过
+2023-05-25 18:59:01,838--train_task.py--hanghao:78--INFO:纵向xgb_默认配置：测试用例通过
