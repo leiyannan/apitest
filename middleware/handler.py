@@ -158,16 +158,25 @@ class Handler():
     @property
     def train_xgb_host(self):
         return add_resource(host= host1,filename=Handler.yaml["test_data"]["train_xgb_host"])["resourceId"]
-
+    @property
     def test_xgb_host(self):
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_v_host"])["resourceId"]
 
     @property
     def train_lr_host(self):
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["train_lr_host"])["resourceId"]
-
+    @property
     def test_lr_host(self):
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_lr"])["resourceId"]
+
+    @property
+    def train_lrnn_host(self):
+        return add_resource(host=host1,filename=Handler.yaml["test_data"]["train_lrnn_host"])["resourceId"]
+
+    @property
+    def test_lrnn_host(self):
+        return add_resource(host=host1,filename=Handler.yaml["test_data"]["test_lrnn"])["resourceId"]
+
 
     @property
     def train_mpc_01(self):
@@ -193,6 +202,14 @@ class Handler():
     @property
     def test_lr_guest(self):
         return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lr"])["resourceId"]
+
+    @property
+    def train_lrnn_guest(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["train_lrnn_guest"])["resourceId"]
+
+    @property
+    def test_lrnn_guest(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lrnn"])["resourceId"]
 
     @property
     def train_mpc_02(self):
@@ -246,6 +263,14 @@ class Handler():
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_lr"])["resourceFusionId"]
 
     @property
+    def train_lrnn_host_FusionId(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["train_lrnn_host"])["resourceFusionId"]
+
+    @property
+    def test_lrnn_host_FusionId(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_lrnn"])["resourceFusionId"]
+
+    @property
     def train_mpc_01_FusionId(self):
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["mpc_lr_01"])["resourceFusionId"]
 
@@ -269,6 +294,14 @@ class Handler():
     @property
     def test_lr_guest_FusionId(self):
         return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lr"])["resourceFusionId"]
+
+    @property
+    def train_lrnn_guest_FusionId(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["train_lrnn_guest"])["resourceFusionId"]
+
+    @property
+    def test_lrnn_guest_FusionId(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lrnn"])["resourceFusionId"]
 
     @property
     def train_mpc_02_FusionId(self):
@@ -457,7 +490,7 @@ def add_resource(host ,filename="训练_纵向xgb_lr_host.csv"):
 
 def add_project():
     # 使用host1和host2、host3的新增资源，并使用该资源 在host1环境新建项目
-    data:str = '{"projectName": "测试项目","projectDesc": "测试项目","projectOrgans": [{"organId": "#organId02#","participationIdentity": 2,"resourceIds": ["#train_xgb_guest_FusionId#", "#test_xgb_guest_FusionId#", "#train_lr_guest_FusionId#", "#test_lr_guest_FusionId#", "#train_mpc_02_FusionId#"]}, {"organId": "#organId03#","participationIdentity": 2,"resourceIds": ["#train_mpc_03_FusionId#"]}, {"organId": "#organId01#","participationIdentity": 1,"resourceIds": ["#train_xgb_host_FusionId#", "#test_xgb_host_FusionId#", "#train_lr_host_FusionId#", "#test_lr_host_FusionId#", "#train_mpc_01_FusionId#"]}],"timestamp": #timestamp#,"nonce": 439,"token": "#token#"}'
+    data:str = '{"projectName": "测试项目","projectDesc": "测试项目","projectOrgans": [{"organId": "#organId02#","participationIdentity": 2,"resourceIds": ["#train_xgb_guest_FusionId#", "#test_xgb_guest_FusionId#", "#train_lr_guest_FusionId#", "#test_lr_guest_FusionId#", "#train_lrnn_guest_FusionId#","#test_lrnn_guest_FusionId#","#train_mpc_02_FusionId#"]}, {"organId": "#organId03#","participationIdentity": 2,"resourceIds": ["#train_mpc_03_FusionId#"]}, {"organId": "#organId01#","participationIdentity": 1,"resourceIds": ["#train_xgb_host_FusionId#", "#test_xgb_host_FusionId#", "#train_lr_host_FusionId#", "#test_lr_host_FusionId#", "#train_lrnn_host_FusionId#","#test_lrnn_host_FusionId#","#train_mpc_01_FusionId#"]}],"timestamp": #timestamp#,"nonce": 439,"token": "#token#"}'
     if "#token#" in data:
         data = data.replace("#token#", Handler().token01)
     if "#organId01#" in data:
@@ -476,6 +509,11 @@ def add_project():
         data = data.replace("#train_lr_host_FusionId#", str(Handler().train_lr_host_FusionId))
     if "#test_lr_host_FusionId#" in data:
         data = data.replace("#test_lr_host_FusionId#", str(Handler().test_lr_host_FusionId))
+    if "#train_lrnn_host_FusionId#" in data:
+        data = data.replace("#train_lrnn_host_FusionId#", str(Handler().train_lrnn_host_FusionId))
+    if "#test_lrnn_host_FusionId#" in data:
+        data = data.replace("#test_lrnn_host_FusionId#", str(Handler().test_lrnn_host_FusionId))
+
     if "#train_mpc_01_FusionId#" in data:
         data = data.replace("#train_mpc_01_FusionId#", str(Handler().train_mpc_01_FusionId))
     if "#train_xgb_guest_FusionId#" in data:
@@ -486,6 +524,10 @@ def add_project():
         data = data.replace("#train_lr_guest_FusionId#", str(Handler().train_lr_guest_FusionId))
     if "#test_lr_guest_FusionId#" in data:
         data = data.replace("#test_lr_guest_FusionId#", str(Handler().test_lr_guest_FusionId))
+    if "#train_lrnn_guest_FusionId#" in data:
+        data = data.replace("#train_lrnn_guest_FusionId#", str(Handler().train_lrnn_guest_FusionId))
+    if "#test_lrnn_guest_FusionId#" in data:
+        data = data.replace("#test_lrnn_guest_FusionId#", str(Handler().test_lrnn_guest_FusionId))
     if "#train_mpc_02_FusionId#" in data:
         data = data.replace("#train_mpc_02_FusionId#", str(Handler().train_mpc_02_FusionId))
     if "#train_mpc_03_FusionId#" in data:
