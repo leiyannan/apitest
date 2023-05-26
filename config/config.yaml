@@ -1,6 +1,8 @@
+# 接口测试用例
 excel:
   file: "cases.xlsx"
 
+# 日志收集
 logger:
   name: primihub-test
   file: 'testlog.txt'
@@ -8,6 +10,7 @@ logger:
   stream_level: "DEBUG"
   file_level: "INFO"
 
+# 数据库配置
 db:
   host: "192.168.99.13"
   port: 30306
@@ -15,28 +18,42 @@ db:
   password: "primihub@123"
   charset: "utf8"
 
-
+# host 地址
 host1: http://192.168.99.31:30811/prod-api
 host2: http://192.168.99.31:30812/prod-api
 host3: http://192.168.99.31:30813/prod-api
 
+# 用户名、密码（默认使用初始用户admin，123456）
 user:
   userAccount: "admin"
   userPassword: "123456"
 
+# 各项任务的测试数据，若想使用新数据测试，将CSV文件放置/data目录下，修改对应资源名称
 test_data:
+  # psi 测试数据
   psi_a: "psi_a.csv"
   psi_b: "psi_b.csv"
-  pir_data: "pir.csv"
-  train_lr_host: "训练_横向lr_host.csv"
-  train_lr_guest: "训练_横向lr_guest.csv"
-  test_lr: "推理_横向lr.csv"
 
+  # pir 测试数据
+  pir_data: "pir.csv"
+
+  # 联邦学习：纵向xgb、纵向lr：训练、推理测试数据：
   train_xgb_host: "训练_纵向xgb_lr_host.csv"
   train_xgb_guest: "训练_纵向xgb_lr_guest.csv"
   test_v_host: "推理_纵向xgb_lr_host.csv"
   test_v_guest: "推理_纵向xgb_lr_guest.csv"
 
+  # 联邦学习：横向lr、横向nn-分类：训练、推理测试数据
+  train_lr_host: "训练_横向lr_host.csv"
+  train_lr_guest: "训练_横向lr_guest.csv"
+  test_lr: "推理_横向lr.csv"
+
+  # 联邦学习：横向nn-回归：训练、推理测试数据
+  train_lrnn_host: "训练_横向nn回归_host.csv"
+  train_lrnn_guest: "训练_横向nn回归_guest.csv"
+  test_lrnn: "推理_横向nn回归.csv"
+
+  # MPC-lr 训练测试数据
   mpc_lr_01: "mpc_lr_1.csv"
   mpc_lr_02: "mpc_lr_2.csv"
   mpc_lr_03: "mpc_lr_3.csv"

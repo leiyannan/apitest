@@ -717,6 +717,7 @@ def getModel_vel():
     xgb_val = []
     hlr_val = []
     mpclr_val = []
+    lrnn_val = []
 
     for dict01 in result01:
         if Handler.yaml["test_data"]["train_xgb_host"] == dict01["resourceName"]:
@@ -734,6 +735,15 @@ def getModel_vel():
                             'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
                             'calculationField':dict01["fileHandleField"],'derivation': str(dict01["derivation"])}
             hlr_val.append(hlr_host_val)
+
+
+        if Handler.yaml["test_data"]["train_lrnn_host"] == dict01["resourceName"]:
+            lrnn_host_val = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+                            'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
+                            'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
+                            'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
+                            'calculationField':dict01["fileHandleField"],'derivation': str(dict01["derivation"])}
+            lrnn_val.append(lrnn_host_val)
 
         if Handler.yaml["test_data"]["mpc_lr_01"] == dict01["resourceName"]:
             mpclr_01_val = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
@@ -765,6 +775,17 @@ def getModel_vel():
                              'calculationField': dict02["fileHandleField"], 'derivation': str(dict02["derivation"])}
             hlr_val.append(hlr_guest_val)
 
+        if Handler.yaml["test_data"]["train_lrnn_guest"] == dict02["resourceName"]:
+            lrnn_guest_val = {'organId': str(dict02["organId"]), 'organName' : str(Handler().organName02),'resourceId': str(dict02["resourceId"]),
+                             'resourceName': str(dict02["resourceName"]),
+                             'resourceRowsCount': dict02["resourceRowsCount"],
+                             'resourceColumnCount': dict02["resourceColumnCount"],
+                             'resourceContainsY': dict02["resourceContainsY"], 'auditStatus': dict02["auditStatus"],
+                             'participationIdentity': dict02["participationIdentity"],
+                             'fileHandleField': dict02["fileHandleField"],
+                             'calculationField': dict02["fileHandleField"], 'derivation': str(dict02["derivation"])}
+            lrnn_val.append(lrnn_guest_val)
+
 
         if Handler.yaml["test_data"]["mpc_lr_02"] == dict02["resourceName"]:
             mpclr_02_val = {'organId': str(dict02["organId"]), 'organName' : str(Handler().organName02),'resourceId': str(dict02["resourceId"]),
@@ -790,7 +811,7 @@ def getModel_vel():
                             'calculationField': dict03["fileHandleField"], 'derivation': str(dict03["derivation"])}
             mpclr_val.append(mpclr_03_val)
 
-    return {"projectId":projectId,"xgb_val":xgb_val,"hlr_val":hlr_val,"mpclr_val":mpclr_val}
+    return {"projectId":projectId,"xgb_val":xgb_val,"hlr_val":hlr_val,"lrnn_val":lrnn_val,"mpclr_val":mpclr_val}
 
 
 
