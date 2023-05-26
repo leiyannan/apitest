@@ -31,6 +31,9 @@ test_data:
   train_lr_host: "训练_横向lr_host.csv"
   train_lr_guest: "训练_横向lr_guest.csv"
   test_lr: "推理_横向lr.csv"
+  train_lrnn_host: "训练_横向nn回归_host.csv"
+  train_lrnn_guest: "训练_横向nn回归_guest.csv"
+  test_lrnn: "推理_横向nn回归.csv"
 
   train_xgb_host: "训练_纵向xgb_lr_host.csv"
   train_xgb_guest: "训练_纵向xgb_lr_guest.csv"
