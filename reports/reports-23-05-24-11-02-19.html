@@ -1,0 +1,1015 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>primihub管理平台测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 120%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">primihub管理平台测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> lyn</p>
+<p class='attribute'><strong>开始时间 : </strong> 2023-05-24 11:02:19</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:01:51.162769</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 35，通过 19，失败 2，错误 14，通过率= 54.29%</p>
+
+<p class='description'>测试报告描述</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 54.29% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 2 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 19 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 35 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 16px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_login.TestLogin</td>
+    <td class="text-center">4</td>
+    <td class="text-center">4</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',4)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in" align="left">
+    <pre>
+    
+pt1_1: {'code': 107, 'msg': '验证key已失效', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_2</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse in" align="left">
+    <pre>
+    
+pt1_2: {'code': 100, 'msg': '缺少参数:userAccount', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_3</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse in" align="left">
+    <pre>
+    
+pt1_3: {'code': 107, 'msg': '验证key已失效', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_4</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse in" align="left">
+    <pre>
+    
+pt1_4: {'code': 107, 'msg': '验证key已失效', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_project.TestResource</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">3</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',3)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='ft2_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_1'>错误</button>
+    <div id='div_ft2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_1'>错误</button>
+    <div id='div_ft2_1' class="collapse in" align="left">
+    <pre>
+    
+ft2_1: Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project.py", line 42, in test_resource
+    data = data.replace("#serverAddress#", env_data.socketserver)
+AttributeError: 'Handler' object has no attribute 'socketserver'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_2</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_2'>错误</button>
+    <div id='div_ft2_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_2'>错误</button>
+    <div id='div_ft2_2' class="collapse in" align="left">
+    <pre>
+    
+ft2_2: Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project.py", line 42, in test_resource
+    data = data.replace("#serverAddress#", env_data.socketserver)
+AttributeError: 'Handler' object has no attribute 'socketserver'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft2_3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_3</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_3'>错误</button>
+    <div id='div_ft2_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_3'>错误</button>
+    <div id='div_ft2_3' class="collapse in" align="left">
+    <pre>
+    
+ft2_3: Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project.py", line 44, in test_resource
+    data = data.replace("#projectName01#", env_data.yaml["test_name"]["projectName01"])
+KeyError: 'test_name'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_project_approval.TestResource</td>
+    <td class="text-center">11</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">10</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',11)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='ft3_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_01</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_1'>错误</button>
+    <div id='div_ft3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_1'>错误</button>
+    <div id='div_ft3_1' class="collapse in" align="left">
+    <pre>
+    
+ft3_1: {"type":"1","id":"[171, 172]","auditStatus":"1","auditOpinin":"审核项目同意","timestamp":"1684897418","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:38.930+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 0, 'msg': '请求成功'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_02</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_2'>错误</button>
+    <div id='div_ft3_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_2'>错误</button>
+    <div id='div_ft3_2' class="collapse in" align="left">
+    <pre>
+    
+ft3_2: {"type":"2","id":"[[594, 593, 592, 591, 590], [595]]","auditStatus":"1","auditOpinin":"审核资源同意","timestamp":"1684897418","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:39.059+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 0, 'msg': '请求成功'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_03</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_3'>错误</button>
+    <div id='div_ft3_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_3'>错误</button>
+    <div id='div_ft3_3' class="collapse in" align="left">
+    <pre>
+    
+ft3_3: {"type":"1","id":"[171, 172]","auditStatus":"1","auditOpinin":"审核项目同意","timestamp":"1684897418","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:39.173+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 1005, 'msg': '审核授权失败:不可以重复审核'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_4' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_04</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_4'>错误</button>
+    <div id='div_ft3_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_4'>错误</button>
+    <div id='div_ft3_4' class="collapse in" align="left">
+    <pre>
+    
+ft3_4: {"type":"2","id":"[[594, 593, 592, 591, 590], [595]]","auditStatus":"1","auditOpinin":"审核资源同意","timestamp":"1684897419","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:39.294+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 1005, 'msg': '审核授权失败:不可以重复审核'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_5' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_05</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_5'>错误</button>
+    <div id='div_ft3_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_5'>错误</button>
+    <div id='div_ft3_5' class="collapse in" align="left">
+    <pre>
+    
+ft3_5: {"type":"3","id":"[[594, 593, 592, 591, 590], [595]]","auditStatus":"1","auditOpinin":"审核资源同意","timestamp":"1684897419","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:39.411+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 100, 'msg': '缺少参数:type'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_6' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_06</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_6'>错误</button>
+    <div id='div_ft3_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_6'>错误</button>
+    <div id='div_ft3_6' class="collapse in" align="left">
+    <pre>
+    
+ft3_6: {"type":null,"id":"[[594, 593, 592, 591, 590], [595]]","auditStatus":"1","auditOpinin":"审核资源同意","timestamp":"1684897419","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:39.538+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 100, 'msg': '缺少参数:type'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_07</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_7'>通过</button>
+    <div id='div_pt3_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_7'>通过</button>
+    <div id='div_pt3_7' class="collapse in" align="left">
+    <pre>
+    
+pt3_7: {"type":"1","id":null,"auditStatus":"1","auditOpinin":"审核项目同意","timestamp":"1684897419","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'code': 100, 'msg': '缺少参数:id', 'result': None, 'extra': None}
+{'code': 100, 'msg': '缺少参数:id'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_8' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_08</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_8'>错误</button>
+    <div id='div_ft3_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_8'>错误</button>
+    <div id='div_ft3_8' class="collapse in" align="left">
+    <pre>
+    
+ft3_8: {"type":"1","id":"[171, 172]","auditStatus":null,"auditOpinin":"审核项目同意","timestamp":"1684897419","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:39.764+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 100, 'msg': '缺少参数:auditStatus'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_9' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_09</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_9'>错误</button>
+    <div id='div_ft3_9' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_9'>错误</button>
+    <div id='div_ft3_9' class="collapse in" align="left">
+    <pre>
+    
+ft3_9: {"type":"1","id":"[174, 175]","auditStatus":"2","auditOpinin":"审核项目拒绝","timestamp":"1684897419","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:39.882+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 0, 'msg': '请求成功'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_10' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_10</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_10'>错误</button>
+    <div id='div_ft3_10' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_10'>错误</button>
+    <div id='div_ft3_10' class="collapse in" align="left">
+    <pre>
+    
+ft3_10: {"type":"1","id":"[177, 178]","auditStatus":"1","auditOpinin":"审核项目同意","timestamp":"1684897419","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:40.002+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 0, 'msg': '请求成功'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft3_11' class='none'>
+    <td class='errorCase'><div class='testcase'>test_resource_11</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_11'>错误</button>
+    <div id='div_ft3_11' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_11'>错误</button>
+    <div id='div_ft3_11' class="collapse in" align="left">
+    <pre>
+    
+ft3_11: {"type":"2","id":"[[616, 615, 614, 613, 612], [617]]","auditStatus":"2","auditOpinion":"审核资源拒绝","timestamp":"1684897419","nonce":"527","token":"SU202305240303383D0FEF8AF1C018AAFCB8F0674E3D09A8"}
+{'timestamp': '2023-05-24T03:03:40.114+00:00', 'status': 400, 'error': 'Bad Request', 'message': '', 'path': '/project/approval'}
+{'code': 0, 'msg': '请求成功'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_project_approval.py", line 68, in test_resource
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_project_close_open.TestResource</td>
+    <td class="text-center">2</td>
+    <td class="text-center">2</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',2)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='pt4_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse in" align="left">
+    <pre>
+    
+pt4_1: {'code': 0, 'msg': '请求成功', 'result': None, 'extra': None}
+{'code': 0, 'msg': '请求成功'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt4_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_2</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_2'>通过</button>
+    <div id='div_pt4_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_2'>通过</button>
+    <div id='div_pt4_2' class="collapse in" align="left">
+    <pre>
+    
+pt4_2: {'code': 0, 'msg': '请求成功', 'result': None, 'extra': None}
+{'code': 0, 'msg': '请求成功'}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_register.TestRegister</td>
+    <td class="text-center">8</td>
+    <td class="text-center">5</td>
+    <td class="text-center">2</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',8)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='pt5_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse in" align="left">
+    <pre>
+    
+pt5_1: {'code': 118, 'msg': '验证码失败', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_register_2</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_2'>错误</button>
+    <div id='div_ft5_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_2'>错误</button>
+    <div id='div_ft5_2' class="collapse in" align="left">
+    <pre>
+    
+ft5_2: {'timestamp': '2023-05-24T03:04:03.055+00:00', 'status': 500, 'error': 'Internal Server Error', 'message': '', 'path': '/user/register'}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_register.py", line 44, in test_register
+    self.assertTrue(value == actual[key])
+KeyError: 'code'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_3</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_3'>通过</button>
+    <div id='div_pt5_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_3'>通过</button>
+    <div id='div_pt5_3' class="collapse in" align="left">
+    <pre>
+    
+pt5_3: {'code': 100, 'msg': '缺少参数:password', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_4</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_4'>通过</button>
+    <div id='div_pt5_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_4'>通过</button>
+    <div id='div_pt5_4' class="collapse in" align="left">
+    <pre>
+    
+pt5_4: {'code': 100, 'msg': '缺少参数:passwordAgain', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_5</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_5'>通过</button>
+    <div id='div_pt5_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_5'>通过</button>
+    <div id='div_pt5_5' class="collapse in" align="left">
+    <pre>
+    
+pt5_5: {'code': 100, 'msg': '缺少参数:verificationCode', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_6' class='none'>
+    <td class='failCase'><div class='testcase'>test_register_6</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_6'>失败</button>
+    <div id='div_ft5_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_6'>失败</button>
+    <div id='div_ft5_6' class="collapse in" align="left">
+    <pre>
+    
+ft5_6: {'code': 118, 'msg': '验证码失败', 'result': None, 'extra': None}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_register.py", line 58, in test_register
+    raise e
+  File "/Users/primihub/Desktop/apitest/testcases/test_register.py", line 44, in test_register
+    self.assertTrue(value == actual[key])
+AssertionError: False is not true
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_7</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_7'>通过</button>
+    <div id='div_pt5_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_7'>通过</button>
+    <div id='div_pt5_7' class="collapse in" align="left">
+    <pre>
+    
+pt5_7: {'code': 101, 'msg': '无效参数:password not match', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_8' class='none'>
+    <td class='failCase'><div class='testcase'>test_register_8</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_8'>失败</button>
+    <div id='div_ft5_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_8'>失败</button>
+    <div id='div_ft5_8' class="collapse in" align="left">
+    <pre>
+    
+ft5_8: 13049135047
+{'code': 118, 'msg': '验证码失败', 'result': None, 'extra': None}
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/ddt.py", line 220, in wrapper
+    return func(self, *args, **kwargs)
+  File "/Users/primihub/Desktop/apitest/testcases/test_register.py", line 58, in test_register
+    raise e
+  File "/Users/primihub/Desktop/apitest/testcases/test_register.py", line 44, in test_register
+    self.assertTrue(value == actual[key])
+AssertionError: False is not true
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_resource.TestResource</td>
+    <td class="text-center">7</td>
+    <td class="text-center">7</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',7)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='pt6_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_1</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse in" align="left">
+    <pre>
+    
+pt6_1: {"resourceName":"apitest_添加资源-名称","resourceDesc":"apitest_添加资源-描述","tags":["111"],"resourceSource":1,"resourceAuthType":1,"fileId":"1307","fieldList":[{"fieldId":null,"fieldName":"areaerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"compactnesserror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"concavepointserror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"concavityerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"fractaldimensionerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanarea","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meancompactness","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanconcavepoints","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanconcavity","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanfractaldimension","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanperimeter","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meansmoothness","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meansymmetry","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"perimetererror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"radiuserror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"smoothnesserror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"symmetryerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"textureerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstarea","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstcompactness","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstconcavepoints","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstconcavity","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstfractaldimension","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstperimeter","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstradius","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstsmoothness","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstsymmetry","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worsttexture","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"y","fieldType":"Integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"1684897448","nonce":802,"token":"SU202305240304087D7D4FBE90FBF5D335A8EB263412BD4D"}
+{'code': 0, 'msg': '请求成功', 'result': {'resourceDesc': 'apitest_添加资源-描述', 'resourceId': 307, 'resourceFusionId': '1af2e6f76cf0-ad315ccc-ca0f-42bd-9855-20b898a6c135', 'resourceName': 'apitest_添加资源-名称'}, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_2</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+    <div id='div_pt6_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_2'>通过</button>
+    <div id='div_pt6_2' class="collapse in" align="left">
+    <pre>
+    
+pt6_2: {"resourceName":"apitest_编辑资源-名称","resourceDesc":"apitest_编辑资源-描述","tags":["111"],"resourceSource":1,"resourceAuthType":1,"fileId":"1307","fieldList":[{"fieldId":null,"fieldName":"areaerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"compactnesserror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"concavepointserror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"concavityerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"fractaldimensionerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanarea","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meancompactness","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanconcavepoints","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanconcavity","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanfractaldimension","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meanperimeter","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meansmoothness","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"meansymmetry","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"perimetererror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"radiuserror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"smoothnesserror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"symmetryerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"textureerror","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstarea","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstcompactness","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstconcavepoints","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstconcavity","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstfractaldimension","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstperimeter","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstradius","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstsmoothness","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worstsymmetry","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"worsttexture","fieldType":"Double","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"y","fieldType":"Integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"resourceId":"304","timestamp":"1684897448","nonce":494,"token":"SU202305240304087D7D4FBE90FBF5D335A8EB263412BD4D"}
+{'code': 0, 'msg': '请求成功', 'result': {'resourceDesc': 'apitest_编辑资源-描述', 'resourceId': 304, 'resourceName': 'apitest_编辑资源-名称'}, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_3</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_3'>通过</button>
+    <div id='div_pt6_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_3'>通过</button>
+    <div id='div_pt6_3' class="collapse in" align="left">
+    <pre>
+    
+pt6_3: {"resourceName":null,"resourceDesc":"apitest_添加资源-描述","tags":["111"],"resourceSource":1,"resourceAuthType":1,"fileId":1161,"fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x0","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"1684897449","nonce":802,"token":"SU202305240304087D7D4FBE90FBF5D335A8EB263412BD4D"}
+{'code': 100, 'msg': '缺少参数:resourceName', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_4</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_4'>通过</button>
+    <div id='div_pt6_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_4'>通过</button>
+    <div id='div_pt6_4' class="collapse in" align="left">
+    <pre>
+    
+pt6_4: {"resourceName":"apitest_添加资源-名称","resourceDesc":null,"tags":["111"],"resourceSource":1,"resourceAuthType":1,"fileId":1161,"fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x0","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"1684897449","nonce":802,"token":"SU202305240304087D7D4FBE90FBF5D335A8EB263412BD4D"}
+{'code': 100, 'msg': '缺少参数:resourceDesc', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_5</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_5'>通过</button>
+    <div id='div_pt6_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_5'>通过</button>
+    <div id='div_pt6_5' class="collapse in" align="left">
+    <pre>
+    
+pt6_5: {"resourceName":"apitest_添加资源-名称","resourceDesc":"apitest_添加资源-描述","tags":null,"resourceSource":1,"resourceAuthType":1,"fileId":1161,"fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x0","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"1684897450","nonce":802,"token":"SU202305240304087D7D4FBE90FBF5D335A8EB263412BD4D"}
+{'code': 100, 'msg': '缺少参数:tags', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_6</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_6'>通过</button>
+    <div id='div_pt6_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_6'>通过</button>
+    <div id='div_pt6_6' class="collapse in" align="left">
+    <pre>
+    
+pt6_6: {"resourceName":"apitest_添加资源-名称","resourceDesc":"apitest_添加资源-描述","tags":["111"],"resourceSource":1,"resourceAuthType":null,"fileId":1161,"fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x0","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"1684897450","nonce":802,"token":"SU202305240304087D7D4FBE90FBF5D335A8EB263412BD4D"}
+{'code': 100, 'msg': '缺少参数:resourceAuthType', 'result': None, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt6_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_resource_7</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_7'>通过</button>
+    <div id='div_pt6_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_7'>通过</button>
+    <div id='div_pt6_7' class="collapse in" align="left">
+    <pre>
+    
+pt6_7: {"resourceName":"apitest_添加资源-名称","resourceDesc":"apitest_添加资源-描述","tags":["111"],"resourceSource":1,"resourceAuthType":2,"fileId":"1307","fieldList":[{"fieldId":null,"fieldName":"Class","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x0","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x1","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x2","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x3","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x4","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0},{"fieldId":null,"fieldName":"x5","fieldType":"integer","fieldDesc":null,"relevance":0,"grouping":0,"protectionStatus":0}],"fusionOrganList":[],"timestamp":"1684897450","nonce":802,"token":"SU202305240304087D7D4FBE90FBF5D335A8EB263412BD4D"}
+{'code': 0, 'msg': '请求成功', 'result': {'resourceDesc': 'apitest_添加资源-描述', 'resourceId': 308, 'resourceFusionId': '1af2e6f76cf0-56b37b4f-1a77-482c-8ad8-5a3fa7db85e0', 'resourceName': 'apitest_添加资源-名称'}, 'extra': None}
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>35</td>
+    <td>19</td>
+    <td>2</td>
+    <td>14</td>
+    <td>通过率：54.29%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>

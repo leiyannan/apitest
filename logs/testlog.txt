@@ -1550,3 +1550,50 @@
 2023-05-25 18:28:10,540--train_task.py--hanghao:68--INFO:纵向xgb_默认配置：测试用例通过
 2023-05-25 18:51:39,411--train_task.py--hanghao:76--INFO:纵向xgb_默认配置：测试用例通过
 2023-05-25 18:59:01,838--train_task.py--hanghao:78--INFO:纵向xgb_默认配置：测试用例通过
+2023-05-26 10:23:08,562--test_project_approval.py--hanghao:69--INFO:审核项目01-同意：测试用例通过
+2023-05-26 10:23:08,798--test_project_approval.py--hanghao:69--INFO:审核资源01-同意：测试用例通过
+2023-05-26 10:23:09,022--test_project_approval.py--hanghao:69--INFO:审核已审核过的项目：测试用例通过
+2023-05-26 10:23:09,152--test_project_approval.py--hanghao:69--INFO:审核已审核过的资源：测试用例通过
+2023-05-26 10:23:09,278--test_project_approval.py--hanghao:69--INFO:审核失败—type=3：测试用例通过
+2023-05-26 10:23:09,404--test_project_approval.py--hanghao:69--INFO:审核失败—类型为空：测试用例通过
+2023-05-26 10:23:09,525--test_project_approval.py--hanghao:69--INFO:审核失败—id为空：测试用例通过
+2023-05-26 10:23:09,647--test_project_approval.py--hanghao:69--INFO:审核失败—状态为空：测试用例通过
+2023-05-26 10:23:09,904--test_project_approval.py--hanghao:69--INFO:审核项目02-拒绝：测试用例通过
+2023-05-26 10:23:10,151--test_project_approval.py--hanghao:69--INFO:审核项目03-同意：测试用例通过
+2023-05-26 10:23:10,372--test_project_approval.py--hanghao:69--INFO:审核资源03-拒绝：测试用例通过
+2023-05-26 10:23:33,513--test_project_close_open.py--hanghao:54--INFO:禁用项目：测试用例通过
+2023-05-26 10:23:33,762--test_project_close_open.py--hanghao:54--INFO:启用项目：测试用例通过
+2023-05-26 10:23:33,880--test_register.py--hanghao:55--INFO:注册失败-验证码错误：测试用例通过
+2023-05-26 10:23:34,155--test_register.py--hanghao:55--INFO:注册失败-密码为空：测试用例通过
+2023-05-26 10:23:34,268--test_register.py--hanghao:55--INFO:注册失败-确认密码为空：测试用例通过
+2023-05-26 10:23:34,384--test_register.py--hanghao:55--INFO:注册失败-验证码为空：测试用例通过
+2023-05-26 10:23:34,491--test_register.py--hanghao:57--ERROR:注册失败-账号已注册：测试用例无法通过：False is not true
+2023-05-26 10:23:34,613--test_register.py--hanghao:55--INFO:两次密码不一致：测试用例通过
+2023-05-26 10:23:34,975--test_register.py--hanghao:57--ERROR:注册成功：测试用例无法通过：False is not true
+2023-05-26 10:23:40,509--test_resource.py--hanghao:77--INFO:添加资源：测试用例通过
+2023-05-26 10:23:41,162--test_resource.py--hanghao:77--INFO:编辑资源：测试用例通过
+2023-05-26 10:23:41,453--test_resource.py--hanghao:77--INFO:添加失败-资源名称为空：测试用例通过
+2023-05-26 10:23:41,749--test_resource.py--hanghao:77--INFO:添加失败-资源描述为空：测试用例通过
+2023-05-26 10:23:42,049--test_resource.py--hanghao:77--INFO:添加失败-关键词为空：测试用例通过
+2023-05-26 10:23:42,345--test_resource.py--hanghao:77--INFO:添加失败-授权方式为空：测试用例通过
+2023-05-26 10:23:42,878--test_resource.py--hanghao:79--ERROR:添加成功-授权方式为私有：测试用例无法通过：False is not true
+2023-05-26 10:28:16,632--test_resource.py--hanghao:77--INFO:添加资源：测试用例通过
+2023-05-26 10:28:17,309--test_resource.py--hanghao:77--INFO:编辑资源：测试用例通过
+2023-05-26 10:28:17,610--test_resource.py--hanghao:77--INFO:添加失败-资源名称为空：测试用例通过
+2023-05-26 10:28:17,912--test_resource.py--hanghao:77--INFO:添加失败-资源描述为空：测试用例通过
+2023-05-26 10:28:18,216--test_resource.py--hanghao:77--INFO:添加失败-关键词为空：测试用例通过
+2023-05-26 10:28:18,517--test_resource.py--hanghao:77--INFO:添加失败-授权方式为空：测试用例通过
+2023-05-26 10:28:18,896--test_resource.py--hanghao:79--ERROR:添加成功-授权方式为私有：测试用例无法通过：False is not true
+2023-05-26 10:30:21,731--test_resource.py--hanghao:77--INFO:添加资源：测试用例通过
+2023-05-26 10:30:22,343--test_resource.py--hanghao:77--INFO:编辑资源：测试用例通过
+2023-05-26 10:30:22,637--test_resource.py--hanghao:77--INFO:添加失败-资源名称为空：测试用例通过
+2023-05-26 10:30:22,930--test_resource.py--hanghao:77--INFO:添加失败-资源描述为空：测试用例通过
+2023-05-26 10:30:23,231--test_resource.py--hanghao:77--INFO:添加失败-关键词为空：测试用例通过
+2023-05-26 10:30:23,528--test_resource.py--hanghao:77--INFO:添加失败-授权方式为空：测试用例通过
+2023-05-26 10:30:24,215--test_resource.py--hanghao:77--INFO:添加成功-授权方式为私有：测试用例通过
+2023-05-26 15:35:38,868--test_train_task.py--hanghao:78--INFO:纵向xgb_默认配置：测试用例通过
+2023-05-26 15:35:39,095--test_train_task.py--hanghao:78--INFO:纵向xgb_isEncrypted为false且最小边界值：测试用例通过
+2023-05-26 15:35:39,326--test_train_task.py--hanghao:78--INFO:纵向xgb_MergeGh为false且最大边界值：测试用例通过
+2023-05-26 15:35:39,581--test_train_task.py--hanghao:78--INFO:纵向xgb_rayGroup为false：测试用例通过
+2023-05-26 15:35:39,825--test_train_task.py--hanghao:78--INFO:纵向xgb_sample_type为goss：测试用例通过
+2023-05-26 15:35:40,063--test_train_task.py--hanghao:78--INFO:纵向xgb_feature_sample为false：测试用例通过
