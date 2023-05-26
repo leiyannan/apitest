@@ -158,16 +158,25 @@ class Handler():
     @property
     def train_xgb_host(self):
         return add_resource(host= host1,filename=Handler.yaml["test_data"]["train_xgb_host"])["resourceId"]
-
+    @property
     def test_xgb_host(self):
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_v_host"])["resourceId"]
 
     @property
     def train_lr_host(self):
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["train_lr_host"])["resourceId"]
-
+    @property
     def test_lr_host(self):
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_lr"])["resourceId"]
+
+    @property
+    def train_lrnn_host(self):
+        return add_resource(host=host1,filename=Handler.yaml["test_data"]["train_lrnn_host"])["resourceId"]
+
+    @property
+    def test_lrnn_host(self):
+        return add_resource(host=host1,filename=Handler.yaml["test_data"]["test_lrnn"])["resourceId"]
+
 
     @property
     def train_mpc_01(self):
@@ -193,6 +202,14 @@ class Handler():
     @property
     def test_lr_guest(self):
         return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lr"])["resourceId"]
+
+    @property
+    def train_lrnn_guest(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["train_lrnn_guest"])["resourceId"]
+
+    @property
+    def test_lrnn_guest(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lrnn"])["resourceId"]
 
     @property
     def train_mpc_02(self):
@@ -246,6 +263,14 @@ class Handler():
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_lr"])["resourceFusionId"]
 
     @property
+    def train_lrnn_host_FusionId(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["train_lrnn_host"])["resourceFusionId"]
+
+    @property
+    def test_lrnn_host_FusionId(self):
+        return add_resource(host=host1, filename=Handler.yaml["test_data"]["test_lrnn"])["resourceFusionId"]
+
+    @property
     def train_mpc_01_FusionId(self):
         return add_resource(host=host1, filename=Handler.yaml["test_data"]["mpc_lr_01"])["resourceFusionId"]
 
@@ -269,6 +294,14 @@ class Handler():
     @property
     def test_lr_guest_FusionId(self):
         return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lr"])["resourceFusionId"]
+
+    @property
+    def train_lrnn_guest_FusionId(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["train_lrnn_guest"])["resourceFusionId"]
+
+    @property
+    def test_lrnn_guest_FusionId(self):
+        return add_resource(host=host2, filename=Handler.yaml["test_data"]["test_lrnn"])["resourceFusionId"]
 
     @property
     def train_mpc_02_FusionId(self):
@@ -448,7 +481,7 @@ def add_resource(host ,filename="训练_纵向xgb_lr_host.csv"):
         # headers=json.loads(test_info["header"]),
         json=json.loads(data)
     )
-    #print(resp02)
+    print(resp02)
     resourceId = resp02["result"]["resourceId"]
     resourceFusionId = resp02["result"]["resourceFusionId"]
     #print(resourceFusionId)
@@ -457,7 +490,7 @@ def add_resource(host ,filename="训练_纵向xgb_lr_host.csv"):
 
 def add_project():
     # 使用host1和host2、host3的新增资源，并使用该资源 在host1环境新建项目
-    data:str = '{"projectName": "测试项目","projectDesc": "测试项目","projectOrgans": [{"organId": "#organId02#","participationIdentity": 2,"resourceIds": ["#train_xgb_guest_FusionId#", "#test_xgb_guest_FusionId#", "#train_lr_guest_FusionId#", "#test_lr_guest_FusionId#", "#train_mpc_02_FusionId#"]}, {"organId": "#organId03#","participationIdentity": 2,"resourceIds": ["#train_mpc_03_FusionId#"]}, {"organId": "#organId01#","participationIdentity": 1,"resourceIds": ["#train_xgb_host_FusionId#", "#test_xgb_host_FusionId#", "#train_lr_host_FusionId#", "#test_lr_host_FusionId#", "#train_mpc_01_FusionId#"]}],"timestamp": #timestamp#,"nonce": 439,"token": "#token#"}'
+    data:str = '{"projectName": "测试项目","projectDesc": "测试项目","projectOrgans": [{"organId": "#organId02#","participationIdentity": 2,"resourceIds": ["#train_xgb_guest_FusionId#", "#test_xgb_guest_FusionId#", "#train_lr_guest_FusionId#", "#test_lr_guest_FusionId#", "#train_lrnn_guest_FusionId#","#test_lrnn_guest_FusionId#","#train_mpc_02_FusionId#"]}, {"organId": "#organId03#","participationIdentity": 2,"resourceIds": ["#train_mpc_03_FusionId#"]}, {"organId": "#organId01#","participationIdentity": 1,"resourceIds": ["#train_xgb_host_FusionId#", "#test_xgb_host_FusionId#", "#train_lr_host_FusionId#", "#test_lr_host_FusionId#", "#train_lrnn_host_FusionId#","#test_lrnn_host_FusionId#","#train_mpc_01_FusionId#"]}],"timestamp": #timestamp#,"nonce": 439,"token": "#token#"}'
     if "#token#" in data:
         data = data.replace("#token#", Handler().token01)
     if "#organId01#" in data:
@@ -476,6 +509,11 @@ def add_project():
         data = data.replace("#train_lr_host_FusionId#", str(Handler().train_lr_host_FusionId))
     if "#test_lr_host_FusionId#" in data:
         data = data.replace("#test_lr_host_FusionId#", str(Handler().test_lr_host_FusionId))
+    if "#train_lrnn_host_FusionId#" in data:
+        data = data.replace("#train_lrnn_host_FusionId#", str(Handler().train_lrnn_host_FusionId))
+    if "#test_lrnn_host_FusionId#" in data:
+        data = data.replace("#test_lrnn_host_FusionId#", str(Handler().test_lrnn_host_FusionId))
+
     if "#train_mpc_01_FusionId#" in data:
         data = data.replace("#train_mpc_01_FusionId#", str(Handler().train_mpc_01_FusionId))
     if "#train_xgb_guest_FusionId#" in data:
@@ -486,6 +524,10 @@ def add_project():
         data = data.replace("#train_lr_guest_FusionId#", str(Handler().train_lr_guest_FusionId))
     if "#test_lr_guest_FusionId#" in data:
         data = data.replace("#test_lr_guest_FusionId#", str(Handler().test_lr_guest_FusionId))
+    if "#train_lrnn_guest_FusionId#" in data:
+        data = data.replace("#train_lrnn_guest_FusionId#", str(Handler().train_lrnn_guest_FusionId))
+    if "#test_lrnn_guest_FusionId#" in data:
+        data = data.replace("#test_lrnn_guest_FusionId#", str(Handler().test_lrnn_guest_FusionId))
     if "#train_mpc_02_FusionId#" in data:
         data = data.replace("#train_mpc_02_FusionId#", str(Handler().train_mpc_02_FusionId))
     if "#train_mpc_03_FusionId#" in data:
@@ -635,27 +677,11 @@ def Projectapproval():
     return pid01
 
 
-def saveModel_v_xgb():
+def getModel_vel():
     token = Handler().token01
     timestamp = str(int(time.time()))
     projectId = Projectapproval()
     modelId_save = {"xgb_modelId":"xgb_modelId","hlr_modelId":"hlr_modelId","mpc_modelId":"mpc_modelId"}
-    data = '{"param":{"projectId":"#projectId#","isDraft":1,"modelComponents":[{"frontComponentId":"cdb278c3-8165-4522-bc50-d5caf13e4061","coordinateX":123.5,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始","componentValues":[{"key":"taskName","val":""},{"key":"taskDesc","val":""}],"input":[],"output":[]}],"modelPointComponents":[]},"timestamp":#timestamp#,"nonce":377,"token":"#token#"}'
-    if "#timestamp#" in data:
-        data = data.replace("#timestamp#", timestamp)
-    if "#projectId#" in data:
-        data = data.replace("#projectId#", str(projectId))
-    if "#token#" in data:
-        data = data.replace("#token#", token)#
-
-    for key in modelId_save:
-        resp = requests_handler.visit(
-            url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
-            method="post",
-            json=json.loads(data)
-        )
-        modelId_save[key] = resp["result"]["modelId"]
-
 
     requests_data = '{"projectId":"#projectId#","organId":"#organId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
     if "#timestamp#" in requests_data:
@@ -688,48 +714,48 @@ def saveModel_v_xgb():
     )["result"]
 
 
-    xgb_vel = []
-    hlr_vel = []
-    mpclr_vel = []
+    xgb_val = []
+    hlr_val = []
+    mpclr_val = []
 
     for dict01 in result01:
         if Handler.yaml["test_data"]["train_xgb_host"] == dict01["resourceName"]:
-            xgb_host_vel = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+            xgb_host_val = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
                             'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
                             'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
                             'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
                             'calculationField':dict01["fileHandleField"],'derivation': str(dict01["derivation"])}
-            xgb_vel.append(xgb_host_vel)
+            xgb_val.append(xgb_host_val)
 
         if Handler.yaml["test_data"]["train_lr_host"] == dict01["resourceName"]:
-            hlr_host_vel = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+            hlr_host_val = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
                             'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
                             'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
                             'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
                             'calculationField':dict01["fileHandleField"],'derivation': str(dict01["derivation"])}
-            hlr_vel.append(hlr_host_vel)
+            hlr_val.append(hlr_host_val)
 
         if Handler.yaml["test_data"]["mpc_lr_01"] == dict01["resourceName"]:
-            mpclr_01_vel = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+            mpclr_01_val = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
                             'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
                             'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
                             'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
                             'calculationField':dict01["fileHandleField"],'derivation': str(dict01["derivation"])}
 
-            mpclr_vel.append(mpclr_01_vel)
+            mpclr_val.append(mpclr_01_val)
     # return train_xgb_host,train_lr_host,mpc_lr_01
 
     for dict02 in result02:
         if Handler.yaml["test_data"]["train_xgb_guest"] == dict02["resourceName"]:
-            xgb_guest_vel = {'organId': str(dict02["organId"]),'resourceId': str(dict02["resourceId"]),'resourceName': str(dict02["resourceName"]),
+            xgb_guest_val = {'organId': str(dict02["organId"]),'resourceId':str(dict02["resourceId"]),'organName' : str(Handler().organName02),'resourceName': str(dict02["resourceName"]),
                             'resourceRowsCount': dict02["resourceRowsCount"], 'resourceColumnCount': dict02["resourceColumnCount"],
                             'resourceContainsY': dict02["resourceContainsY"], 'auditStatus': dict02["auditStatus"],
                             'participationIdentity': dict02["participationIdentity"],'fileHandleField':dict02["fileHandleField"] ,
                             'calculationField':dict02["fileHandleField"],'derivation': str(dict02["derivation"])}
-            xgb_vel.append(xgb_guest_vel)
+            xgb_val.append(xgb_guest_val)
 
         if Handler.yaml["test_data"]["train_lr_guest"] == dict02["resourceName"]:
-            hlr_guest_vel = {'organId': str(dict02["organId"]), 'resourceId': str(dict02["resourceId"]),
+            hlr_guest_val = {'organId': str(dict02["organId"]), 'organName' : str(Handler().organName02),'resourceId': str(dict02["resourceId"]),
                              'resourceName': str(dict02["resourceName"]),
                              'resourceRowsCount': dict02["resourceRowsCount"],
                              'resourceColumnCount': dict02["resourceColumnCount"],
@@ -737,11 +763,11 @@ def saveModel_v_xgb():
                              'participationIdentity': dict02["participationIdentity"],
                              'fileHandleField': dict02["fileHandleField"],
                              'calculationField': dict02["fileHandleField"], 'derivation': str(dict02["derivation"])}
-            hlr_vel.append(hlr_guest_vel)
+            hlr_val.append(hlr_guest_val)
 
 
         if Handler.yaml["test_data"]["mpc_lr_02"] == dict02["resourceName"]:
-            mpclr_02_vel = {'organId': str(dict02["organId"]), 'resourceId': str(dict02["resourceId"]),
+            mpclr_02_val = {'organId': str(dict02["organId"]), 'organName' : str(Handler().organName02),'resourceId': str(dict02["resourceId"]),
                              'resourceName': str(dict02["resourceName"]),
                              'resourceRowsCount': dict02["resourceRowsCount"],
                              'resourceColumnCount': dict02["resourceColumnCount"],
@@ -749,12 +775,12 @@ def saveModel_v_xgb():
                              'participationIdentity': dict02["participationIdentity"],
                              'fileHandleField': dict02["fileHandleField"],
                              'calculationField': dict02["fileHandleField"], 'derivation': str(dict02["derivation"])}
-            mpclr_vel.append(mpclr_02_vel)
+            mpclr_val.append(mpclr_02_val)
 
 
     for dict03 in result03:
         if Handler.yaml["test_data"]["mpc_lr_03"] == dict03["resourceName"]:
-            mpclr_03_vel = {'organId': str(dict03["organId"]), 'resourceId': str(dict03["resourceId"]),
+            mpclr_03_val = {'organId': str(dict03["organId"]), 'organName' : str(Handler().organName03),'resourceId': str(dict03["resourceId"]),
                             'resourceName': str(dict03["resourceName"]),
                             'resourceRowsCount': dict03["resourceRowsCount"],
                             'resourceColumnCount': dict03["resourceColumnCount"],
@@ -762,59 +788,101 @@ def saveModel_v_xgb():
                             'participationIdentity': dict03["participationIdentity"],
                             'fileHandleField': dict03["fileHandleField"],
                             'calculationField': dict03["fileHandleField"], 'derivation': str(dict03["derivation"])}
-            mpclr_vel.append(mpclr_03_vel)
+            mpclr_val.append(mpclr_03_val)
+
+    return {"projectId":projectId,"xgb_val":xgb_val,"hlr_val":hlr_val,"mpclr_val":mpclr_val}
 
 
 
-    xgb_data:str = {"param": {"projectId": str(projectId),"modelId": str(modelId_save["xgb_modelId"]),"isDraft": 1,"modelComponents": [
-        {"frontComponentId": "0c894164-cc3f-4812-8a13-16ace76ebb6b","coordinateX": 710,"coordinateY": 100,"width": 120,"height": 40,"shape": "start-node",
-        "componentCode": "start","componentName": "开始","componentValues": [{"key": "taskName","val": "纵向xgb任务"},{"key": "taskDesc","val": "纵向xgb任务"}],"input": [],"output": [
-          {"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37","componentCode": "dataSet","componentName": "选择数据集","portId": "port1","pointType": "edge","pointJson": ""}]},
-        {"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37","coordinateX": 650,"coordinateY": 250,"width": 180,"height": 50,"shape": "dag-node",
-        "componentCode": "dataSet","componentName": "选择数据集","componentValues": [{"key": "selectData","val": json.dumps(xgb_vel)}],
-         "input": [{"frontComponentId": "0c894164-cc3f-4812-8a13-16ace76ebb6b","componentCode": "start","componentName": "开始","portId": "port2","pointType": "edge","pointJson": ""}],
-         "output": [{"frontComponentId": "eb315941-fbb1-4988-8808-fb887827362d","componentCode": "model","componentName": "模型选择","portId": "port1","pointType": "edge","pointJson": ""}]},
-        {"frontComponentId": "eb315941-fbb1-4988-8808-fb887827362d","coordinateX": 650,"coordinateY": 413,"width": 180,"height": 50,"shape": "dag-node","componentCode": "model","componentName": "模型选择",
-        "componentValues": [{"key": "modelType","val": "2"},
-          {"key": "numTree","val": 5},{"key": "maxDepth","val": 5},{"key": "regLambda","val": "1"},{"key": "minChildWeight","val": 3},
-          {"key": "isEncrypted","val": "true"},{"key": "mergeGh","val": "true"},{"key": "rayGroup","val": "true"},{"key": "sampleType","val": "random"},
-          {"key": "featureSample","val": "true"},{"key": "modelName","val": "纵向xgb模型"},{"key": "modelDesc","val": "纵向xgb模型"}],
-        "input": [{"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37","componentCode": "dataSet","componentName": "选择数据集","portId": "port2","pointType": "edge","pointJson": ""}],"output": []}],"modelPointComponents": [{
-        "frontComponentId": "d1804655-6591-4962-9dc2-753323f83346","shape": "edge","input": {"cell": "0c894164-cc3f-4812-8a13-16ace76ebb6b","port": "port2"},
-        "output": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37","port": "port1"}},{"frontComponentId": "9a924166-e20f-4f0e-acd2-0186caff9364","shape": "edge","input": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37",
-          "port": "port2"},"output": {"cell": "eb315941-fbb1-4988-8808-fb887827362d","port": "port1"}}]},"timestamp": timestamp,"nonce": 729,"token": token}
 
+def runTask():
+    token = Handler().token01
+    timestamp = str(int(time.time()))
+    Model_vel = getModel_vel()
 
-    hlr_data:str ={ "param":{"projectId":str(projectId),"modelId":str(modelId_save["hlr_modelId"]),"isDraft":1,"modelComponents":[{"frontComponentId":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","coordinateX":710,"coordinateY":100,"width":120,"height":40,"shape":"start-node","componentCode":"start","componentName":"开始",
-                  "componentValues":[{"key":"taskName","val":"横向lr-DPSGD"},{"key":"taskDesc","val":"横向lr-DPSGD"}],"input":[],"output":[{"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","componentCode":"dataSet","componentName":"选择数据集","portId":"port1","pointType":"edge","pointJson":""}]},
-                  {"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","coordinateX":680,"coordinateY":227,"width":180,"height":50,"shape":"dag-node","componentCode":"dataSet","componentName":"选择数据集",
-                   "componentValues":[{"key":"selectData","val":json.dumps(hlr_vel)}],"input":[{"frontComponentId":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","componentCode":"start","componentName":"开始","portId":"port2","pointType":"edge","pointJson":""}],
-                   "output":[{"frontComponentId":"381c6a40-c09b-448c-b065-700e0c3886f5","componentCode":"model","componentName":"模型选择","portId":"port1","pointType":"edge","pointJson":""}]},
-                  {"frontComponentId":"381c6a40-c09b-448c-b065-700e0c3886f5","coordinateX":660,"coordinateY":390,"width":180,"height":50,"shape":"dag-node","componentCode":"model","componentName":"模型选择","componentValues":[{"key":"modelType","val":"3"},{"key":"arbiterOrgan","val":"c8770d1e-d34d-48d7-bd83-a00c426fd4d3"},
-                   {"key":"encryption","val":"DPSGD"},{"key":"delta","val":"0.0001"},{"key":"noiseMultiplier","val":"2.0"},{"key":"l2NormClip","val":"1.0"},{"key":"secureMode","val":"true"},{"key":"alpha","val":"0.0001"},{"key":"batchSize","val":1},{"key":"maxIter","val":5},{"key":"modelName","val":"横向lr-DPSGD"},{"key":"modelDesc","val":"横向lr-DPSGD"}],
-                   "input":[{"frontComponentId":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","componentCode":"dataSet","componentName":"选择数据集","portId":"port2","pointType":"edge","pointJson":""}],"output":[]}],"modelPointComponents":[{"frontComponentId":"d69e97be-0fd1-4b71-ac0b-975f2af1eb79","shape":"edge","input":{"cell":"0770c4ae-c9ba-4e7f-a27e-903fcf3109e5","port":"port2"},
-                   "output":{"cell":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","port":"port1"}},{"frontComponentId":"3b09d79d-c562-46de-9098-466f45b6fcd8","shape":"edge","input":{"cell":"15ac0fc2-b40c-4f4e-8d09-8507657ea4c2","port":"port2"},"output":{"cell":"381c6a40-c09b-448c-b065-700e0c3886f5","port":"port1"}}]},
-                    "timestamp":timestamp,"nonce":326,"token":token}
+    xgb_data: str = {"param": {"projectId": str(Model_vel["projectId"]), "isDraft": 1, "modelComponents": [
+        {"frontComponentId": "0c894164-cc3f-4812-8a13-16ace76ebb6b", "coordinateX": 710, "coordinateY": 100,
+         "width": 120, "height": 40, "shape": "start-node",
+         "componentCode": "start", "componentName": "开始",
+         "componentValues": [{"key": "taskName", "val": "纵向xgb任务"}, {"key": "taskDesc", "val": "纵向xgb任务"}], "input": [],
+         "output": [
+             {"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37", "componentCode": "dataSet",
+              "componentName": "选择数据集", "portId": "port1", "pointType": "edge", "pointJson": ""}]},
+        {"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37", "coordinateX": 650, "coordinateY": 250,
+         "width": 180, "height": 50, "shape": "dag-node",
+         "componentCode": "dataSet", "componentName": "选择数据集",
+         "componentValues": [{"key": "selectData", "val": json.dumps(Model_vel["xgb_val"])}],
+         "input": [{"frontComponentId": "0c894164-cc3f-4812-8a13-16ace76ebb6b", "componentCode": "start",
+                    "componentName": "开始", "portId": "port2", "pointType": "edge", "pointJson": ""}],
+         "output": [{"frontComponentId": "eb315941-fbb1-4988-8808-fb887827362d", "componentCode": "model",
+                     "componentName": "模型选择", "portId": "port1", "pointType": "edge", "pointJson": ""}]},
+        {"frontComponentId": "eb315941-fbb1-4988-8808-fb887827362d", "coordinateX": 650, "coordinateY": 413,
+         "width": 180, "height": 50, "shape": "dag-node", "componentCode": "model", "componentName": "模型选择",
+         "componentValues": [{"key": "modelType", "val": "2"},
+                             {"key": "numTree", "val": 5}, {"key": "maxDepth", "val": 5},
+                             {"key": "regLambda", "val": "1"}, {"key": "minChildWeight", "val": 3},
+                             {"key": "isEncrypted", "val": "true"}, {"key": "mergeGh", "val": "true"},
+                             {"key": "rayGroup", "val": "true"}, {"key": "sampleType", "val": "random"},
+                             {"key": "featureSample", "val": "true"}, {"key": "modelName", "val": "纵向xgb模型"},
+                             {"key": "modelDesc", "val": "纵向xgb模型"}],
+         "input": [{"frontComponentId": "4c98af0b-277e-4f74-9d52-7e4e94390d37", "componentCode": "dataSet",
+                    "componentName": "选择数据集", "portId": "port2", "pointType": "edge", "pointJson": ""}], "output": []}],
+                               "modelPointComponents": [{
+                                   "frontComponentId": "d1804655-6591-4962-9dc2-753323f83346", "shape": "edge",
+                                   "input": {"cell": "0c894164-cc3f-4812-8a13-16ace76ebb6b", "port": "port2"},
+                                   "output": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37", "port": "port1"}},
+                                   {"frontComponentId": "9a924166-e20f-4f0e-acd2-0186caff9364", "shape": "edge",
+                                    "input": {"cell": "4c98af0b-277e-4f74-9d52-7e4e94390d37",
+                                              "port": "port2"},
+                                    "output": {"cell": "eb315941-fbb1-4988-8808-fb887827362d", "port": "port1"}}]},
+                     "timestamp": timestamp, "nonce": 729, "token": token}
 
-    task_data_id = {"xgb_data":xgb_data,"hlr_data":hlr_data}
-    modelId_run = {"xgb_model_id":"xgb_model_id","hlr_model_id":"hlr_model_id"}
+    hlr_data: str = {"param": {"projectId": str(Model_vel["projectId"]), "isDraft": 1, "modelComponents": [
+        {"frontComponentId": "0770c4ae-c9ba-4e7f-a27e-903fcf3109e5", "coordinateX": 710, "coordinateY": 100,
+         "width": 120, "height": 40, "shape": "start-node", "componentCode": "start", "componentName": "开始",
+         "componentValues": [{"key": "taskName", "val": "横向lr-DPSGD"}, {"key": "taskDesc", "val": "横向lr-DPSGD"}],
+         "input": [], "output": [
+            {"frontComponentId": "15ac0fc2-b40c-4f4e-8d09-8507657ea4c2", "componentCode": "dataSet",
+             "componentName": "选择数据集", "portId": "port1", "pointType": "edge", "pointJson": ""}]},
+        {"frontComponentId": "15ac0fc2-b40c-4f4e-8d09-8507657ea4c2", "coordinateX": 680, "coordinateY": 227,
+         "width": 180, "height": 50, "shape": "dag-node", "componentCode": "dataSet", "componentName": "选择数据集",
+         "componentValues": [{"key": "selectData", "val": json.dumps(Model_vel["hlr_val"])}], "input": [
+            {"frontComponentId": "0770c4ae-c9ba-4e7f-a27e-903fcf3109e5", "componentCode": "start",
+             "componentName": "开始", "portId": "port2", "pointType": "edge", "pointJson": ""}],
+         "output": [{"frontComponentId": "381c6a40-c09b-448c-b065-700e0c3886f5", "componentCode": "model",
+                     "componentName": "模型选择", "portId": "port1", "pointType": "edge", "pointJson": ""}]},
+        {"frontComponentId": "381c6a40-c09b-448c-b065-700e0c3886f5", "coordinateX": 660, "coordinateY": 390,
+         "width": 180, "height": 50, "shape": "dag-node", "componentCode": "model", "componentName": "模型选择",
+         "componentValues": [{"key": "modelType", "val": "3"},
+                             {"key": "arbiterOrgan", "val": "c8770d1e-d34d-48d7-bd83-a00c426fd4d3"},
+                             {"key": "encryption", "val": "DPSGD"}, {"key": "delta", "val": "0.0001"},
+                             {"key": "noiseMultiplier", "val": "2.0"}, {"key": "l2NormClip", "val": "1.0"},
+                             {"key": "secureMode", "val": "true"}, {"key": "alpha", "val": "0.0001"},
+                             {"key": "batchSize", "val": 1}, {"key": "maxIter", "val": 5},
+                             {"key": "modelName", "val": "横向lr-DPSGD"}, {"key": "modelDesc", "val": "横向lr-DPSGD"}],
+         "input": [{"frontComponentId": "15ac0fc2-b40c-4f4e-8d09-8507657ea4c2", "componentCode": "dataSet",
+                    "componentName": "选择数据集", "portId": "port2", "pointType": "edge", "pointJson": ""}], "output": []}],
+                               "modelPointComponents": [
+                                   {"frontComponentId": "d69e97be-0fd1-4b71-ac0b-975f2af1eb79", "shape": "edge",
+                                    "input": {"cell": "0770c4ae-c9ba-4e7f-a27e-903fcf3109e5", "port": "port2"},
+                                    "output": {"cell": "15ac0fc2-b40c-4f4e-8d09-8507657ea4c2", "port": "port1"}},
+                                   {"frontComponentId": "3b09d79d-c562-46de-9098-466f45b6fcd8", "shape": "edge",
+                                    "input": {"cell": "15ac0fc2-b40c-4f4e-8d09-8507657ea4c2", "port": "port2"},
+                                    "output": {"cell": "381c6a40-c09b-448c-b065-700e0c3886f5", "port": "port1"}}]},
+                     "timestamp": timestamp, "nonce": 326, "token": token}
+
+    task_data_id = {"xgb_data": xgb_data, "hlr_data": hlr_data}
     for key in task_data_id:
         resp = requests_handler.visit(
             url=Handler.yaml["host1"] + "/data/model/saveModelAndComponent",
             method="post",
             json=json.loads(json.dumps(task_data_id[key]))
         )
-        # xgb_modelId = resp["result"]["modelId"]
-        task_data_id[key]=resp["result"]["modelId"]
+        task_data_id[key] = resp["result"]["modelId"]
 
-    return task_data_id
 
-def runTask_xgb():
-    task_data_id = saveModel_v_xgb()
-    print(task_data_id)
     task_id = []
     for key in task_data_id:
-
         data = '{"modelId":"#modelId#","timestamp":#timestamp#,"nonce":622,"token":"#token#"}'
         if "#timestamp#" in data:
             data = data.replace("#timestamp#", str(int(time.time())))
@@ -846,7 +914,7 @@ if __name__ == "__main__":
     #print(Handler().resourceId03)
     #print(Handler().fileId01)
     # print((Handler().organId01))
-    print(getProjectDetails())
+    print(runTask())
 
 
 
