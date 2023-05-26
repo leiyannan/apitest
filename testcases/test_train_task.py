@@ -40,6 +40,12 @@ class TestResource(unittest.TestCase):
             data = data.replace("#projectId#", str(self.getModel_vel["projectId"]))
         if "#xgb_val#" in data:
             data = data.replace("#xgb_val#", json.dumps(json.dumps(self.getModel_vel["xgb_val"])))
+        if "#hlr_val#" in data:
+            data = data.replace("#hlr_val#", json.dumps(json.dumps(self.getModel_vel["hlr_val"])))
+        if "#lrnn_val#" in data:
+            data = data.replace("#lrnn_val#", json.dumps(json.dumps(self.getModel_vel["lrnn_val"])))
+        if "#mpclr_val#" in data:
+            data = data.replace("#mpclr_val#", json.dumps(json.dumps(self.getModel_vel["mpclr_val"])))
 
 
         actual = requests_handler.visit(
