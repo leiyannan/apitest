@@ -1597,3 +1597,66 @@
 2023-05-26 15:35:39,581--test_train_task.py--hanghao:78--INFO:纵向xgb_rayGroup为false：测试用例通过
 2023-05-26 15:35:39,825--test_train_task.py--hanghao:78--INFO:纵向xgb_sample_type为goss：测试用例通过
 2023-05-26 15:35:40,063--test_train_task.py--hanghao:78--INFO:纵向xgb_feature_sample为false：测试用例通过
+2023-05-29 14:01:40,315--test_train_task.py--hanghao:82--INFO:纵向xgb_默认配置：测试用例通过
+2023-05-29 14:01:40,601--test_train_task.py--hanghao:82--INFO:纵向xgb_isEncrypted为false且最小边界值：测试用例通过
+2023-05-29 14:01:41,009--test_train_task.py--hanghao:82--INFO:纵向xgb_MergeGh为false且最大边界值：测试用例通过
+2023-05-29 14:01:41,358--test_train_task.py--hanghao:82--INFO:纵向xgb_rayGroup为false：测试用例通过
+2023-05-29 14:01:41,689--test_train_task.py--hanghao:82--INFO:纵向xgb_sample_type为goss：测试用例通过
+2023-05-29 14:01:42,244--test_train_task.py--hanghao:82--INFO:纵向xgb_feature_sample为false：测试用例通过
+2023-05-29 14:01:42,928--test_train_task.py--hanghao:82--INFO:横向lr_默认配置：测试用例通过
+2023-05-29 14:01:43,244--test_train_task.py--hanghao:82--INFO:横向nn分类_默认配置：测试用例通过
+2023-05-29 14:01:43,515--test_train_task.py--hanghao:82--INFO:横向nn回归_默认配置：测试用例通过
+2023-05-29 14:01:43,759--test_train_task.py--hanghao:82--INFO:mpclr_默认配置：测试用例通过
+2023-05-29 14:08:13,453--test_train_task.py--hanghao:82--INFO:纵向xgb_默认配置：测试用例通过
+2023-05-29 14:08:13,867--test_train_task.py--hanghao:82--INFO:纵向xgb_isEncrypted为false且最小边界值：测试用例通过
+2023-05-29 14:08:14,428--test_train_task.py--hanghao:82--INFO:纵向xgb_MergeGh为false且最大边界值：测试用例通过
+2023-05-29 14:08:14,781--test_train_task.py--hanghao:82--INFO:纵向xgb_rayGroup为false：测试用例通过
+2023-05-29 14:08:15,132--test_train_task.py--hanghao:82--INFO:纵向xgb_sample_type为goss：测试用例通过
+2023-05-29 14:08:15,501--test_train_task.py--hanghao:82--INFO:纵向xgb_feature_sample为false：测试用例通过
+2023-05-29 14:08:15,929--test_train_task.py--hanghao:82--INFO:横向lr_默认配置：测试用例通过
+2023-05-29 14:08:16,173--test_train_task.py--hanghao:82--INFO:横向nn分类_默认配置：测试用例通过
+2023-05-29 14:08:16,436--test_train_task.py--hanghao:82--INFO:横向nn回归_默认配置：测试用例通过
+2023-05-29 14:08:16,656--test_train_task.py--hanghao:82--INFO:mpclr_默认配置：测试用例通过
+2023-06-01 17:27:59,972--test_train_task.py--hanghao:84--INFO:纵向xgb_默认配置：测试用例通过
+2023-06-01 17:28:00,264--test_train_task.py--hanghao:84--INFO:横向lr_默认配置：测试用例通过
+2023-06-01 17:28:00,458--test_train_task.py--hanghao:84--INFO:横向nn分类_默认配置：测试用例通过
+2023-06-01 17:28:03,669--test_train_task.py--hanghao:84--INFO:横向nn回归_默认配置：测试用例通过
+2023-06-01 17:28:03,892--test_train_task.py--hanghao:84--INFO:mpclr_默认配置：测试用例通过
+2023-06-01 17:35:01,964--test_train_task.py--hanghao:84--INFO:纵向xgb_默认配置：测试用例通过
+2023-06-01 17:35:02,163--test_train_task.py--hanghao:84--INFO:横向lr_默认配置：测试用例通过
+2023-06-01 17:35:02,385--test_train_task.py--hanghao:84--INFO:横向nn分类_默认配置：测试用例通过
+2023-06-01 17:35:02,567--test_train_task.py--hanghao:84--INFO:横向nn回归_默认配置：测试用例通过
+2023-06-01 17:35:02,751--test_train_task.py--hanghao:84--INFO:mpclr_默认配置：测试用例通过
+2023-06-01 17:43:49,377--test_train_task.py--hanghao:84--INFO:纵向xgb_默认配置：测试用例通过
+2023-06-01 17:43:49,728--test_train_task.py--hanghao:84--INFO:横向lr_默认配置：测试用例通过
+2023-06-01 17:43:49,969--test_train_task.py--hanghao:84--INFO:横向nn分类_默认配置：测试用例通过
+2023-06-01 17:43:50,221--test_train_task.py--hanghao:84--INFO:横向nn回归_默认配置：测试用例通过
+2023-06-01 17:54:40,926--test_train_task.py--hanghao:87--INFO:纵向xgb_默认配置：测试用例通过
+2023-06-01 17:54:41,189--test_train_task.py--hanghao:87--INFO:横向lr_默认配置：测试用例通过
+2023-06-01 17:54:41,477--test_train_task.py--hanghao:87--INFO:横向nn分类_默认配置：测试用例通过
+2023-06-01 17:54:41,752--test_train_task.py--hanghao:87--INFO:横向nn回归_默认配置：测试用例通过
+2023-06-02 14:00:28,627--test_train_task.py--hanghao:87--INFO:纵向xgb_默认配置：测试用例通过
+2023-06-02 14:00:28,842--test_train_task.py--hanghao:87--INFO:纵向lr_默认配置：测试用例通过
+2023-06-02 14:00:29,082--test_train_task.py--hanghao:87--INFO:横向lr_默认配置：测试用例通过
+2023-06-02 14:00:29,409--test_train_task.py--hanghao:87--INFO:横向nn分类_默认配置：测试用例通过
+2023-06-02 14:00:29,678--test_train_task.py--hanghao:87--INFO:横向nn回归_默认配置：测试用例通过
+2023-06-02 14:00:29,967--test_train_task.py--hanghao:87--INFO:psi-纵向xgb：测试用例通过
+2023-06-02 14:00:30,277--test_train_task.py--hanghao:87--INFO:psi-纵向lr：测试用例通过
+2023-06-02 14:36:09,954--test_pir.py--hanghao:62--ERROR:查询单个关键词：测试用例无法通过：False is not true
+2023-06-02 14:36:10,170--test_pir.py--hanghao:62--ERROR:查询多个关键词：测试用例无法通过：False is not true
+2023-06-02 14:37:42,021--test_pir.py--hanghao:62--ERROR:查询单个关键词：测试用例无法通过：False is not true
+2023-06-02 14:37:42,161--test_pir.py--hanghao:62--ERROR:查询多个关键词：测试用例无法通过：False is not true
+2023-06-02 14:46:39,226--test_pir.py--hanghao:63--ERROR:查询单个关键词：测试用例无法通过：False is not true
+2023-06-02 14:46:39,367--test_pir.py--hanghao:63--ERROR:查询多个关键词：测试用例无法通过：False is not true
+2023-06-02 14:47:49,441--test_pir.py--hanghao:63--ERROR:查询单个关键词：测试用例无法通过：False is not true
+2023-06-02 14:47:49,607--test_pir.py--hanghao:63--ERROR:查询多个关键词：测试用例无法通过：False is not true
+2023-06-02 14:50:07,523--test_pir.py--hanghao:63--ERROR:查询单个关键词：测试用例无法通过：False is not true
+2023-06-02 14:50:07,650--test_pir.py--hanghao:63--ERROR:查询多个关键词：测试用例无法通过：False is not true
+2023-06-02 14:53:54,302--test_pir.py--hanghao:63--INFO:查询单个关键词：测试用例通过
+2023-06-02 14:53:54,394--test_pir.py--hanghao:63--INFO:查询多个关键词：测试用例通过
+2023-06-02 15:21:50,544--test_pir.py--hanghao:63--INFO:查询多个关键词：测试用例通过
+2023-06-02 15:22:46,911--test_pir.py--hanghao:63--INFO:查询多个关键词：测试用例通过
+2023-06-02 15:24:00,258--test_pir.py--hanghao:63--INFO:查询单个关键词：测试用例通过
+2023-06-02 15:24:00,351--test_pir.py--hanghao:63--INFO:查询多个关键词：测试用例通过
+2023-06-02 15:25:23,535--test_pir.py--hanghao:63--INFO:查询单个关键词：测试用例通过
+2023-06-02 15:25:23,633--test_pir.py--hanghao:63--INFO:查询多个关键词：测试用例通过

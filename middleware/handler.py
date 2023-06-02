@@ -721,7 +721,7 @@ def getModel_vel():
 
     for dict01 in result01:
         if Handler.yaml["test_data"]["train_xgb_host"] == dict01["resourceName"]:
-            xgb_host_val = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+            xgb_host_val = {'organId': str(dict01["organId"]),'organName' : str(Handler().organName01),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
                             'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
                             'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
                             'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
@@ -729,7 +729,7 @@ def getModel_vel():
             xgb_val.append(xgb_host_val)
 
         if Handler.yaml["test_data"]["train_lr_host"] == dict01["resourceName"]:
-            hlr_host_val = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+            hlr_host_val = {'organId': str(dict01["organId"]),'organName' : str(Handler().organName01),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
                             'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
                             'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
                             'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
@@ -738,7 +738,7 @@ def getModel_vel():
 
 
         if Handler.yaml["test_data"]["train_lrnn_host"] == dict01["resourceName"]:
-            lrnn_host_val = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+            lrnn_host_val = {'organId': str(dict01["organId"]),'organName' : str(Handler().organName01),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
                             'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
                             'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
                             'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
@@ -746,7 +746,7 @@ def getModel_vel():
             lrnn_val.append(lrnn_host_val)
 
         if Handler.yaml["test_data"]["mpc_lr_01"] == dict01["resourceName"]:
-            mpclr_01_val = {'organId': str(dict01["organId"]),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
+            mpclr_01_val = {'organId': str(dict01["organId"]),'organName' : str(Handler().organName01),'resourceId': str(dict01["resourceId"]),'resourceName': dict01["resourceName"],
                             'resourceRowsCount': dict01["resourceRowsCount"], 'resourceColumnCount': dict01["resourceColumnCount"],
                             'resourceContainsY': dict01["resourceContainsY"], 'auditStatus': dict01["auditStatus"],
                             'participationIdentity': dict01["participationIdentity"],'fileHandleField':dict01["fileHandleField"],
@@ -757,7 +757,7 @@ def getModel_vel():
 
     for dict02 in result02:
         if Handler.yaml["test_data"]["train_xgb_guest"] == dict02["resourceName"]:
-            xgb_guest_val = {'organId': str(dict02["organId"]),'resourceId':str(dict02["resourceId"]),'organName' : str(Handler().organName02),'resourceName': str(dict02["resourceName"]),
+            xgb_guest_val = {'organId': str(dict02["organId"]),'organName' : str(Handler().organName02),'resourceId':str(dict02["resourceId"]),'resourceName': str(dict02["resourceName"]),
                             'resourceRowsCount': dict02["resourceRowsCount"], 'resourceColumnCount': dict02["resourceColumnCount"],
                             'resourceContainsY': dict02["resourceContainsY"], 'auditStatus': dict02["auditStatus"],
                             'participationIdentity': dict02["participationIdentity"],'fileHandleField':dict02["fileHandleField"] ,
@@ -935,7 +935,9 @@ if __name__ == "__main__":
     #print(Handler().resourceId03)
     #print(Handler().fileId01)
     # print((Handler().organId01))
-    print(runTask())
+    #print(runTask())
+    print(Projectapproval())
+    #print(Handler().train_xgb_guest_FusionId)
 
 
 

@@ -19,9 +19,9 @@ db:
   charset: "utf8"
 
 # host 地址
-host1: http://192.168.99.31:30811/prod-api
-host2: http://192.168.99.31:30812/prod-api
-host3: http://192.168.99.31:30813/prod-api
+host1: http://test1.primihub.com/prod-api
+host2: http://test2.primihub.com/prod-api
+host3: http://test3.primihub.com/prod-api
 
 # 用户名、密码（默认使用初始用户admin，123456）
 user:
@@ -38,8 +38,8 @@ test_data:
   pir_data: "pir.csv"
 
   # 联邦学习：纵向xgb、纵向lr：训练、推理测试数据：
-  train_xgb_host: "训练_纵向xgb_lr_host.csv"
-  train_xgb_guest: "训练_纵向xgb_lr_guest.csv"
+  train_xgb_host: "train_host_id.csv"
+  train_xgb_guest: "train_guest_id.csv"
   test_v_host: "推理_纵向xgb_lr_host.csv"
   test_v_guest: "推理_纵向xgb_lr_guest.csv"
 

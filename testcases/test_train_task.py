@@ -19,6 +19,7 @@ class TestResource(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.getModel_vel = getModel_vel()
         cls.token = env_data.token01
+        cls.organId03 = env_data.organId03
 
     def setUp(self) -> None:
         pass
@@ -38,6 +39,8 @@ class TestResource(unittest.TestCase):
             data = data.replace("#timestamp#", str(int(time.time())))
         if "#projectId#" in data:
             data = data.replace("#projectId#", str(self.getModel_vel["projectId"]))
+        if "#organId03#" in data:
+            data = data.replace("#organId03#", self.organId03)
         if "#xgb_val#" in data:
             data = data.replace("#xgb_val#", json.dumps(json.dumps(self.getModel_vel["xgb_val"])))
         if "#hlr_val#" in data:
@@ -47,6 +50,7 @@ class TestResource(unittest.TestCase):
         if "#mpclr_val#" in data:
             data = data.replace("#mpclr_val#", json.dumps(json.dumps(self.getModel_vel["mpclr_val"])))
 
+        print(data)
 
         actual = requests_handler.visit(
             url=env_data.yaml["host1"] + test_info["url"],
@@ -54,7 +58,7 @@ class TestResource(unittest.TestCase):
             # headers=json.loads(test_info["header"]),
             json =json.loads(data)
         )
-        #print(actual)
+        print(actual)
 
         # 获取modleId,发起任务运行
         modelId = actual["result"]["modelId"]
@@ -65,6 +69,7 @@ class TestResource(unittest.TestCase):
             rundata = rundata.replace("#modelId#", str(modelId))
         if "#token#" in rundata:
             rundata = rundata.replace("#token#", self.token)
+        print(rundata)
 
         resp = requests_handler.visit(
             url=Handler.yaml["host1"] + "/data/model/runTaskModel",
